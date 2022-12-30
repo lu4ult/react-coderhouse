@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+.centrarColumna {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.centrarFila {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: 1px solid red;
+  background-color: rgba(255,0,0,0.1);
+}
+
+body #root {
+  @extend .centrarColumna;
+  border: 3px solid green;
+  header {
+    background-color: yellow;
+    @extend .centrarFila;
+    width: 100%;
+    justify-content: space-around;
+
+    margin: 0.5rem;
+    padding: 0.5rem;
+    img {
+      width: 150px;
+      aspect-ratio: auto;
+
+    }
+
+
+    .header__navbar-categories {
+      background-color: #ccc;
+    }
+
+    .carrito {
+      position: relative;
+      svg {
+        width: 50px;
+        aspect-ratio: 1;
+      }
+
+      .counter {
+        position: absolute;
+        top: -50%;
+        left: 80%;
+        padding: 0.5rem;
+        background-color: red;
+        //width: fit-content;
+        //height: fit-content;
+        border-radius: 50%;
+        font-size: 2rem;
+        text-align: center;
+      }
+    }
+  }
+}

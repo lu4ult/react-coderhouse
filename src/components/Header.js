@@ -8,7 +8,6 @@ const Header = (props) => {
         <header>
             <img src="/img/logo.png" alt="LU4ULT logo"></img>
             <NavBar />
-            <CartWidget cartSum={3} />
             <UserLogin />
         </header>
     );

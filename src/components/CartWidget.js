@@ -1,5 +1,4 @@
 const CartWidget = (props) => {
-
     const cartSum = props.cartSum || 0;
 
     console.log(cartSum);

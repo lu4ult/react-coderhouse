@@ -1,10 +1,15 @@
+import CartWidget from "./CartWidget";
+
 const NavBar = () => {
     return (
-        <div className="header__navbar-categories">
-            <a>Categoría 1</a>
-            <a>Categoría 2</a>
-            <a>Categoría 3</a>
-        </div>
+        <>
+            <div className="header__navbar-categories">
+                <a href="/" >Industria</a>
+                <a href="/" >Hogar</a>
+                <a href="/" >Arduino</a>
+            </div>
+            <CartWidget cartSum={22} />
+        </>
     );
 }
 

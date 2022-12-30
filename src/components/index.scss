@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
+
+
+$debugCss: 0;
 
 .centrarColumna {
   display: flex;
@@ -18,16 +22,27 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  outline: 1px solid red;
-  background-color: rgba(255,0,0,0.1);
+
+  @if $debugCss>=1 {
+    outline: 1px solid red;
+  }
+
+  @if $debugCss==2 {
+    background-color: rgba(255,0,0,0.1);
+  }
 }
 
+
 body #root {
+  font-family: 'Roboto', sans-serif;
+
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+
   @extend .centrarColumna;
-  border: 3px solid green;
   header {
-    background-color: yellow;
     @extend .centrarFila;
+    border-bottom: 3px solid #ccc;
+    box-shadow: 0 5px 25px black;
     width: 100%;
     justify-content: space-around;
 
@@ -41,28 +56,85 @@ body #root {
 
 
     .header__navbar-categories {
-      background-color: #ccc;
+      //background-color: #ccc;
+      a {
+        margin: 1rem;
+        text-decoration: none;
+        &:hover {
+          border-bottom: 2px solid blueviolet;
+          transition: all .3s;
+        }
+      }
     }
 
     .carrito {
       position: relative;
+      width: 75px;
+      height: 75px;
+      @extend .centrarColumna;
       svg {
-        width: 50px;
-        aspect-ratio: 1;
+        cursor: pointer;
+        width: 48px;
+        height: 48px;
       }
 
       .counter {
         position: absolute;
-        top: -50%;
-        left: 80%;
+        bottom: -10%;
+        right: -15px;
         padding: 0.5rem;
         background-color: red;
         //width: fit-content;
         //height: fit-content;
         border-radius: 50%;
-        font-size: 2rem;
+        font-size: 1rem;
+        font-weight: 500;
         text-align: center;
+        color: white;
       }
     }
+
+    .user {
+      @extend .centrarColumna;
+      width: 75px;
+      height: 75px;
+      position: relative;
+
+      .user__login {
+        position: relative;
+        cursor: pointer;
+        font-size: 50px;
+      }
+
+      .user__name {
+        position: absolute;
+        bottom: -10px;
+        font-size: 1.2rem;
+        white-space: nowrap;
+        //width: fit-content;
+
+      }
+    }
+
+    margin-bottom: 5rem;
+  }
+
+
+  main {
+    background-color: red;
+    @extend .centrarColumna;
+  }
+
+  footer {
+    margin-top: 5rem;
+
+    font-size: clamp(0.7rem, 2vw, 1.1rem);
+    width: 100%;
+    background-color: black;
+    padding: 1rem;
+    text-align: center;
+    color: white;
+    font-weight: 400;
   }
 }
+

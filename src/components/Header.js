@@ -1,5 +1,4 @@
 import NavBar from "./NavBar";
-import CartWidget from "./CartWidget";
 import UserLogin from "./UserLogin"
 
 const Header = (props) => {
@@ -8,7 +7,7 @@ const Header = (props) => {
         <header>
             <img src="/img/logo.png" alt="LU4ULT logo"></img>
             <NavBar />
-            <UserLogin />
+            <UserLogin greeting="Hola Usuario!" />
         </header>
     );
 }

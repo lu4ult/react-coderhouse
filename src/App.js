@@ -11,7 +11,7 @@ function App() {
   return (
     <>
       <Header isHeader={true} />
-      <ItemListContainer greeting="alojaaa" />
+      <ItemListContainer />
       <Main />
       <Footer />
     </>

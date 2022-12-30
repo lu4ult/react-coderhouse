@@ -1,6 +1,6 @@
 const Footer = () => {
     return (
-        <p>Desarrollado por Lautaro Tourn</p>
+        <footer>Desarrollado por Lautaro Tourn</footer>
     );
 }
 

@@ -2,7 +2,7 @@ import NavBar from "./NavBar";
 import UserLogin from "./UserLogin"
 
 const Header = (props) => {
-    console.log(props);
+    //console.log(props);
     return (
         <header>
             <img src="/img/logo.png" alt="LU4ULT logo"></img>

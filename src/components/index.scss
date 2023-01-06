@@ -59,7 +59,13 @@ body #root {
       //background-color: #ccc;
       a {
         margin: 1rem;
+        padding: 0.5rem;
         text-decoration: none;
+        &.active {
+          background-color: blueviolet;
+          border-bottom: 2px solid blueviolet;
+          color: white;
+        }
         &:hover {
           border-bottom: 2px solid blueviolet;
           transition: all .3s;
@@ -138,3 +144,10 @@ body #root {
   }
 }
 
+@media (max-width: 1024px) {
+  body #root {
+    header {
+      flex-direction: column;
+    }
+  }  
+}

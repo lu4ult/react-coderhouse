@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const CartWidget = (props) => {
+const CartWidget = () => {
     //const cartSum = parseInt(props.cartSum) || 0;
     const [cartCounter,setCartCounter] = useState(0);
     //console.log(cartSum);

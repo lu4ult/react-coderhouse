@@ -6,6 +6,7 @@ import Main from './components/Main.js'
 import Footer from './components/Footer.js'
 //import NavBar from './components/NavBar.js';
 
+
 function App() {
   return (
     <>

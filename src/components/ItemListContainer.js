@@ -1,3 +1,4 @@
+import BeatLoader from "react-spinners/BeatLoader";
 import { useEffect, useState } from "react"
 import CartWidget from './CartWidget.js'
 
@@ -51,6 +52,7 @@ const ItemListContainer = () => {
 
     return (
         <>
+            <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />
             {estanProductosCargados ? "" : "Cargando..."}
             <div className="productsContainer">
                 {

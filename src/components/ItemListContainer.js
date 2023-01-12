@@ -53,12 +53,11 @@ const ItemListContainer = () => {
     return (
         <>
             <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />
-            {estanProductosCargados ? "" : "Cargando..."}
             <div className="productsContainer">
                 {
                     productos.map((producto) => {
                         return (
-                            <article>
+                            <article key={producto.id}>
                                 <a href={'https://articulo.mercadolibre.com.ar/'+producto.idMeli.replace("MLA","MLA-")} target="_blank">{producto.title}</a>
                                 <img alt={producto.title} src={producto.imgMeliUrl}></img>
                                 <div className="article__price">{producto.price} $</div>

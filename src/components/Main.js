@@ -4,17 +4,16 @@ import Carrito from "./Carrito";
 import Error from "./Error";
 
 const Main = () => {
+    const mainPath = "/react-coderhouse";
     return (
         <main>
             <Routes>
-                <Route path="/" element={<ItemListContainer />} />
-                <Route path="/productos/:categoria" element={<ItemListContainer />} />
+                <Route path={mainPath} element={<ItemListContainer />} />
+                <Route path={mainPath + "/productos/:categoria"} element={<ItemListContainer />} />
                 <Route path="/item/:id" element={<ItemListContainer />} />
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path="*" element={<Error />} />
-
             </Routes>
-            <ItemListContainer />
         </main>
     );
 }

@@ -6,7 +6,7 @@ const Header = (props) => {
     //console.log(props);
     return (
         <header>
-            <NavLink to="/">
+            <NavLink to="/react-coderhouse">
                 <img src="./img/logo.png" alt="LU4ULT logo"></img>
             </NavLink>
             <NavBar />

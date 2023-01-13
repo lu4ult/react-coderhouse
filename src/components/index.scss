@@ -28,7 +28,7 @@ $debugCss: 0;
   }
 
   @if $debugCss==2 {
-    background-color: rgba(255,0,0,0.1);
+    background-color: rgba(255, 0, 0, 0.1);
   }
 }
 
@@ -39,6 +39,7 @@ body #root {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
 
   @extend .centrarColumna;
+
   header {
     @extend .centrarFila;
     border-bottom: 3px solid #ccc;
@@ -48,6 +49,7 @@ body #root {
 
     margin: 0.5rem;
     padding: 0.5rem;
+
     a {
       img {
         width: 150px;
@@ -57,16 +59,19 @@ body #root {
 
 
     .header__navbar {
+
       //background-color: #ccc;
       a {
         margin: 1rem;
         padding: 0.5rem;
         text-decoration: none;
+
         &.active {
           background-color: blueviolet;
           border-bottom: 2px solid blueviolet;
           color: white;
         }
+
         &:hover {
           border-bottom: 2px solid blueviolet;
           transition: all .3s;
@@ -79,6 +84,7 @@ body #root {
       width: 75px;
       height: 75px;
       @extend .centrarColumna;
+
       svg {
         cursor: pointer;
         width: 48px;
@@ -131,20 +137,28 @@ body #root {
     //background-color: red;
     @extend .centrarColumna;
     width: 100%;
+
     .productsContainer {
       //border: 1px solid black;
       @extend .centrarFila;
       flex-wrap: wrap;
       padding: 0.5rem;
       margin: 0.5rem;
+
       article {
-        border: 1px solid black;
+        outline: 1px solid #ccc;
         @extend .centrarColumna;
         justify-content: space-around;
         padding: 0.5rem;
         margin: 0.5rem;
         width: 250px;
         height: 400px;
+
+        &:hover {
+          outline: 1px solid black;
+          transition: all .3s;
+        }
+
         //background-color: yellow;
         img {
           max-width: 200px;
@@ -161,6 +175,35 @@ body #root {
             font-size: 1rem;
           }
         }
+
+        .buttonsContainer {
+          position: relative;
+          //border: 1px solid red;
+          width: 80%;
+          max-height: 50px;
+          @extend .centrarFila;
+          justify-content: space-evenly;
+
+          a {
+            svg {
+              width: 2rem;
+              aspect-ratio: 1;
+
+              &:hover {
+                color: blue;
+              }
+            }
+            &:hover {
+              color: green;
+            }
+
+            &.mas_informacion {
+            }
+          }
+
+        }
+
+
       }
 
     }
@@ -184,5 +227,5 @@ body #root {
     header {
       flex-direction: column;
     }
-  }  
+  }
 }

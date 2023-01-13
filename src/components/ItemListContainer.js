@@ -14,12 +14,8 @@ const ItemListContainer = () => {
             fetch('https://raw.githubusercontent.com/lu4ult/react-coderhouse/gh-pages/data/products.json')
                 .then(response => response.json())
                 .then(data => {
-                    //console.table(data);
-                    //setProductos(data);
-
-
                     //Intento 1:
-                    /*
+
                     data.forEach(e => {
                         if (e.idMeli.includes("MLA")) {
                             fetch('https://api.mercadolibre.com/items/' + e.idMeli)
@@ -31,7 +27,10 @@ const ItemListContainer = () => {
                                 })
                         }
                     })
-                    */
+
+
+                    setEstanProductosCargados(true);
+                    setProductos(data);
 
                     //Intento 2:
                     /*
@@ -72,12 +71,9 @@ const ItemListContainer = () => {
                         console.log(valor)
                     });
                     */
-
-                    setEstanProductosCargados(true);
-                    setProductos(data);
                 })
                 .catch(error => console.log(error))
-        }, 2000)
+        }, 1000)
         console.log("Fin useEffect");
     }, []);
 

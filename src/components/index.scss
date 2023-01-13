@@ -48,14 +48,15 @@ body #root {
 
     margin: 0.5rem;
     padding: 0.5rem;
-    img {
-      width: 150px;
-      aspect-ratio: auto;
-
+    a {
+      img {
+        width: 150px;
+        aspect-ratio: auto;
+      }
     }
 
 
-    .header__navbar-categories {
+    .header__navbar {
       //background-color: #ccc;
       a {
         margin: 1rem;
@@ -131,7 +132,7 @@ body #root {
     @extend .centrarColumna;
     width: 100%;
     .productsContainer {
-      border: 1px solid black;
+      //border: 1px solid black;
       @extend .centrarFila;
       flex-wrap: wrap;
       padding: 0.5rem;
@@ -148,6 +149,17 @@ body #root {
         img {
           max-width: 200px;
           //aspect-ratio: 2;
+        }
+
+        button {
+          &.meliButton {
+            outline: none;
+            font-style: none;
+            cursor: pointer;
+            background-color: yellow;
+            padding: 0.5rem;
+            font-size: 1rem;
+          }
         }
       }
 

@@ -150,6 +150,7 @@ body #root {
       margin: 0.5rem;
 
       article {
+        font-size: 1rem;
         outline: 1px solid #ccc;
         @extend .centrarColumna;
         justify-content: space-around;
@@ -215,9 +216,10 @@ body #root {
     .itemDetalles {
       width: 90%;
       @extend .centrarColumna;
-      outline: 3px solid red;
+      //outline: 3px solid red;
+
       * {
-        outline: 1px solid red;
+        //outline: 1px solid red;
       }
     }
 

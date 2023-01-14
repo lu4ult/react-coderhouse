@@ -8,7 +8,6 @@ const Item = ({ producto }) => {
             <div className="article__price">{producto.price} $</div>
             <div>Stock: {producto.stock}</div>
             <div>{producto.idMeli}</div>
-            <div>Full: {producto.fullFilment ? "si" : "no"}</div>
             <div>Cat: {producto.internalCategory}</div>
             <div>ID: {producto.id}</div>
             {producto.fullFilment ?

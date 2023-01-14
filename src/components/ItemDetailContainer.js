@@ -1,12 +1,14 @@
 import { useParams } from "react-router-dom";
 import MoreProducts from "./MoreProducts";
+import NumericInput from 'react-numeric-input';
 
 const ItemDetailContainer = ({ productos }) => {
 
     console.log("Hola Detail Container")
     const { currentId } = useParams();
 
-    // console.log(currentId);
+     console.log(currentId);
+     console.log( productos );
 
 
     const indexOfCurrentProd = productos.findIndex(e => e.id === parseInt(currentId));
@@ -28,16 +30,13 @@ const ItemDetailContainer = ({ productos }) => {
                 <img src={productoAMostrar.imgMeliUrl}></img>
                 <p>{productoAMostrar.internalCategory}</p>
                 <p>{productoAMostrar.price} $</p>
-                <input type="number" value={productoAMostrar.stock?1:0}  min={0} max={productoAMostrar.stock}></input>
-                <button></button>
+                <NumericInput mobile className="form-control" min={productoAMostrar.stock?1:0} max={productoAMostrar.stock} value={productoAMostrar.stock?1:0}/>
+                <a href={"https://articulo.mercadolibre.com.ar/" + productoAMostrar.idMeli.replace("MLA","MLA-")} target="_blank">Ver en mercado libre</a>
+                <button>Agregar al carrito</button>
             </div>
             <MoreProducts productos={productosParaBanner} />
         </>
-
-
     );
 }
 
 export default ItemDetailContainer;
-
-//

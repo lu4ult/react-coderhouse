@@ -32,6 +32,10 @@ $debugCss: 0;
   }
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
 body #root {
   font-family: 'Roboto', sans-serif;
@@ -193,19 +197,105 @@ body #root {
                 color: blue;
               }
             }
+
             &:hover {
               color: green;
             }
 
-            &.mas_informacion {
-            }
+            &.mas_informacion {}
           }
 
         }
+      }
+
+    }
+
+
+    //ItemDetailContainer
+    .itemDetalles {
+      width: 90%;
+      @extend .centrarColumna;
+      outline: 3px solid red;
+      * {
+        outline: 1px solid red;
+      }
+    }
+
+
+    //ItemDetailContainer => MoreProducts
+    .miniatura__container {
+      margin-top: 2rem;
+      z-index: 10;
+      @extend .centrarFila;
+      width: 100%;
+
+      .miniatura__individual {
+        margin: 0.5rem;
+        @extend .centrarColumna;
+        justify-content: space-between;
+        width: 25%;
+        aspect-ratio: 1;
+        outline: 1px solid #ccc;
+        box-shadow: 2px 2px 10px black;
+        transition: all 1s;
+
+        &:hover {
+          outline: 2px solid black;
+          transform: translateY(-15px);
+          box-shadow: 10px 10px 20px black;
+          transition: all .3s;
+          //background-color: cyan;
+        }
+
+        .miniatura__titulo {
+          //background-color: #ccc;
+          @extend .centrarColumna;
+          max-height: 6rem;
+          //height: 25%;
+          font-size: 1rem;
+          text-decoration: none;
+          text-align: center;
+          //overflow: hidden;
+        }
+
+        .miniatura__img-container {
+          @extend .centrarColumna;
+
+          // outline: 2px solid blue;
+          // background-color: red;
+          //height: 6rem;
+          //height: 50%;
+          //object-fit: scale-down;
+          //outline: 3px solid blue;
+          //height: 50%;
+          // mix-blend-mode: multiply;
+          img {
+            //width: 100px;
+
+            height: 6rem;
+            object-fit: scale-down;
+
+            //z-index: -10;
+            //width: 100%;
+            //height: 100px;
+          }
+        }
+
+        .miniatura__individual-precio {
+          //height: 2rem;
+          text-align: center;
+          height: 15%;
+          //background-color: lightcoral;
+
+          &::after {
+            content: " $";
+          }
+        }
+
+
 
 
       }
-
     }
   }
 

@@ -9,9 +9,9 @@ const Main = () => {
         <main>
             <Routes>
                 <Route path={mainPath} element={<ItemListContainer />} />
-                <Route path={mainPath + "/productos/:categoria"} element={<ItemListContainer />} />
-                <Route path="/item/:id" element={<ItemListContainer />} />
-                <Route path="/carrito" element={<Carrito />} />
+
+                <Route path="/item/:currentId" element={<ItemListContainer isDetails={true} />} />
+
                 <Route path="*" element={<Error />} />
             </Routes>
         </main>
@@ -21,8 +21,5 @@ const Main = () => {
 export default Main;
 
 
-/*
-
-
-
-*/
+//<Route path={mainPath + "/productos/:categoria"} element={<ItemListContainer />} />
+//<Route path="/carrito" element={<Carrito />} />

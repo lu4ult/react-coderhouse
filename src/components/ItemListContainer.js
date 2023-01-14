@@ -1,9 +1,13 @@
 import BeatLoader from "react-spinners/BeatLoader";
 import { useEffect, useState } from "react"
 import ItemList from "./ItemList"
+import ItemDetailContainer from "./ItemDetailContainer";
 
 
-const ItemListContainer = () => {
+
+const ItemListContainer = ({ isDetails }) => {
+
+    const renderDetails = isDetails || false;
 
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
@@ -16,16 +20,21 @@ const ItemListContainer = () => {
                 .then(data => {
                     //Intento 1:
 
-                    data.forEach(e => {
+                    data.forEach((e) => {
                         if (e.idMeli.includes("MLA")) {
                             fetch('https://api.mercadolibre.com/items/' + e.idMeli)
                                 .then(response => response.json())
                                 .then(data => {
-                                    e.imgMeliUrl = data['pictures'][0]['secure_url'];
+                                    e.imgMeliUrl = data['pictures'][0]['secure_url']
                                     //console.log(data['pictures'][0]['secure_url'])
                                     //console.log(data)
                                 })
                         }
+                        // if(indice >= data.length-1) {
+                        //     console.log("fin array")
+                        // }
+
+                        //console.log(`${indice} - ${data.length}`)
                     })
 
 
@@ -86,11 +95,22 @@ const ItemListContainer = () => {
         //setCartCounter(cartCounter);
     }
 
-    return (
-        <>
-            {estanProductosCargados ? <ItemList productos={productos} /> : <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />}
-        </>
-    );
+    if (renderDetails === true) {
+        return (
+            <ItemDetailContainer productos={productos}/>
+        );
+    }
+    else {
+        return (
+            <>
+                {
+                    estanProductosCargados ?
+                        <ItemList productos={productos} />
+                        : <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />
+                }
+            </>
+        );
+    }
 }
 
 export default ItemListContainer;

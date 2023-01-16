@@ -2,12 +2,17 @@ import BeatLoader from "react-spinners/BeatLoader";
 import { useEffect, useState } from "react"
 import ItemList from "./ItemList"
 import ItemDetailContainer from "./ItemDetailContainer";
+import CategoriesContainer from "./CategoriesContainer";
 
 
+const ItemListContainer = (props) => {
 
-const ItemListContainer = ({ isDetails }) => {
+    const renderIsDetails = props.render === 'detalle';
+    const renderIsCategories = props.render === 'categoria';
 
-    const renderDetails = isDetails || false;
+    console.log(renderIsDetails);
+    console.log(renderIsCategories);
+
 
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
@@ -95,12 +100,10 @@ const ItemListContainer = ({ isDetails }) => {
         //setCartCounter(cartCounter);
     }
 
-    if (renderDetails === true) {
-        return (
-            <ItemDetailContainer productos={productos}/>
-        );
-    }
-    else {
+
+    //Si no recibió que debe renderizar un sólo producto con sus detalles o una categoría, es porque estamos en la página principal y mostramos todos los productos.
+    if (!renderIsCategories && !renderIsDetails) {
+        console.log("pagina principal")
         return (
             <>
                 {
@@ -109,6 +112,18 @@ const ItemListContainer = ({ isDetails }) => {
                         : <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />
                 }
             </>
+        );
+    }
+
+    if (renderIsDetails === true) {
+        return (
+            <ItemDetailContainer productos={productos} />
+        );
+    }
+
+    if (renderIsCategories === true) {
+        return (
+            <CategoriesContainer productos={productos} />
         );
     }
 }

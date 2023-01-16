@@ -190,6 +190,8 @@ body #root {
           justify-content: space-evenly;
 
           a {
+            position: relative;
+
             svg {
               width: 2rem;
               aspect-ratio: 1;
@@ -199,16 +201,38 @@ body #root {
               }
             }
 
-            &:hover {
-              color: green;
+            &.mas_informacion {
+              &:hover {
+                &::after {
+                  padding: 0.5rem;
+                  background-color: black;
+                  color: white;
+                  position: absolute;
+                  top: -100%;
+                  right: -50%;
+                  text-overflow: none;
+                  border-radius: 10px;
+                  content: "Más Información";
+                }
+              }
             }
 
-            &.mas_informacion {}
+            &.agregar_carrito {
+              &:hover {
+                &::after {
+                  padding: 0.5rem;
+                  background-color: black;
+                  color: white;
+                  position: absolute;
+                  top: -100%;
+                  right: -50%;
+                  content: "Agregar al carrito";
+                }
+              }
+            }
           }
-
         }
       }
-
     }
 
 

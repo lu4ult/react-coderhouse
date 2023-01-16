@@ -5,9 +5,9 @@ const MoreProducts = (props) => {
 
 
     const productosAMostrarMiniatura = [...props.productos]
-    console.log("More Products");
+    //console.log("More Products");
 
-    console.log(productosAMostrarMiniatura);
+    //console.log(productosAMostrarMiniatura);
     return (
         <div className="miniatura__container">
             {

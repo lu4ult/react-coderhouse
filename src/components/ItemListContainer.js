@@ -5,91 +5,53 @@ import ItemDetailContainer from "./ItemDetailContainer";
 import CategoriesContainer from "./CategoriesContainer";
 
 
-const ItemListContainer = (props) => {
+/*
+Se encarga de pedir el array de productos a products.json alojado en el repo.
+También, decide si debe renderizar, en función de los props boobleanos que recibe qué debe renderizar:
+1) la página principal:     ItemList => Item
+2) individual de producto:  ItemDetailContainer
+3) página por categoría:    CategoriesContainer => ItemList => Item
 
+*/
+const ItemListContainer = (props) => {
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
-
-    console.log(renderIsDetails);
-    console.log(renderIsCategories);
-
 
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
 
     useEffect(() => {
         console.log("Inicio useEffect")
-        setTimeout(() => {
-            fetch('https://raw.githubusercontent.com/lu4ult/react-coderhouse/gh-pages/data/products.json')
-                .then(response => response.json())
-                .then(data => {
-                    //Intento 1:
+        //       setTimeout(() => {
+        fetch('https://raw.githubusercontent.com/lu4ult/react-coderhouse/gh-pages/data/products.json')
+            .then(response => response.json())
+            .then(data => {
+                //Intento 1:
 
-                    data.forEach((e) => {
-                        if (e.idMeli.includes("MLA")) {
-                            fetch('https://api.mercadolibre.com/items/' + e.idMeli)
-                                .then(response => response.json())
-                                .then(data => {
-                                    e.imgMeliUrl = data['pictures'][0]['secure_url']
-                                    //console.log(data['pictures'][0]['secure_url'])
-                                    //console.log(data)
-                                })
-                        }
-                        // if(indice >= data.length-1) {
-                        //     console.log("fin array")
-                        // }
+                data.forEach(e => {
+                    if (e.idMeli.includes("MLA")) {
+                        fetch('https://api.mercadolibre.com/items/' + e.idMeli)
+                            .then(response => response.json())
+                            .then(data => {
+                                e.imgMeliUrl = data['pictures'][0]['secure_url']
+                            })
+                    }
+                })
 
-                        //console.log(`${indice} - ${data.length}`)
-                    })
-
-
+                //TODO: solucionar esto.
+                setTimeout(() => {
                     setEstanProductosCargados(true);
                     setProductos(data);
+                }, 1000);
 
-                    //Intento 2:
-                    /*
-                    async function awaitImageFromMeLi(id) {
-                        const rtta = await fetch('https://api.mercadolibre.com/items/' + id)
-                                .then(response => response.json())
-                                .then(data => {
-                                    const imgUrl = data['pictures'][0]['secure_url'];
-                                    //console.log(imgUrl)
-                                    return imgUrl;
-                            });
-                        return rtta;
-                    }
-
-                    data.forEach((e)=>{
-                        e.imgMeliUrl = awaitImageFromMeLi(e.idMeli);
-                    });
-                    */
-
-                    //Intento 3:
-                    /*
-                     const promesaDeImagenes = data.map(producto => {
-                        if (producto.idMeli.includes("MLA")) {
-                            return (
-                                fetch('https://api.mercadolibre.com/items/' + producto.idMeli)
-                                .then(response => response.json())
-                                .then(data => data['pictures'][0]['secure_url'])
-                            )
-                        }
-                    })
-
-                    const productosSinImagenes = [...data,{id:99,"title":"test"}];
-
-                    console.log(productosSinImagenes)
-                    Promise.all(promesaDeImagenes)
-                    .then((valor) => {
-                        productosSinImagenes.forEach((e,indice)=>{e.imgMeliUrl=valor[indice]});
-                        console.log(valor)
-                    });
-                    */
-                })
-                .catch(error => console.log(error))
-        }, 1000)
+                //Acá estaba originalmente
+                //setProductos(data);
+                //setEstanProductosCargados(true);
+            })
+            .catch(error => console.log(error))
+        //      }, 1000)
         console.log("Fin useEffect");
-    }, []);
+    }, [estanProductosCargados]);
 
 
 
@@ -103,7 +65,6 @@ const ItemListContainer = (props) => {
 
     //Si no recibió que debe renderizar un sólo producto con sus detalles o una categoría, es porque estamos en la página principal y mostramos todos los productos.
     if (!renderIsCategories && !renderIsDetails) {
-        console.log("pagina principal")
         return (
             <>
                 {
@@ -114,6 +75,8 @@ const ItemListContainer = (props) => {
             </>
         );
     }
+
+    //Nota: no usamos 'else' ya que como está el return no llega y no es necesario
 
     if (renderIsDetails === true) {
         return (

@@ -4,11 +4,10 @@ import NumericInput from 'react-numeric-input';
 
 const ItemDetailContainer = ({ productos }) => {
 
-    console.log("Hola Detail Container")
     const { currentId } = useParams();
 
-     console.log(currentId);
-     console.log( productos );
+    // console.log(currentId);
+    // console.log( productos );
 
 
     const indexOfCurrentProd = productos.findIndex(e => e.id === parseInt(currentId));
@@ -20,7 +19,7 @@ const ItemDetailContainer = ({ productos }) => {
         productosParaBanner.push(productos.at(indexOfCurrentProd - i));             //Hacemos -1 para recorrer el array de atrás a adelante, ya que se puede acceder por índice negativo pero no por índice mayor a la longitud
     }
 
-    console.log(productosParaBanner);
+    // console.log(productosParaBanner);
 
     //console.log(productoAMostrar)
     return (

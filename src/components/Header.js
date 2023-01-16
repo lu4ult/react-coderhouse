@@ -2,7 +2,7 @@ import NavBar from "./NavBar";
 import UserLogin from "./UserLogin"
 import { NavLink } from "react-router-dom"
 
-const Header = (props) => {
+const Header = () => {
     //console.log(props);
     return (
         <header>

@@ -12,7 +12,7 @@ import Footer from './components/Footer.js'
 function App() {
   return (
     <BrowserRouter>
-      <Header isHeader={true} />
+      <Header />
       <Main />
       <Footer />
     </BrowserRouter>

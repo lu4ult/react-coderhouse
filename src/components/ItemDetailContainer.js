@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import MoreProducts from "./MoreProducts";
 import NumericInput from 'react-numeric-input';
+import shuffleArray from "./ShuffleArray";
 
 const ItemDetailContainer = ({ productos }) => {
 
@@ -15,16 +16,26 @@ const ItemDetailContainer = ({ productos }) => {
 
     let viewportWidth = window.innerWidth;
     console.log(viewportWidth)
-    let cantidadDeMiniaturas = Math.floor(viewportWidth/200);
-    if(cantidadDeMiniaturas<=1)
+    let cantidadDeMiniaturas = Math.floor(viewportWidth / 200);
+    if (cantidadDeMiniaturas <= 1)
         cantidadDeMiniaturas = 2;
-    if(cantidadDeMiniaturas>5)
+    if (cantidadDeMiniaturas > 5)
         cantidadDeMiniaturas = 5;
     console.log(cantidadDeMiniaturas)
-    //En este array guardamos el objeto actual, el anterior y el siguiente, para pasarle el array al componente que renderiza el banner.
+
+    /*
+
+    Para que los productos del banner sean aleatorios y no consecutivos primero hacemos una copia y los ordenamos de manera random.
+    Luego pasamos a productosParaBanner desde los último elementos porque ya están desordenados.
+    */
+    const productosCopia = [...productos]
+    shuffleArray(productosCopia);
+    //console.log(productosCopia);
+
     const productosParaBanner = [];
     for (let i = 1; i <= cantidadDeMiniaturas; i++) {
-        productosParaBanner.push(productos.at(indexOfCurrentProd - i));             //Hacemos -1 para recorrer el array de atrás a adelante, ya que se puede acceder por índice negativo pero no por índice mayor a la longitud
+        //productosParaBanner.push(productosCopia.at(indexOfCurrentProd - i));             //Hacemos -1 para recorrer el array de atrás a adelante, ya que se puede acceder por índice negativo pero no por índice mayor a la longitud
+        productosParaBanner.push(productosCopia.pop());
     }
 
     // console.log(productosParaBanner);

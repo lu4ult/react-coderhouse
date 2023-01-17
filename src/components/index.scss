@@ -193,15 +193,39 @@ body #root {
 
       }
     }
-
-    //margin-bottom: 5rem;
   }
 
   .filtros {
     grid-area: filtros;
 
-    margin-bottom: 4rem;
-    //background-color: red
+    @extend .centrarFila;
+    height: 50px;
+    outline: 1px solid #ccc;
+
+    div {
+      @extend .centrarFila;
+      width: 30%;
+      height: 100%;
+
+      // input[type="checkbox"] {
+      //   width: 100px;
+      //   height: 50px;
+      // }
+
+      input[type="text"] {
+        background-color: inherit;
+        text-align: center;
+        outline: none;
+        //width: 100%;
+        height: 100%;
+
+      }
+    }
+
+    justify-content: space-around;
+
+
+    margin: 1rem 0;
   }
 
 
@@ -515,13 +539,17 @@ body #root {
       .itemDetalles {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 50px 1fr auto;
+        grid-template-rows: auto auto auto;
 
         grid-template-areas:
           "titulo"
           "foto"
           "datos";
       }
+    }
+
+    footer {
+      margin-top: 2rem;
     }
   }
 }

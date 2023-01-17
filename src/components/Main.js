@@ -4,7 +4,7 @@ import Carrito from "./Carrito";
 import Error from "./Error";
 
 const Main = () => {
-    const mainPath = "/react-coderhouse";                                                                   //Agrego esto a la URL porque sino en Github Pages me manda a cualquier lado.
+    const mainPath = "/";                                                                   //Agrego esto a la URL porque sino en Github Pages me manda a cualquier lado.
     return (
         <main>
             <Routes>

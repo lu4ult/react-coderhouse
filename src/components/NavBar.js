@@ -9,7 +9,7 @@ const NavBar = () => {
                 <NavLink className="header__link" to="react-coderhouse/productos/industria">Industria</NavLink>
                 <NavLink className="header__link" to="react-coderhouse/productos/hogar">Hogar</NavLink>
             </div>
-            <CartWidget cartSum={Math.floor(Math.random() * 10)} />
+            <CartWidget cartSum={0} />
         </>
     );
 }

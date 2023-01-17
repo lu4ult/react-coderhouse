@@ -13,9 +13,17 @@ const ItemDetailContainer = ({ productos }) => {
     const indexOfCurrentProd = productos.findIndex(e => e.id === parseInt(currentId));
     const productoAMostrar = productos.find(e => e.id === parseInt(currentId));
 
+    let viewportWidth = window.innerWidth;
+    console.log(viewportWidth)
+    let cantidadDeMiniaturas = Math.floor(viewportWidth/200);
+    if(cantidadDeMiniaturas<=1)
+        cantidadDeMiniaturas = 2;
+    if(cantidadDeMiniaturas>5)
+        cantidadDeMiniaturas = 5;
+    console.log(cantidadDeMiniaturas)
     //En este array guardamos el objeto actual, el anterior y el siguiente, para pasarle el array al componente que renderiza el banner.
     const productosParaBanner = [];
-    for (let i = 1; i <= 5; i++) {
+    for (let i = 1; i <= cantidadDeMiniaturas; i++) {
         productosParaBanner.push(productos.at(indexOfCurrentProd - i));             //Hacemos -1 para recorrer el array de atrás a adelante, ya que se puede acceder por índice negativo pero no por índice mayor a la longitud
     }
 
@@ -43,3 +51,6 @@ const ItemDetailContainer = ({ productos }) => {
 }
 
 export default ItemDetailContainer;
+
+
+//

@@ -334,6 +334,8 @@ body #root {
 
     .itemDetalles {
 
+      padding: 0.5rem;
+
       border: 3px solid black;
       border-radius: 10px;
       background-color: #fff;
@@ -353,6 +355,7 @@ body #root {
 
       .itemDetalles__titulo {
         grid-area: titulo;
+        text-align: center;
         @extend .centrarColumna;
         //background-color: pink;
       }
@@ -360,12 +363,12 @@ body #root {
       .itemDetalles__imagen {
         grid-area: foto;
         @extend .centrarColumna;
-        // max-width: 200px;
-        // max-height: 200px;
-        height: 30vh;
+        height: 35vh;
+        //max-height: 250px;
 
         img {
           height: 100%;
+          width: 100%;
           object-fit: scale-down;
           //width: 100%;
           //height: 100%;
@@ -388,50 +391,64 @@ body #root {
       margin-top: 2rem;
       z-index: 10;
       @extend .centrarFila;
+      justify-content: space-around;
       width: 100%;
 
+      // * {
+      //   outline: 1px solid red;
+      // }
+
       .miniatura__individual {
-        margin: 0.5rem;
         @extend .centrarColumna;
         justify-content: space-between;
-        width: 25%;
+        width: 40vw;
+        max-width: 200px;
+
         aspect-ratio: 1;
+
+        margin: 0 1rem;
         outline: 1px solid #ccc;
         box-shadow: 2px 2px 10px black;
         transition: all 1s;
+
+        background-color: #fff;
 
         &:hover {
           outline: 2px solid black;
           transform: translateY(-15px);
           box-shadow: 10px 10px 20px black;
           transition: all .3s;
-          //background-color: cyan;
         }
 
         .miniatura__titulo {
-          //background-color: #ccc;
-          @extend .centrarColumna;
-          max-height: 6rem;
-          //height: 25%;
-          font-size: 1rem;
+          // @extend .centrarCFila;
+          height: 20%;
+
+          font-size: 0.7rem;
           text-decoration: none;
           text-align: center;
-          //overflow: hidden;
+
+          overflow: hidden;
+          //z-index: 10;
         }
 
         .miniatura__img-container {
           @extend .centrarColumna;
 
+
           // outline: 2px solid blue;
-          // background-color: red;
           //height: 6rem;
           //height: 50%;
           //height: 50%;
           // mix-blend-mode: multiply;
+          height: 60%;
+
           img {
             //width: 100px;
 
-            height: 6rem;
+            //height: 6rem;
+            width: 100%;
+            height: 100%;
             object-fit: scale-down;
 
             //z-index: -10;
@@ -442,8 +459,9 @@ body #root {
 
         .miniatura__individual-precio {
           //height: 2rem;
-          text-align: center;
-          height: 15%;
+          height: 20%;
+          //text-align: center;
+
           //background-color: lightcoral;
 
           &::after {
@@ -460,7 +478,7 @@ body #root {
   }
 
   footer {
-    //margin-top: 5rem;
+    margin-top: 5rem;
     grid-area: footer;
 
     font-size: clamp(0.7rem, 2vw, 1.1rem);
@@ -475,16 +493,35 @@ body #root {
 
 @media (max-width: 1024px) {
   body #root {
-
-    //background-color: red;
     header {
-      //display: grid;
       position: relative;
       grid-template-columns: 3fr 1fr 1fr 1fr;
       grid-template-rows: 75px auto;
       grid-template-areas:
         "logo nada carrito userLogin"
         "navbar navbar navbar navbar";
+
+      .header__navbar {
+        flex-wrap: wrap;
+
+        .header__link {
+          //width: 25%;
+          font-size: 0.75rem;
+        }
+      }
+    }
+
+    main {
+      .itemDetalles {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 50px 1fr auto;
+
+        grid-template-areas:
+          "titulo"
+          "foto"
+          "datos";
+      }
     }
   }
 }

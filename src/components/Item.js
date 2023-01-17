@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 const Item = ({ producto }) => {
     return (
         <article>
-            <h3>{producto.title}</h3>
+            <Link to={"/item/" + producto.id}><h3>{producto.title}</h3></Link>
             <div className="article__category">
                 <div>{producto.internalCategory}</div>
             </div>

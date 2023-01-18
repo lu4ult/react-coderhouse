@@ -5,13 +5,13 @@ const ItemCount = ({ producto }) => {
 
     const handleSumar = () => {
         if (contador < producto.stock) {
-            setContador(contador + 1)
+            setContador(contador + 1);
         }
     }
 
     const handleRestar = () => {
         if (contador) {
-            setContador(contador - 1)
+            setContador(contador - 1);
         }
     }
 
@@ -19,11 +19,12 @@ const ItemCount = ({ producto }) => {
         setContador(parseInt(e.target.value))
     }
 
+    //TODO: boton disabled si no hay más stock
     return (
         <div>
             <button onClick={handleRestar}>-</button>
             <input type="text" value={contador} onChange={handleOnChange}></input>
-            <button onClick={handleSumar}>+</button>
+            <button disabled={contador>=producto.stock} onClick={handleSumar}>+</button>
         </div>
     );
 }

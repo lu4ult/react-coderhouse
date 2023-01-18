@@ -9,7 +9,7 @@ const Filters = () => {
                 <input type="text" value="Buscar"></input>
             </div>
             <div>
-                
+
             </div>
         </div>
     )

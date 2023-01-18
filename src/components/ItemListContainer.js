@@ -17,6 +17,7 @@ const ItemListContainer = (props) => {
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
 
+
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
 
@@ -29,13 +30,11 @@ const ItemListContainer = (props) => {
                 //Intento 1:
 
                 data.forEach(e => {
-                    if (e.idMeli.includes("MLA")) {
-                        fetch('https://api.mercadolibre.com/items/' + e.idMeli)
-                            .then(response => response.json())
-                            .then(data => {
-                                e.imgMeliUrl = data['pictures'][0]['secure_url']
-                            })
-                    }
+                    fetch('https://api.mercadolibre.com/items/' + e.idMeli)
+                        .then(response => response.json())
+                        .then(data => {
+                            e.imgMeliUrl = data['pictures'][0]['secure_url'];
+                        })
                 })
 
                 //TODO: solucionar esto.

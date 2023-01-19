@@ -53,7 +53,7 @@ const ItemDetailContainer = ({ productos }) => {
 
     return (
         <>
-            <p>Ups!!</p>
+            <MoreProducts productos={productosParaBanner} />
         </>
     );
 }
@@ -63,6 +63,6 @@ export default ItemDetailContainer;
 /*
 
 <ItemDetail productoAMostrar={productoAMostrar} />
-            <MoreProducts productos={productosParaBanner} />
+            
 
             */

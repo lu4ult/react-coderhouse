@@ -236,6 +236,12 @@ body #root {
     grid-area: main;
     width: 100%;
 
+    .spinner {
+      height: 60vh;
+      width: 90vw;
+      @extend .centrarColumna;
+    }
+
     .productsContainer {
       //border: 1px solid black;
       @extend .centrarFila;
@@ -414,9 +420,10 @@ body #root {
         // }
 
         iframe {
-          width: 100%;
+          width: 60%;
+          aspect-ratio: 16/9;
           //height: 300px;
-          height: 40vh;
+          //height: 40vh;
         }
 
         img {

@@ -6,9 +6,7 @@ const CategoriesContainer = ({ productos }) => {
     const productosFiltrados = productos.filter(e => e.category.toLowerCase().includes(categoria));
 
     return (
-        <>
-            <ItemList productos={productosFiltrados} />
-        </>
+        <ItemList productos={productosFiltrados} />
     );
 }
 

@@ -77,7 +77,10 @@ const ItemListContainer = (props) => {
                 {
                     estanProductosCargados ?
                         <ItemList productos={productos} />
-                        : <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />
+                        :
+                        <div className="spinner">
+                            <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />
+                        </div>
                 }
             </>
         );

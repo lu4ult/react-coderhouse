@@ -9,6 +9,10 @@ const ItemDetailContainer = ({ productos }) => {
     //Si colocamos la url "manualmente" (por ej.: /item/102) este array llega vacío y react colapsa. Para evitar eso creamos este objeto producto vacío.
     let productoAMostrar = {
         title: "",
+        stock: 0,
+        id: 0,
+        category:"",
+        fullFilment: false,
         idMeli: "MLA",
         internalCategory: "",
         imgMeliUrl: "https://i.ytimg.com/vi/-6vnomecItA/maxresdefault.jpg",
@@ -53,6 +57,7 @@ const ItemDetailContainer = ({ productos }) => {
 
     return (
         <>
+            <ItemDetail productoAMostrar={productoAMostrar} />
             <MoreProducts productos={productosParaBanner} />
         </>
     );
@@ -62,7 +67,7 @@ export default ItemDetailContainer;
 
 /*
 
-<ItemDetail productoAMostrar={productoAMostrar} />
+
             
 
             */

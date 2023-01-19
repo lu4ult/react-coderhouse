@@ -7,7 +7,7 @@ import CategoriesContainer from "./CategoriesContainer";
 
 /*
 Se encarga de pedir el array de productos a products.json alojado en el repo.
-También, decide si debe renderizar, en función de los props boobleanos que recibe qué debe renderizar:
+También, decide si debe renderizar, en función de los props booleanos que recibe qué debe renderizar:
 1) la página principal:     ItemList => Item
 2) individual de producto:  ItemDetailContainer
 3) página por categoría:    CategoriesContainer => ItemList => Item
@@ -35,6 +35,13 @@ const ItemListContainer = (props) => {
                         .then(response => response.json())
                         .then(data => {
                             e.imgMeliUrl = data['pictures'][0]['secure_url'];
+                            e.video = data['video_id']
+
+                            //Si el producto está en full no modificamos el precio porque la venta se realiza sólo en MeLi.
+                            e.price = Math.floor(0.89 * parseInt(data['price']));
+                            if (e.fullFilment === true)
+                                e.price = Math.floor(1 * parseInt(data['price']));
+                            //e.stock = parseInt(data['available_quantity']);               //No porque no es el stock
                         })
                 })
 

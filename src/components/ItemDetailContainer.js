@@ -22,6 +22,8 @@ const ItemDetailContainer = ({ productos }) => {
 
     /*******************************************/
     let viewportWidth = window.innerWidth;
+    let viewPortHeight = window.innerHeight;
+    console.log(viewPortHeight)
     let cantidadDeMiniaturas = Math.floor(viewportWidth / 250);
     if (cantidadDeMiniaturas <= 1)
         cantidadDeMiniaturas = 2;

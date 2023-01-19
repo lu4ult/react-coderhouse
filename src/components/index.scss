@@ -356,8 +356,8 @@ body #root {
       width: 90vw;
 
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr 50px;
+      grid-template-columns: 1.618034fr 1fr;
+      grid-template-rows: auto auto 50px;
 
       grid-template-areas:
         "foto titulo"
@@ -378,18 +378,27 @@ body #root {
       .itemDetalles__imagen {
         grid-area: foto;
         @extend .centrarColumna;
-        height: 35vh;
+        height: 30vh;
         //max-height: 250px;
+        height: 100%;
+        // * {
+        //   outline: 1px solid red;
+        // }
+
+        iframe {
+          width: 100%;
+          //height: 300px;
+          height: 30vh;
+        }
 
         img {
-          height: 100%;
+          //outline: 1px solid blue;
           width: 100%;
           object-fit: scale-down;
-          //width: 100%;
-          //height: 100%;
-          //max-width: 20vw;
-          //Fmax-height: 20vw;
+          //height: 300px;
+          height: 30vh;
         }
+
       }
 
       .itemDetalles__datos {
@@ -432,12 +441,14 @@ body #root {
         a {
           //border: 1px solid green;
           height: 100%;
+
           svg {
             //border: 1px solid blue;
             height: 100%;
             fill: green;
           }
         }
+
         //border: 3px solid red;
       }
     }

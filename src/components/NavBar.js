@@ -4,10 +4,10 @@ const NavBar = () => {
     return (
         <>
             <div className="header__navbar">
-                <NavLink className="header__link" to="react-coderhouse/productos/arduino">Arduino</NavLink>
-                <NavLink className="header__link" to="react-coderhouse/productos/iot">IOT</NavLink>
-                <NavLink className="header__link" to="react-coderhouse/productos/industria">Industria</NavLink>
-                <NavLink className="header__link" to="react-coderhouse/productos/hogar">Hogar</NavLink>
+                <NavLink className="header__link" to="/productos/arduino">Arduino</NavLink>
+                <NavLink className="header__link" to="/productos/iot">IOT</NavLink>
+                <NavLink className="header__link" to="/productos/industria">Industria</NavLink>
+                <NavLink className="header__link" to="/productos/hogar">Hogar</NavLink>
             </div>
             <CartWidget cartSum={0} />
         </>

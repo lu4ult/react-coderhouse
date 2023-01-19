@@ -9,7 +9,7 @@ const ItemDetailContainer = ({ productos }) => {
     //Si colocamos la url "manualmente" (por ej.: /item/102) este array llega vacío y react colapsa. Para evitar eso creamos este objeto producto vacío.
 
     let productoAMostrar = {
-        title: "Algo salió mal",
+        title: undefined,
         stock: 0,
         id: 0,
         category: "",

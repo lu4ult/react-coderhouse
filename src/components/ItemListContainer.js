@@ -20,7 +20,6 @@ const ItemListContainer = (props) => {
     const renderIsCategories = props.render === 'categoria';
 
     const { categoria } = useParams();
-
     const { currentId } = useParams();
 
     console.log(currentId)
@@ -66,7 +65,8 @@ const ItemListContainer = (props) => {
             .catch(error => console.log(error))
         //      }, 1000)
         console.log("Fin useEffect");
-    }, [estanProductosCargados,currentId,categoria]);
+    //}, [estanProductosCargados,currentId,categoria]);
+}, [estanProductosCargados]);
 
 
 

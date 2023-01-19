@@ -245,12 +245,13 @@ body #root {
 
       article {
         background-color: white;
+        position: relative;
 
         font-size: 1rem;
         outline: 1px solid #ccc;
         @extend .centrarColumna;
         justify-content: space-around;
-        padding: 0.5rem;
+        //padding: 0.5rem;
         margin: 0.5rem;
         width: 250px;
         //height: 400px;
@@ -259,6 +260,25 @@ body #root {
         &:hover {
           outline: 1px solid black;
           transition: all .3s;
+
+          .article__title {
+            color: green;
+            font-weight: 500;
+          }
+
+          .sinStock {
+            background-color: #000;
+          }
+        }
+
+        .article__title {
+          padding: 0.5rem;
+          width: 100%;
+          height: 50px;
+          font-size: 1rem;
+          //background-color: darkblue;
+          color: #0066cc;
+          text-align: center;
         }
 
         .article__category {
@@ -266,12 +286,11 @@ body #root {
           @extend .centrarFila;
           justify-content: space-between;
 
-          div {
-            //@extend .centrarColumna;
-            text-align: center;
-            font-size: 0.8rem;
-            width: 40%;
-          }
+          //background-color: cyan;
+          color: #aaa;
+          text-align: end;
+          font-size: 0.8rem;
+          //width: 40%;
         }
 
         //background-color: yellow;
@@ -291,6 +310,15 @@ body #root {
           font-size: 1.5rem;
         }
 
+        .sinStock {
+          background-color: #ccc;
+          color: #fff;
+          padding: 0.5rem;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+
         .buttonsContainer {
           position: relative;
           //border: 1px solid red;
@@ -308,7 +336,7 @@ body #root {
               aspect-ratio: 1;
 
               &:hover {
-                color: blue;
+                fill: darkgreen;
               }
             }
 
@@ -388,7 +416,7 @@ body #root {
         iframe {
           width: 100%;
           //height: 300px;
-          height: 30vh;
+          height: 40vh;
         }
 
         img {
@@ -455,10 +483,11 @@ body #root {
 
     a {
       &.meliButton {
-        outline: 1px solid black;
+        outline: 1px solid #333;
         font-style: none;
         cursor: pointer;
-        background-color: yellow;
+        background-color: #fff159;
+        color: #08178a;
         padding: 0.5rem;
         font-size: 1rem;
       }

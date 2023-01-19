@@ -1,6 +1,8 @@
 const Carrito = () => {
     return (
-        <></>
+        <div className="carrito">
+
+        </div>
     );
 }
 

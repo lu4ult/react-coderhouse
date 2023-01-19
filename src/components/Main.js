@@ -1,6 +1,6 @@
 import ItemListContainer from "./ItemListContainer";
 import { Route, Routes } from "react-router-dom"
-import Carrito from "./Carrito";
+//import Carrito from "./Carrito";
 import Error from "./Error";
 
 const Main = () => {

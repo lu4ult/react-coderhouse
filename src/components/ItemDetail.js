@@ -1,4 +1,6 @@
 import ItemCount from "./ItemCount";
+import BeatLoader from "react-spinners/BeatLoader";
+
 
 
 const ItemDetail = ({ productoAMostrar }) => {
@@ -6,9 +8,12 @@ const ItemDetail = ({ productoAMostrar }) => {
     console.log(productoAMostrar.title === undefined)
     console.log(productoAMostrar === undefined)
 
+    //TODO: spinner
     if (productoAMostrar.title === undefined) {
         return (
-            <p>Espere...</p>
+            <div className="spinner">
+                <BeatLoader color="#36d7b7" loading={true} />
+            </div>
         );
     }
 

@@ -23,10 +23,14 @@ const ItemCount = ({ producto }) => {
     return (
         <div className="itemCount">
             <button onClick={handleRestar}>-</button>
-            <input type="text" value={contador} onChange={handleOnChange}></input>
             <button className="plus" disabled={contador >= producto.stock} onClick={handleSumar}>+</button>
         </div>
     );
 }
 
 export default ItemCount;
+
+/*
+
+<input type="text" value={contador} onChange={handleOnChange}></input>
+*/

@@ -3,13 +3,15 @@ import ItemCount from "./ItemCount";
 
 const ItemDetail = ({ productoAMostrar }) => {
 
+    console.log(productoAMostrar.title)
+
     return (
         <div className="itemDetalles">
             <h3 className="itemDetalles__titulo">{productoAMostrar.title}</h3>
             <div className="itemDetalles__imagen">
                 <img src={productoAMostrar.imgMeliUrl} alt={"Foto producto "+productoAMostrar.title}></img>
                 {productoAMostrar.video != null ?
-                    <iframe className="itemDetalles__video" src={"https://www.youtube.com/embed/" + productoAMostrar.video} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe className="itemDetalles__video" src={"https://www.youtube.com/embed/" + productoAMostrar.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                     : null
                 }
             </div>

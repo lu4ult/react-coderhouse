@@ -14,6 +14,7 @@ También, decide si debe renderizar, en función de los props boobleanos que rec
 
 */
 const ItemListContainer = (props) => {
+
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
 
@@ -63,7 +64,7 @@ const ItemListContainer = (props) => {
 
 
     //Si no recibió que debe renderizar un sólo producto con sus detalles o una categoría, es porque estamos en la página principal y mostramos todos los productos.
-    if (!renderIsCategories && !renderIsDetails) {
+    if (renderIsCategories === false && renderIsDetails === false) {
         return (
             <>
                 {

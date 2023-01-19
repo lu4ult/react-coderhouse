@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom";
 import MoreProducts from "./MoreProducts";
-
 import shuffleArray from "./ShuffleArray";
 import ItemDetail from "./ItemDetail";
 

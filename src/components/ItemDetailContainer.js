@@ -55,13 +55,20 @@ const ItemDetailContainer = ({ productos }) => {
     /*******************************************/
 
 
+    if (productos.length) {
+        return (
+            <>
+                <ItemDetail productoAMostrar={productoAMostrar} />
+                <MoreProducts productos={productosParaBanner} />
+            </>
+        );
 
-    return (
-        <>
-            <ItemDetail productoAMostrar={productoAMostrar} />
-            <MoreProducts productos={productosParaBanner} />
-        </>
-    );
+    }
+    else {
+        return(
+            <p>Espere!!!</p>
+        );
+    }
 }
 
 export default ItemDetailContainer;

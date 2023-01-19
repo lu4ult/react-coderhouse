@@ -65,8 +65,8 @@ const ItemListContainer = (props) => {
             .catch(error => console.log(error))
         //      }, 1000)
         console.log("Fin useEffect");
-    }, [estanProductosCargados, currentId, categoria]);
-//  }, [estanProductosCargados]);
+        //   }, [estanProductosCargados, currentId, categoria]);
+    }, [estanProductosCargados]);
 
 
 

@@ -6,9 +6,10 @@ import BeatLoader from "react-spinners/BeatLoader";
 const ItemDetail = ({ productoAMostrar }) => {
 
     console.log(productoAMostrar.title === undefined)
-    console.log(productoAMostrar === undefined)
+    console.log(productoAMostrar)
 
-    //TODO: spinner
+
+    //TODO: esto me parece que debería ir directamente arriba en ItemDetailCOntainer porque estamos haciendo la validación dos veces.
     if (productoAMostrar.title === undefined) {
         return (
             <div className="spinner">

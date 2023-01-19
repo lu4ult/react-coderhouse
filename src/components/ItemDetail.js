@@ -14,8 +14,6 @@ const ItemDetail = ({ productoAMostrar }) => {
                 }
             </div>
 
-
-
             <div className="itemDetalles__datos">
                 <p>{productoAMostrar.internalCategory}</p>
                 <p>{productoAMostrar.price} $</p>

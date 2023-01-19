@@ -66,9 +66,7 @@ const ItemListContainer = (props) => {
         //      }, 1000)
         console.log("Fin useEffect");
         //       }, [estanProductosCargados, currentId]);
-    //}, [estanProductosCargados]);
-}, []);
-
+    }, [estanProductosCargados]);
 
 
     //Si no recibió que debe renderizar un sólo producto con sus detalles o una categoría, es porque estamos en la página principal y mostramos todos los productos.

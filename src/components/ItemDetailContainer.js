@@ -12,6 +12,7 @@ const ItemDetailContainer = ({ productos }) => {
         idMeli: "MLA",
         internalCategory: "",
         imgMeliUrl: "https://i.ytimg.com/vi/-6vnomecItA/maxresdefault.jpg",
+        video: "dQw4w9WgXcQ",
         price: 0
     };
 

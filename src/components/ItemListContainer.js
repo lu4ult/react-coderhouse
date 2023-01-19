@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import ItemList from "./ItemList"
 import ItemDetailContainer from "./ItemDetailContainer";
 import CategoriesContainer from "./CategoriesContainer";
+import { useParams } from "react-router-dom";
 
 
 /*
@@ -17,6 +18,13 @@ const ItemListContainer = (props) => {
 
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
+
+    const { categoria } = useParams();
+
+    const { currentId } = useParams();
+
+    console.log(currentId)
+    console.log(categoria)
 
 
     const [productos, setProductos] = useState([]);
@@ -58,7 +66,7 @@ const ItemListContainer = (props) => {
             .catch(error => console.log(error))
         //      }, 1000)
         console.log("Fin useEffect");
-    }, []);
+    }, [estanProductosCargados,currentId,categoria]);
 
 
 

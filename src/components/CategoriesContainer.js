@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 const CategoriesContainer = ({ productos }) => {
     const { categoria } = useParams();
+    console.log(categoria)
     const productosFiltrados = productos.filter(e => e.category.toLowerCase().includes(categoria));
 
     return (

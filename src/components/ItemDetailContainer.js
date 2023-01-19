@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import MoreProducts from "./MoreProducts";
 import shuffleArray from "./ShuffleArray";
 import ItemDetail from "./ItemDetail";
+import BeatLoader from "react-spinners/BeatLoader";
+
 
 const ItemDetailContainer = ({ productos }) => {
     const { currentId } = useParams();
@@ -65,18 +67,12 @@ const ItemDetailContainer = ({ productos }) => {
 
     }
     else {
-        return(
-            <p>Espere!!!</p>
+        return (
+            <div className="spinner">
+                <BeatLoader color="#36d7b7" loading={true} />
+            </div>
         );
     }
 }
 
 export default ItemDetailContainer;
-
-/*
-
-
-
-            
-
-            */

@@ -27,7 +27,7 @@ const Item = ({ producto }) => {
 
             <div className="article__price"><strong>{producto.price}</strong> $</div>
             {
-                producto.stock == 0 ?
+                producto.stock === 0 ?
                     <div className="sinStock">Agotado</div> :
                     ""
             }

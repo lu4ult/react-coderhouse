@@ -62,14 +62,6 @@ const ItemListContainer = (props) => {
 
 
 
-    const addToCart = (e) => {
-        console.log(e.target.value)
-        console.log(productos);
-        //setCartCounter(cartCounter +1);   //No anduvo
-        //setCartCounter(cartCounter);
-    }
-
-
     //Si no recibió que debe renderizar un sólo producto con sus detalles o una categoría, es porque estamos en la página principal y mostramos todos los productos.
     if (renderIsCategories === false && renderIsDetails === false) {
         return (

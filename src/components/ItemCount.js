@@ -15,11 +15,6 @@ const ItemCount = ({ producto }) => {
         }
     }
 
-    const handleOnChange = (e) => {
-        console.log("se")
-        setContador(parseInt(e.target.value))
-    }
-
     return (
         <div className="itemCount">
             <button onClick={handleRestar}>-</button>
@@ -34,3 +29,12 @@ export default ItemCount;
 
 <input type="text" value={contador} onChange={handleOnChange}></input>
 */
+
+/*
+
+const handleOnChange = (e) => {
+        console.log("se")
+        setContador(parseInt(e.target.value))
+    }
+
+    */

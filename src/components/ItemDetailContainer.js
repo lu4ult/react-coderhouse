@@ -1,12 +1,15 @@
 import { useParams } from "react-router-dom";
 import MoreProducts from "./MoreProducts";
 import shuffleArray from "./ShuffleArray";
-import ItemDetail from "./ItemDetail";
+//import ItemDetail from "./ItemDetail";
 
 const ItemDetailContainer = ({ productos }) => {
     const { currentId } = useParams();
 
+    alert(currentId)
+
     //Si colocamos la url "manualmente" (por ej.: /item/102) este array llega vacío y react colapsa. Para evitar eso creamos este objeto producto vacío.
+    /*
     let productoAMostrar = {
         title: "",
         stock: 0,
@@ -19,10 +22,10 @@ const ItemDetailContainer = ({ productos }) => {
         video: "dQw4w9WgXcQ",
         price: 0
     };
-
+    */
     //Si el array llegó correctamente ahora si encontramos el producto correspondiente según el id del param.
     if (productos.length) {
-        productoAMostrar = productos.find(e => e.id === parseInt(currentId));
+        //productoAMostrar = productos.find(e => e.id === parseInt(currentId));
     }
 
     /*******************************************/
@@ -57,7 +60,7 @@ const ItemDetailContainer = ({ productos }) => {
 
     return (
         <>
-            <ItemDetail productoAMostrar={productoAMostrar} />
+            
             <MoreProducts productos={productosParaBanner} />
         </>
     );
@@ -66,6 +69,8 @@ const ItemDetailContainer = ({ productos }) => {
 export default ItemDetailContainer;
 
 /*
+
+<ItemDetail productoAMostrar={productoAMostrar} />
 
 
             

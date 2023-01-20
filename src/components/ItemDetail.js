@@ -2,6 +2,7 @@ import ItemCount from "./ItemCount";
 import { useSearchParams } from "react-router-dom";
 import emailjs from '@emailjs/browser';
 
+
 const ItemDetail = ({ productoAMostrar }) => {
 
     // console.log(productoAMostrar.title === undefined)
@@ -13,22 +14,15 @@ const ItemDetail = ({ productoAMostrar }) => {
 
     if (fuente !== null) {
 
+
+
         emailjs.send('service_k3tj0b9', 'template_aznyypc', { 'from_name': 'yo', 'producto': 'test', 'source': fuente }, '840utIXux0aomLktd')
             .then(function (response) {
                 console.log('Email enviado correctamente!', response.status, response.text);
             }, function (error) {
                 console.log('Email fallo...', error);
             });
-
-        //emailjs.send('service_k3tj0b9', 'template_gqsipms', { destinatario: configuracionUsuario.email, producto: _titulo, estado: _estado ? "activo" : "pausado" })
-        // .then(function (response) {
-        //     console.log('Email enviado correctamente!', response.status, response.text);
-        // }, function (error) {
-        //     console.log('Email fallo...', error);
-        // });
     }
-
-
 
     return (
         <div className="itemDetalles">

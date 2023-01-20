@@ -1,6 +1,6 @@
 import ItemCount from "./ItemCount";
 import { useSearchParams } from "react-router-dom";
-import emailjs from '@emailjs/browser';
+//import emailjs from '@emailjs/browser';
 
 
 const ItemDetail = ({ productoAMostrar }) => {
@@ -8,20 +8,42 @@ const ItemDetail = ({ productoAMostrar }) => {
     // console.log(productoAMostrar.title === undefined)
     // console.log(productoAMostrar)
 
+
+
+    /*
+    Aquí analizamos el query params recibido (si existe) por ejemplo ?share=whatsapp
+    estos links se generan en el botón "compartir" que genera un link a whatsapp con ese parámetro agregado a la URL del ítem.
+    El objetivo es que si una persona comparte el link de la publicación y otra accede con esa URL yo puedo observar esa data en el Google sheets donde se loguea.
+    Para loguear la data hacemos un sheets asociado a un forms y hacemos el truquito de pegarlo al endpoint con el ID de la hoja y los datos como query params,
+    y finalmente publicamos la data haciendo un fetch como si fuera una api rest
+    */
     const [params] = useSearchParams();
     const fuente = params.get('share');
-    console.log(fuente)
 
+    //Si se recibió algún parámetro lo publicaremos en el sheets
     if (fuente !== null) {
+        //TODO: refactorizar con template strings
+        const sheetsId = '1FAIpQLSeXpik6ntBv63mqANSA5QcktDDCG9yaMzw06FJp5Dzg8_C3Bg';
+        let googleFormsUrl = 'https://docs.google.com/forms/d/e/';
+        googleFormsUrl += sheetsId;
+        googleFormsUrl += '/formResponse?';
+        googleFormsUrl += '&entry.376427269=' + 'Nombre usuario';
+        googleFormsUrl += '&entry.902394427=' + productoAMostrar.id;
+        googleFormsUrl += '&entry.425774946=' + productoAMostrar.title;
+        googleFormsUrl += ' &entry.1591128327=' + fuente;
+
+        fetch(googleFormsUrl)
+            .finally()
 
 
-
+        /*
         emailjs.send('service_k3tj0b9', 'template_aznyypc', { 'from_name': 'yo', 'producto': 'test', 'source': fuente }, '840utIXux0aomLktd')
             .then(function (response) {
                 console.log('Email enviado correctamente!', response.status, response.text);
             }, function (error) {
                 console.log('Email fallo...', error);
             });
+        */
     }
 
     return (

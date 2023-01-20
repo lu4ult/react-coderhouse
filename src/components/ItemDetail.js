@@ -1,11 +1,32 @@
 import ItemCount from "./ItemCount";
+import { useSearchParams } from "react-router-dom";
+import emailjs from '@emailjs/browser';
 
 const ItemDetail = ({ productoAMostrar }) => {
 
-    console.log(productoAMostrar.title === undefined)
-    console.log(productoAMostrar)
+    // console.log(productoAMostrar.title === undefined)
+    // console.log(productoAMostrar)
 
+    const [params] = useSearchParams();
+    const fuente = params.get('share');
+    console.log(fuente)
 
+    if (fuente !== null) {
+
+        emailjs.send('service_k3tj0b9', 'template_aznyypc', { 'from_name': 'yo', 'producto': 'test', 'source': fuente }, '840utIXux0aomLktd')
+            .then(function (response) {
+                console.log('Email enviado correctamente!', response.status, response.text);
+            }, function (error) {
+                console.log('Email fallo...', error);
+            });
+
+        //emailjs.send('service_k3tj0b9', 'template_gqsipms', { destinatario: configuracionUsuario.email, producto: _titulo, estado: _estado ? "activo" : "pausado" })
+        // .then(function (response) {
+        //     console.log('Email enviado correctamente!', response.status, response.text);
+        // }, function (error) {
+        //     console.log('Email fallo...', error);
+        // });
+    }
 
 
 
@@ -38,11 +59,3 @@ const ItemDetail = ({ productoAMostrar }) => {
 }
 
 export default ItemDetail;
-
-/*
-
-
-
-
-
-        */

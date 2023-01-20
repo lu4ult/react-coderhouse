@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+//import { useSearchParams } from "react-router-dom";
 
 const Item = ({ producto }) => {
 
@@ -14,6 +15,13 @@ const Item = ({ producto }) => {
     // productoUrl += producto.id;
 
     //console.log(productoUrl)
+
+    // const handleOnClick = (e) => {
+    //     const idRecibido = e.target.id;
+    //     console.log(idRecibido)
+    //     //console.log(e.target.id)
+    // }
+
 
     return (
         <article>
@@ -51,3 +59,6 @@ export default Item;
 //<div>{producto.category}</div>
 
 //<button className="meliButton">Ver en MercadoLibre</button>
+
+///
+//

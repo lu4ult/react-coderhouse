@@ -22,15 +22,14 @@ const ItemDetail = ({ productoAMostrar }) => {
 
     //Si se recibió algún parámetro lo publicaremos en el sheets
     if (fuente !== null) {
-        //TODO: refactorizar con template strings
         const sheetsId = '1FAIpQLSeXpik6ntBv63mqANSA5QcktDDCG9yaMzw06FJp5Dzg8_C3Bg';
-        let googleFormsUrl = 'https://docs.google.com/forms/d/e/';
-        googleFormsUrl += sheetsId;
-        googleFormsUrl += '/formResponse?';
-        googleFormsUrl += '&entry.376427269=' + 'Nombre usuario';
-        googleFormsUrl += '&entry.902394427=' + productoAMostrar.id;
-        googleFormsUrl += '&entry.425774946=' + productoAMostrar.title;
-        googleFormsUrl += ' &entry.1591128327=' + fuente;
+
+        let googleFormsUrl = `https://docs.google.com/forms/d/e/${sheetsId}/formResponse?
+                            &entry.376427269=${"Nombre Usuario aqui"}
+                            &entry.902394427=${productoAMostrar.id}
+                            &entry.425774946=${productoAMostrar.title}
+                            &entry.1591128327=${fuente}
+                            `
 
         fetch(googleFormsUrl)
             .finally()

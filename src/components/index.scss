@@ -632,6 +632,58 @@ body #root {
       }
     }
 
+    .verde {
+      background-color: green;
+    }
+
+
+    .userDataContainer {
+      * {
+        //outline: 1px solid red;
+      }
+
+      width: 80%;
+      border: 2px solid black;
+      //margin: 1rem;
+      padding: 2rem;
+      background-color: white;
+
+
+      @extend .centrarColumna;
+
+      .userData__field {
+        width: 100%;
+        @extend .centrarFila;
+        outline: 1px solid #ccc;
+        margin: 0.5rem;
+
+        input {
+          width: 50%;
+          text-align: center;
+          background-color: inherit;
+        }
+
+        p {
+          width: 50%;
+          color: #ccc;
+        }
+
+        &:hover {
+          p {
+            color: blue;
+          }
+        }
+      }
+
+      // input {
+      //   outline: none;
+      //   border: none;
+      // }
+
+
+
+    }
+
     .error404-img {
       width: 100%;
       object-fit: scale-down;

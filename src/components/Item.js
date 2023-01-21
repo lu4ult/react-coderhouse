@@ -30,7 +30,7 @@ const Item = ({ producto }) => {
     return (
         <article>
             <div className="article__img-container">
-                <img loading="lazy" alt={"Foto producto " + producto.title} src={producto.imgMeliUrl}></img>
+                <img alt={"Foto producto " + producto.title} src={producto.imgMeliUrl}></img>
             </div>
             <Link className="article__title" to={"/item/" + producto.id} rel="noopener noreferrer">{producto.title}</Link>
             <div className="article__category">
@@ -69,3 +69,5 @@ export default Item;
 
 ///
 //
+
+//loading="lazy" 

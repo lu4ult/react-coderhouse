@@ -1,12 +1,14 @@
 import { useSearchParams } from "react-router-dom";
 
+import { NomPropio } from "./utils";
+
 const UserData = () => {
 
     let provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
 
 
-    let usuarioDatos = {};
 
+    let usuarioDatos = {};
 
     let dataLeidaLocal = localStorage.getItem('tiendaLu4ult_userData');
     if (dataLeidaLocal === null) {
@@ -38,10 +40,10 @@ const UserData = () => {
     if (params.get('email') != null) {
         usuarioDatos = {
             email: params.get('email'),
-            nombre: params.get('nombre'),
+            nombre: NomPropio(params.get('nombre')),
             dni: params.get('dni'),
             provincia: params.get('provincia'),
-            localidad: params.get('loc'),
+            localidad: NomPropio(params.get('loc')),
             calle: params.get('calle'),
             altura: params.get('altura'),
             piso: params.get('piso'),
@@ -66,23 +68,23 @@ const UserData = () => {
         <form>
             <h3>Info envío</h3>
             <div className="form__field">
-                <input type="email" name="email" defaultValue={usuarioDatos.email}></input>
+                <input placeholder="correo" type="email" name="email" defaultValue={usuarioDatos.email}></input>
                 <p>Tu dirección de correo electrónico</p>
             </div>
 
             <div className="form__field">
-                <input type="text" name="nombre" defaultValue={usuarioDatos.nombre}></input>
+                <input placeholder={usuarioDatos.nombre} type="text" name="nombre" defaultValue={usuarioDatos.nombre}></input>
                 <p>Tu nombre y apellido</p>
             </div>
 
             <div className="form__field">
-                <input type="number" name="dni" defaultValue={usuarioDatos.dni}></input>
+                <input placeholder={usuarioDatos.dni} type="number" name="dni" defaultValue={usuarioDatos.dni}></input>
                 <p>DNI sin puntos</p>
 
             </div>
 
             <div className="form__field">
-                <input list="provincias" name="provincia" id="provinciaa" defaultValue={usuarioDatos.provincia}></input>
+                <input placeholder="Seleccione de lista" list="provincias" name="provincia" id="provinciaa" defaultValue={usuarioDatos.provincia}></input>
                 <datalist id="provincias">
                     {
                         provinciasLista.map(prov => {
@@ -104,7 +106,7 @@ const UserData = () => {
             </div>
             <div className="form__field">
                 <input type="text" name="altura" defaultValue={usuarioDatos.altura}></input>
-                <p>(número)</p>
+                <p>Número</p>
             </div>
             <div className="form__field">
                 <input type="text" name="piso" defaultValue={usuarioDatos.piso}></input>
@@ -121,11 +123,11 @@ const UserData = () => {
 
             <div className="form__field">
                 <input type="number" name="codarea" defaultValue={usuarioDatos.codarea}></input>
-                <p>Sólo código de área</p>
+                <p>Teléfono - Sólo código de área</p>
             </div>
             <div className="form__field">
                 <input type="number" name="cel" defaultValue={usuarioDatos.celular}></input>
-                <p></p>
+                <p>Teléfono</p>
             </div>
             <h5>Datos Facturación</h5>
             <div className="form__field">

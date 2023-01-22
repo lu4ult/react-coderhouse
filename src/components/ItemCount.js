@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 
 const ItemCount = ({ producto }) => {
 
@@ -28,10 +28,11 @@ const ItemCount = ({ producto }) => {
     }
 
     //TODO: reemplazar por un componente porque esto está re mal
+    /*
     useEffect(()=>{
         document.getElementById("precio_"+producto.id).innerText = `${contador}x ${producto.price}$ = ${producto.price * contador} $`
     },[contador]);
-
+    */
     return (
         <div className="itemCount">
             <button onClick={handleRestar}>-</button>

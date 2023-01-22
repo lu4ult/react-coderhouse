@@ -24,6 +24,7 @@ const AdminPage = () => {
     if (adminLogueado === false) {
         return (
             <div className="adminPage">
+                <p>Esta página se usará para generar los archivos de los envíos</p>
                 <div className='adminPage__credenciales'>
                     <input id="adminLogin-user" type="text" defaultValue="Usuario"></input>
                     <input id="adminLogin-pass" type="password" ></input>

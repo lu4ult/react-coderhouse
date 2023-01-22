@@ -319,18 +319,20 @@ body #root {
 
         .article__price {
           //background-color: red;
+          color: darkgreen;
           font-size: 1.5rem;
         }
 
 
-        //TODO: background con rgba
         .sinStock {
-          background-color: #ccc;
+          //background-color: #ccc;
+          background-color: rgba(204, 204, 204, .8);
           color: #fff;
           padding: 0.5rem;
           position: absolute;
           top: 0;
           right: 0;
+          border-bottom-left-radius: 15px;
         }
 
         .buttonsContainer {
@@ -773,15 +775,21 @@ body #root {
           margin-top: 0.5rem;
           width: 100%;
           flex-direction: column-reverse;
+          border: none;
+
+          &:hover {
+            border-bottom: none;
+          }
 
           p {
-            text-align: center;
             width: 100%;
           }
 
           input {
             margin-top: 0.5rem;
             width: 100%;
+            border: 1px solid #ccc;
+            border-bottom: 1px solid blue;
           }
         }
       }

@@ -32,7 +32,6 @@ const UserData = () => {
 
     usuarioDatos = JSON.parse(localStorage.getItem('tiendaLu4ult_userData'));
 
-
     const [params] = useSearchParams();
     console.log(params.get('email'))
 
@@ -56,7 +55,7 @@ const UserData = () => {
         setTimeout(() => { localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(usuarioDatos)) }, 1000);
     }
 
-    let inputs = document.querySelectorAll('.userData__field input');
+    let inputs = document.querySelectorAll('.form__field input');
     inputs.forEach(e => {
         e.addEventListener('focus', () => {
             e.value = ""
@@ -64,108 +63,89 @@ const UserData = () => {
     })
 
     return (
-        <div className="userDataContainer">
-            <form>
-                <h3>Info envío</h3>
-                <div className="userData__field">
-                    <input type="email" name="email" defaultValue={usuarioDatos.email}></input>
-                    <p>Tu dirección de correo electrónico</p>
-                </div>
+        <form>
+            <h3>Info envío</h3>
+            <div className="form__field">
+                <input type="email" name="email" defaultValue={usuarioDatos.email}></input>
+                <p>Tu dirección de correo electrónico</p>
+            </div>
 
-                <div className="userData__field">
-                    <input type="text" name="nombre" defaultValue={usuarioDatos.nombre}></input>
-                    <p>Su nombre</p>
-                </div>
+            <div className="form__field">
+                <input type="text" name="nombre" defaultValue={usuarioDatos.nombre}></input>
+                <p>Tu nombre y apellido</p>
+            </div>
 
-                <div className="userData__field">
-                    <input type="number" name="dni" defaultValue={usuarioDatos.dni}></input>
-                    <p>DNI sin puntos</p>
+            <div className="form__field">
+                <input type="number" name="dni" defaultValue={usuarioDatos.dni}></input>
+                <p>DNI sin puntos</p>
 
-                </div>
+            </div>
 
-                <div className="userData__field">
-                    <input list="provincias" name="provincia" id="provinciaa" defaultValue={usuarioDatos.provincia}></input>
-                    <datalist id="provincias">
-                        {
-                            provinciasLista.map(prov => {
-                                return (<option value={prov} key={prov}></option>)
-                            })
+            <div className="form__field">
+                <input list="provincias" name="provincia" id="provinciaa" defaultValue={usuarioDatos.provincia}></input>
+                <datalist id="provincias">
+                    {
+                        provinciasLista.map(prov => {
+                            return (<option value={prov} key={prov}></option>)
+                        })
 
-                        }
-                    </datalist>
-                    <p>Provincia destino</p>
-                </div>
+                    }
+                </datalist>
+                <p>Provincia</p>
+            </div>
 
-                <div className="userData__field">
-                    <input type="text" name="loc" defaultValue={usuarioDatos.localidad}></input>
-                    <p>Localidad</p>
-                </div>
-                <div className="userData__field">
-                    <input type="text" name="calle" defaultValue={usuarioDatos.calle}></input>
-                    <p>Calle</p>
-                </div>
-                <div className="userData__field">
-                    <input type="text" name="altura" defaultValue={usuarioDatos.altura}></input>
-                    <p>(número)</p>
-                </div>
-                <div className="userData__field">
-                    <input type="text" name="piso" defaultValue={usuarioDatos.piso}></input>
-                    <p>Piso (si es departamento)</p>
-                </div>
-                <div className="userData__field">
-                    <input type="text" name="unidad" defaultValue={usuarioDatos.unidad}></input>
-                    <p>Unidad (Si es departamento)</p>
-                </div>
-                <div className="userData__field">
-                    <input type="text" name="cp" defaultValue={usuarioDatos.cp}></input>
-                    <p><a href="https://www.correoargentino.com.ar/formularios/cpa" target="_blank" rel="noopener noreferrer">Código Postal. Si no lo conoce puede buscarlo aquí</a></p>
-                </div>
+            <div className="form__field">
+                <input type="text" name="loc" defaultValue={usuarioDatos.localidad}></input>
+                <p>Localidad</p>
+            </div>
+            <div className="form__field">
+                <input type="text" name="calle" defaultValue={usuarioDatos.calle}></input>
+                <p>Calle</p>
+            </div>
+            <div className="form__field">
+                <input type="text" name="altura" defaultValue={usuarioDatos.altura}></input>
+                <p>(número)</p>
+            </div>
+            <div className="form__field">
+                <input type="text" name="piso" defaultValue={usuarioDatos.piso}></input>
+                <p>Piso (si es departamento)</p>
+            </div>
+            <div className="form__field">
+                <input type="text" name="unidad" defaultValue={usuarioDatos.unidad}></input>
+                <p>Unidad (Si es departamento)</p>
+            </div>
+            <div className="form__field">
+                <input type="number" name="cp" defaultValue={usuarioDatos.cp}></input>
+                <p><a href="https://www.correoargentino.com.ar/formularios/cpa" target="_blank" rel="noopener noreferrer">Código Postal. Si no lo conoce puede buscarlo aquí</a></p>
+            </div>
 
-                <div className="userData__field">
-                    <input type="text" name="codarea" defaultValue={usuarioDatos.codarea}></input>
-                    <p>Sólo código de área</p>
-                </div>
-                <div className="userData__field">
-                    <input type="text" name="cel" defaultValue={usuarioDatos.celular}></input>
-                    <p></p>
-                </div>
+            <div className="form__field">
+                <input type="number" name="codarea" defaultValue={usuarioDatos.codarea}></input>
+                <p>Sólo código de área</p>
+            </div>
+            <div className="form__field">
+                <input type="number" name="cel" defaultValue={usuarioDatos.celular}></input>
+                <p></p>
+            </div>
+            <h5>Datos Facturación</h5>
+            <div className="form__field">
+                <input type="number" defaultValue={usuarioDatos.celular}></input>
+                <p>CUIT. Si es consumidor final dejar en blanco</p>
+            </div>
+            <div className="form__field">
+                <input list="ivas" name="iva" value={usuarioDatos.iva}></input>
+                <datalist id="ivas">
+                    <option value="Consumidor Final"></option>
+                    <option value="Responsable Inscripto"></option>
+                    <option value="Excento"></option>
+                    <option value="Monotributo"></option>
+                </datalist>
+                <p>Condición frente al IVA</p>
+            </div>
 
+            <input type="submit" className="submitButton" value="Guardar Datos"></input>
+        </form>
 
-                <h6>Datos Facturación</h6>
-                <div className="userData__field">
-                    <input type="numbre" defaultValue={usuarioDatos.celular}></input>
-                    <p>CUIT. Si es consumidor final dejar en blanco</p>
-                </div>
-                <div className="userData__field">
-                    <input list="ivas" name="iva" value={usuarioDatos.iva}></input>
-                    <datalist id="ivas">
-                        <option value="Consumidor Final"></option>
-                        <option value="Responsable Inscripto"></option>
-                        <option value="Excento"></option>
-                        <option value="Monotributo"></option>
-                    </datalist>
-                    <p>asfdasdf</p>
-                </div>
-
-
-                <input type="submit" className="submitButton"></input>
-            </form>
-        </div>
     );
 }
 export default UserData;
-
-
-
-//<input type="button" value="Guardar Datos" onClick={handleOnSubmit}></input>
-// <button onClick={handleOnSubmit}>Guardameee</button>
-
-
-/*
-
-
-
- 
-
-
-                */

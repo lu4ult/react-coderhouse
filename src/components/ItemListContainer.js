@@ -4,7 +4,7 @@ import ItemList from "./ItemList"
 import ItemDetailContainer from "./ItemDetailContainer";
 import CategoriesContainer from "./CategoriesContainer";
 import { useParams } from "react-router-dom";
-
+import Filters from "./Filters";
 
 /*
 Se encarga de pedir el array de productos a products.json alojado en el repo.
@@ -22,8 +22,8 @@ const ItemListContainer = (props) => {
     const { categoria } = useParams();
     const { currentId } = useParams();
 
-    console.log(currentId)
-    console.log(categoria)
+    //console.log(currentId)
+    //console.log(categoria)
 
 
     const [productos, setProductos] = useState([]);
@@ -73,6 +73,7 @@ const ItemListContainer = (props) => {
     if (renderIsCategories === false && renderIsDetails === false) {
         return (
             <>
+                <Filters />
                 {
                     estanProductosCargados ?
                         <ItemList productos={productos} />

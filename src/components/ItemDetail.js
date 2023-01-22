@@ -58,7 +58,7 @@ const ItemDetail = ({ productoAMostrar }) => {
 
             <div className="itemDetalles__datos">
                 <p>{productoAMostrar.internalCategory}</p>
-                <p>{productoAMostrar.price} $</p>
+                <p id={"precio_" + productoAMostrar.id}>{productoAMostrar.price} $</p>
                 <ItemCount producto={productoAMostrar} />
                 <a className="meliButton" href={"https://articulo.mercadolibre.com.ar/" + productoAMostrar.idMeli.replace("MLA", "MLA-")} target="_blank" rel="noopener noreferrer">Ver en mercado libre</a>
                 <button>Agregar al carrito</button>

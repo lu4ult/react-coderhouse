@@ -55,7 +55,7 @@ const Item = ({ producto }) => {
             </div>
             <Link className="article__title" to={"/item/" + producto.id} rel="noopener noreferrer">{producto.title}</Link>
             <div className="article__category">
-                <div>{producto.internalCategory}</div>
+                <div>{producto.popularidad} - {producto.internalCategory}</div>
             </div>
 
             <div className="article__price"><strong>{producto.price}</strong> $</div>

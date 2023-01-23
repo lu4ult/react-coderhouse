@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import ItemList from "./ItemList"
 import ItemDetailContainer from "./ItemDetailContainer";
 import CategoriesContainer from "./CategoriesContainer";
-import { useParams } from "react-router-dom";
+//import { useParams } from "react-router-dom";
 import Filters from "./Filters";
 
 /*
@@ -19,8 +19,8 @@ const ItemListContainer = (props) => {
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
 
-    const { categoria } = useParams();
-    const { currentId } = useParams();
+    // const { categoria } = useParams();
+    // const { currentId } = useParams();
 
     //console.log(currentId)
     //console.log(categoria)
@@ -42,7 +42,9 @@ const ItemListContainer = (props) => {
                         .then(response => response.json())
                         .then(data => {
                             e.imgMeliUrl = data['pictures'][0]['secure_url'];
-                            e.video = data['video_id']
+                            e.video = data['video_id'];
+                            //e.popularidad = data['initial_quantity']; //Cuál de los dos es las ventas??
+                            e.popularidad = data['sold_quantity'];
 
                             //Si el producto está en full no modificamos el precio porque la venta se realiza sólo en MeLi.
                             e.price = Math.floor(0.89 * parseInt(data['price']));

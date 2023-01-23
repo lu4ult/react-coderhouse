@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { contexto } from "./CustomProvider";
 
 const Item = ({ producto }) => {
+
+    const { totalProductos, setearTotalProductos, agregarAlCarrito } = useContext(contexto);
 
     // const isLocalHost = window.location.href.includes("localhost");
     // //console.log(isLocalHost)
@@ -18,15 +22,32 @@ const Item = ({ producto }) => {
     //console.log(productoUrl)
 
     const handleOnClick = () => {
-        //console.log("aca")
+        console.log("aca")
 
-        toast.success("Agregado al carrito!", {
-            autoClose: 3000,
-            pauseOnHover: false
-        });
+        setTimeout(() => {
+            setearTotalProductos(totalProductos + 1);
+            agregarAlCarrito({
+                id: producto.id,
+                cantidadIndividual: 1
+            });
+
+
+
+            //TODO: por qué esto dejó de funcionar??
+            toast.success("Agregado al carrito!", {
+                autoClose: 3000,
+                pauseOnHover: false
+            });
+
+        }, 500)
+
     }
 
 
+
+    //TODO: el botón del carrito no tiene que ser un link porque no nos va a llevar a ningún lado,
+    //reemplazarlo por un botón que se pueda deshabilitar al no tener stock,
+    //y al hacerle click gestione lo que ya está haciendo
     return (
         <article>
             <div className="article__img-container">

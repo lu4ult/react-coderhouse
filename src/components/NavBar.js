@@ -1,6 +1,17 @@
 import CartWidget from "./CartWidget";
 import { NavLink } from "react-router-dom"
+import { useContext } from "react";
+import { contexto } from "./CustomProvider"
 const NavBar = () => {
+
+    //totalProductos = useContext(contexto).totalProductos
+    const { totalProductos } = useContext(contexto);
+
+
+    //console.log(totalProductos)
+
+    //setearTotalProductos(8);
+
     return (
         <>
             <div className="header__navbar">
@@ -9,7 +20,7 @@ const NavBar = () => {
                 <NavLink className="header__link" to="/productos/industria">Industria</NavLink>
                 <NavLink className="header__link" to="/productos/hogar">Hogar</NavLink>
             </div>
-            <CartWidget cartSum={0} />
+            <CartWidget cartSum={totalProductos} />
         </>
     );
 }

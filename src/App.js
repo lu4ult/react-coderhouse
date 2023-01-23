@@ -8,14 +8,19 @@ import Main from './components/Main.js'
 import Footer from './components/Footer.js'
 //import Filters from './components/Filters'
 //import NavBar from './components/NavBar.js';
+import CustomProvider from "./components/CustomProvider"
 
 function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Main />
-      <Footer />
-    </BrowserRouter>
+    <CustomProvider>
+      <BrowserRouter>
+        <Header />
+        <Main />
+        <Footer />
+      </BrowserRouter>
+    </CustomProvider>
+
+
   );
 }
 

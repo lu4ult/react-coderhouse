@@ -4,6 +4,7 @@ import { Route, Routes } from "react-router-dom"
 import Error from "./Error";
 import UserData from "./UserData";
 import AdminPage from "./Admin";
+import Carrito from "./Carrito";
 
 const Main = () => {
     //const mainPath = "/";                                                                   //Agrego esto a la URL porque sino en Github Pages me manda a cualquier lado.
@@ -15,6 +16,7 @@ const Main = () => {
                 <Route path="/productos/:categoria" element={<ItemListContainer render="categoria"/>} />
                 <Route path="/item/:currentId" element={<ItemListContainer render="detalle" />} />
                 <Route path="/user" element={<UserData />} />
+                <Route path="/carrito" element={<Carrito />} />
                 <Route path="/admin" element={<AdminPage />} />
                 <Route path="*" element={<Error />} />
             </Routes>

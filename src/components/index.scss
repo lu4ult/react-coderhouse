@@ -639,6 +639,7 @@ body #root {
       }
     }
 
+    //UserLogin => UserData
     form {
       border: 2px solid black;
       //margin: 1rem;
@@ -686,6 +687,14 @@ body #root {
       }
     }
 
+    .carritoContainer {
+      margin-top: 3rem;
+      width: 100%;
+      min-height: 60vh;
+      @extend .centrarColumna;
+      justify-content: flex-start;
+    }
+    //Main => Admin
     .adminPage {
       @extend .centrarColumna;
       width: 90vw;

@@ -1,3 +1,4 @@
+import uuid from "react-uuid";
 import Item from "./Item"
 
 const ItemList = ({productos}) => {
@@ -6,7 +7,7 @@ const ItemList = ({productos}) => {
             {
                 productos.map((producto) => {
                     return (
-                        <Item producto={producto} key={producto.id} />
+                        <Item producto={producto} key={uuid()} />
                     )
                 })
             }

@@ -1,13 +1,9 @@
 import { useSearchParams } from "react-router-dom";
-
 import { NomPropio } from "./utils";
 
 const UserData = () => {
-
+    console.log("user data")
     let provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
-
-
-
     let usuarioDatos = {};
 
     let dataLeidaLocal = localStorage.getItem('tiendaLu4ult_userData');
@@ -33,7 +29,6 @@ const UserData = () => {
     }
 
     usuarioDatos = JSON.parse(localStorage.getItem('tiendaLu4ult_userData'));
-
     const [params] = useSearchParams();
     console.log(params.get('email'))
 

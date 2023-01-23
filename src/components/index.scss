@@ -478,6 +478,11 @@ body #root {
             border: 1px solid #ccc;
             outline: none;
           }
+
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
         }
       }
 
@@ -661,6 +666,10 @@ body #root {
           border: none;
         }
 
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+        }
+
         p {
           width: 35%;
           color: #ccc;
@@ -672,10 +681,11 @@ body #root {
 
         input {
           height: 100%;
+
           &:focus {
-          outline: 1px dotted black;
+            outline: 1px dotted black;
+          }
         }
-      }
 
         &:hover {
           border-bottom: 1px solid blue;
@@ -704,10 +714,12 @@ body #root {
         //background-color: pink;
         border: 3px solid lightgreen;
         width: 80%;
+
         .carrito__productos-producto {
           @extend .centrarFila;
           margin: 2rem 0.5rem;
           justify-content: space-around;
+
           * {
             //outline: 1px solid red;
           }
@@ -724,6 +736,7 @@ body #root {
 
       }
     }
+
     //Main => Admin
     .adminPage {
       @extend .centrarColumna;

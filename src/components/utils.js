@@ -1,6 +1,8 @@
 export function NomPropio(strBk) {
 
     //TODO: separar por espacios y aplicar a cada palabra
+    // let palabras = strBk.split(" ");
+    // palabras.forEach(palabra => {console.log(palabra)})
     let str = strBk;
     str = str.toLowerCase();
     str = str.charAt(0).toUpperCase() + str.slice(1);

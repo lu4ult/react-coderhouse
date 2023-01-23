@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { useContext } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { contexto } from "./CustomProvider";
 
 const ItemCount = ({ producto }) => {
-
-    //console.log(producto)
     const [contador, setContador] = useState(1);
     // if(producto.stock) {
     //     setContador(1);
@@ -32,29 +33,27 @@ const ItemCount = ({ producto }) => {
         }
     }
 
-    const { totalProductos, setearTotalProductos,agregarAlCarrito } = useContext(contexto);
-    console.log(totalProductos)
+    const { totalProductos, setearTotalProductos, agregarAlCarrito } = useContext(contexto);
+    //console.log(totalProductos)
     //console.log()
 
     const handleAddToCart = () => {
-        console.log("click");
-        console.log(totalProductos);
-        console.log(contador)
+        // console.log("click");
+        // console.log(totalProductos);
+        // console.log(contador)
         setearTotalProductos(totalProductos + contador);
         agregarAlCarrito({
-            id:producto.id,
-            cantidadIndividual:contador
+            id: producto.id,
+            cantidadIndividual: contador
         })
 
         setContador(1);
+        toast.success("Agregado al carrito!", {
+            autoClose: 3000,
+            pauseOnHover: false
+        });
     }
 
-    //TODO: reemplazar por un componente porque esto está re mal
-    /*
-    useEffect(()=>{
-        document.getElementById("precio_"+producto.id).innerText = `${contador}x ${producto.price}$ = ${producto.price * contador} $`
-    },[contador]);
-    */
     return (
         <>
             <div className="itemCount">
@@ -62,7 +61,8 @@ const ItemCount = ({ producto }) => {
                 <input type="number" value={contador} onChange={handleOnChange}></input>
                 <button className="plus" disabled={contador >= producto.stock} onClick={handleSumar}>+</button>
             </div>
-            <button onClick={handleAddToCart}>Agregar al carrito</button>
+            <button onClick={handleAddToCart} disabled={producto.stock === 0}>Agregar al carrito</button>
+            <ToastContainer />
         </>
 
     );

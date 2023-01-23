@@ -16,8 +16,6 @@ const CustomProvider = ({ children }) => {
         //console.log(prod);
         setCarrito([...carrito, prod]);
         setTimeout(() => { localStorage.setItem('tiendaLu4ult_cart', JSON.stringify(carrito)) }, 2000);
-
-
     }
 
     //console.log(carrito)

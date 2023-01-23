@@ -25,7 +25,8 @@ const UserData = () => {
             cuit: '20123456780',
             iva: 'Consumidor Final'
         }
-        localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(newUser))
+        localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(newUser));
+        setTimeout(()=>{document.getElementById("firstInputField").focus();},1000);
     }
 
     usuarioDatos = JSON.parse(localStorage.getItem('tiendaLu4ult_userData'));
@@ -57,13 +58,16 @@ const UserData = () => {
         e.addEventListener('focus', () => {
             e.value = ""
         });
-    })
+    });
+
+
+    //TODO: agregar Login con auth0
 
     return (
         <form>
             <h3>Info envío</h3>
             <div className="form__field">
-                <input placeholder="correo" type="email" name="email" defaultValue={usuarioDatos.email}></input>
+                <input id="firstInputField" placeholder="correo" type="email" name="email" defaultValue={usuarioDatos.email}></input>
                 <p>Tu dirección de correo electrónico</p>
             </div>
 
@@ -140,9 +144,8 @@ const UserData = () => {
                 <p>Condición frente al IVA</p>
             </div>
 
-            <input type="submit" className="submitButton" value="Guardar Datos"></input>
+            <input type="submit" className="submitButton" value="Guardar mis datos"></input>
         </form>
-
     );
 }
 export default UserData;

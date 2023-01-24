@@ -695,8 +695,6 @@ body #root {
 
           }
         }
-
-
       }
 
       .submitButton {
@@ -741,6 +739,7 @@ body #root {
     //Main => Admin
     .adminPage {
       @extend .centrarColumna;
+      margin-top: 5rem;
       width: 90vw;
       height: 60vh;
 
@@ -754,6 +753,12 @@ body #root {
         input {
           border: 2px solid blue;
           outline: 2px solid blue;
+        }
+      }
+
+      ul {
+        li {
+          font-size: 1rem;
         }
       }
     }

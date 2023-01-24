@@ -2,20 +2,23 @@ import { useSearchParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
 
-import { NomPropio } from "./utils";
+//import { NomPropio } from "./utils";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useState, useEffect } from "react";
 //import { useEffect } from "react";
 
 const UserData = () => {
-    const { user, isAuthenticated, isLoading} = useAuth0();
+    const { user, isAuthenticated, isLoading } = useAuth0();
+    const [params] = useSearchParams();
+    const [usuarioDatosHook, setUsuarioDatosHook] = useState({});
+
+
 
     //const { logout } = useAuth0();
     //TODO: probar si al loguearse con facebook (que no tiene email) logramos hacer el deslogueo automáticamente
 
     //TODO: utilizar el hook para el objeto.
-    const [usuarioDatosHook,setUsuarioDatosHook] = useState({});
     console.log("user data")
 
     console.log(user)
@@ -24,38 +27,6 @@ const UserData = () => {
 
     let provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
     let usuarioDatos = {};
-
-    //Reemplazar por traer desde firestore
-    /*
-    let dataLeidaLocal = localStorage.getItem('tiendaLu4ult_userData');
-    if (dataLeidaLocal === null) {
-        console.log("creando usuario por primera vez")
-        let newUser = {
-            email: 'nombre@email.com',
-            nombre: 'Juan Perez',
-            dni: '12345678',
-            provincia: 'CAPITAL FEDERAL',
-            localidad: 'Ciudad',
-            calle: 'Calle',
-            altura: '123',
-            piso: '11',
-            unidad: 'B',
-            cp: '1234',
-            codarea: '0000',
-            celular: '151234567',
-            trackCode: 'Email',
-            cuit: '20123456780',
-            iva: 'Consumidor Final'
-        }
-        localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(newUser));
-        setTimeout(() => { document.getElementById("firstInputField").focus(); }, 1000);
-    }
-    
-    usuarioDatos = JSON.parse(localStorage.getItem('tiendaLu4ult_userData'));
-    */
-
-
-    const [params] = useSearchParams();
 
     useEffect(() => {
         console.log(`cambio isAU: ${isAuthenticated}`)
@@ -66,7 +37,7 @@ const UserData = () => {
             console.log(`ID usuario: ${user.name}`)
             console.log(`email: ${user.email}`)
 
-            if(user.email === undefined) {
+            if (user.email === undefined) {
                 console.log("no valido")
                 alert(`Esta cuenta de ${user.sub.split('|')[0]} no tiene un email válido`);
                 //logout({ logoutParams: { returnTo: window.location.origin + "/user"} })
@@ -101,21 +72,22 @@ const UserData = () => {
             locale: user.locale
         }
 
+
         //Si recibimos datos por query parámetros los guardamos
         if (params.get('dni') != null) {
-            usuarioDatos.dni = params.get('dni'),
-            usuarioDatos.provincia = params.get('provincia'),
-            usuarioDatos.localidad = NomPropio(params.get('loc')),
-            usuarioDatos.calle = params.get('calle'),
-            usuarioDatos.altura = params.get('altura'),
-            usuarioDatos.piso = params.get('piso'),
-            usuarioDatos.unidad = params.get('unidad'),
-            usuarioDatos.cp = params.get('cp'),
-            usuarioDatos.codarea = params.get('codarea'),
-            usuarioDatos.celular = params.get('cel'),
-            usuarioDatos.trackCode = params.get('trackCode'),
-            usuarioDatos.cuit = params.get('cuit'),
-            usuarioDatos.iva = params.get('iva')
+            usuarioDatos.dni = params.get('dni');
+                usuarioDatos.provincia = params.get('provincia');
+                usuarioDatos.localidad = params.get('loc');
+                usuarioDatos.calle = params.get('calle');
+                usuarioDatos.altura = params.get('altura');
+                usuarioDatos.piso = params.get('piso');
+                usuarioDatos.unidad = params.get('unidad');
+                usuarioDatos.cp = params.get('cp');
+                usuarioDatos.codarea = params.get('codarea');
+                usuarioDatos.celular = params.get('cel');
+                usuarioDatos.trackCode = params.get('trackCode');
+                usuarioDatos.cuit = params.get('cuit');
+                usuarioDatos.iva = params.get('iva');
 
             const dbSet = getFirestore();
             setDoc(doc(dbSet, "usuarios", user.name), usuarioDatos, { merge: true })
@@ -123,22 +95,22 @@ const UserData = () => {
         // setTimeout(() => { localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(usuarioDatos)) }, 1000);
     }
 
-    console.log(usuarioDatos.dni)
-    console.log(usuarioDatosHook.dni);
+    // console.log(usuarioDatos.dni)
+    // console.log(usuarioDatosHook.dni);
 
 
 
 
-    console.log(usuarioDatos)
+    // console.log(usuarioDatos)
 
-    let inputs = document.querySelectorAll('.form__field input');
-    inputs.forEach(e => {
-        e.addEventListener('focus', () => {
-            e.value = ""
-        });
-    });
+    // let inputs = document.querySelectorAll('.form__field input');
+    // inputs.forEach(e => {
+    //     e.addEventListener('focus', () => {
+    //         e.value = ""
+    //     });
+    // });
 
-    console.log(usuarioDatos)
+    //console.log(usuarioDatos)
 
     //TODO: si se guardaron los datos y el CUIT es igual al por defecto, colocar el DNI y consumidor final.
     return (

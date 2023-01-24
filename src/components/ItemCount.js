@@ -48,7 +48,7 @@ const ItemCount = ({ producto }) => {
         })
 
         setContador(1);
-        toast.success("Agregado al carrito!", {
+        toast.success(`${producto.internalCategory} agregado al carrito!`, {
             autoClose: 3000,
             pauseOnHover: false
         });
@@ -57,7 +57,7 @@ const ItemCount = ({ producto }) => {
     return (
         <>
             <div className="itemCount">
-                <button onClick={handleRestar}>-</button>
+                <button onClick={handleRestar} disabled={contador === 1}>-</button>
                 <input type="number" value={contador} onChange={handleOnChange}></input>
                 <button className="plus" disabled={contador >= producto.stock} onClick={handleSumar}>+</button>
             </div>

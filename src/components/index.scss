@@ -249,7 +249,6 @@ body #root {
       margin: 0.5rem;
 
       article {
-        background-color: white;
         position: relative;
 
         font-size: 1rem;
@@ -464,10 +463,6 @@ body #root {
             height: 2rem;
             font-size: 2rem;
             text-align: center;
-
-            &.plus {
-              //background-color: green;
-            }
           }
 
           input {
@@ -646,7 +641,7 @@ body #root {
     //UserLogin => UserData
     form {
       border: 2px solid black;
-      //margin: 1rem;
+      margin-top: 3rem;
       padding: 2rem;
       background-color: white;
       @extend .centrarColumna;
@@ -675,9 +670,7 @@ body #root {
           color: #ccc;
         }
 
-        .submitButton {
-          background-color: red;
-        }
+
 
         input {
           height: 100%;
@@ -686,6 +679,8 @@ body #root {
             outline: 1px dotted black;
           }
         }
+
+
 
         &:hover {
           border-bottom: 1px solid blue;
@@ -700,6 +695,17 @@ body #root {
 
           }
         }
+
+
+      }
+
+      .submitButton {
+        cursor: pointer;
+        padding: 0.5rem;
+        font-size: 1rem;
+        background-color: green;
+        color: #fff;
+        font-weight: 700;
       }
     }
 
@@ -719,11 +725,6 @@ body #root {
           @extend .centrarFila;
           margin: 2rem 0.5rem;
           justify-content: space-around;
-
-          * {
-            //outline: 1px solid red;
-          }
-
           border-bottom: 1px solid black;
 
           img {

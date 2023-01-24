@@ -1,5 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import FirebaseComponent from "./FirebaseComponent";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
+
 import { NomPropio } from "./utils";
 
 const UserData = () => {
@@ -23,6 +25,7 @@ const UserData = () => {
             cp: '1234',
             codarea: '0000',
             celular: '151234567',
+            trackCode: 'Email',
             cuit: '20123456780',
             iva: 'Consumidor Final'
         }
@@ -48,10 +51,16 @@ const UserData = () => {
             cp: params.get('cp'),
             codarea: params.get('codarea'),
             celular: params.get('cel'),
+            trackCode: params.get('trackCode'),
             cuit: params.get('cuit'),
             iva: params.get('iva')
         }
+        console.log("aca")
         setTimeout(() => { localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(usuarioDatos)) }, 1000);
+
+        const db = getFirestore();
+        setDoc(doc(db, "usuarios", usuarioDatos.nombre), usuarioDatos, { merge: true })
+
     }
 
     let inputs = document.querySelectorAll('.form__field input');
@@ -63,6 +72,7 @@ const UserData = () => {
 
 
     //TODO: agregar Login con auth0
+    //TODO: si se guardaron los datos y el CUIT es igual al por defecto, colocar el DNI y consumidor final.
 
     return (
         <>
@@ -131,6 +141,16 @@ const UserData = () => {
                     <input type="number" name="cel" defaultValue={usuarioDatos.celular}></input>
                     <p>Teléfono</p>
                 </div>
+                <div className="form__field">
+                    <input list="paqartrack" name="trackCode" placeholder="Seleccione"></input>
+                    <datalist id="paqartrack">
+                        <option value="Email"></option>
+                        <option value="Whatsapp"></option>
+                        <option value="Ambos"></option>
+                    </datalist>
+                    <p>Cómo le enviamos el código de tracking?</p>
+                </div>
+
                 <h5>Datos Facturación</h5>
                 <div className="form__field">
                     <input type="number" defaultValue={usuarioDatos.celular}></input>
@@ -150,7 +170,6 @@ const UserData = () => {
                 <input type="submit" className="submitButton" value="Guardar mis datos"></input>
             </form>
         </>
-
     );
 }
 export default UserData;

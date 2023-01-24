@@ -1,7 +1,7 @@
 import md5 from 'md5-hash'
 import uuid from 'react-uuid';
 import { useState } from 'react'
-import { doc, setDoc, collection, getFirestore } from "firebase/firestore";
+import { doc, setDoc, getFirestore } from "firebase/firestore";
 
 
 const AdminPage = () => {
@@ -27,18 +27,15 @@ const AdminPage = () => {
 
     const handleFirebaseClick = () => {
         console.log(productosDesdeArchivo);
-        console.log(misProductos);
+        //console.log(misProductos);
         document.getElementById("archivo-selector").value = "";
 
         if (productosDesdeArchivo.length) {
+            console.log("va")
             const db = getFirestore();
             productosDesdeArchivo.forEach((producto) => {
                 setDoc(doc(db, "items", producto.id.toString()), producto, { merge: true })
             });
-
-            productosDesdeArchivo.forEach(fl => {
-                console.log(...fl.toString())
-            })
         }
     }
 

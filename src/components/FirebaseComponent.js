@@ -1,5 +1,4 @@
 import { collection, getDocs, getFirestore } from "firebase/firestore"
-import { useState } from "react";
 import { useEffect } from "react";
 
 const FirebaseComponent = () => {

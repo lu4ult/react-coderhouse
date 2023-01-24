@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 // Import the functions you need from the SDKs you need
+import { Auth0Provider } from '@auth0/auth0-react';
 import { initializeApp } from "firebase/app";
 //import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -25,5 +26,13 @@ initializeApp(firebaseConfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <Auth0Provider
+    domain="dev-eevpki3wx8j8g2s5.us.auth0.com"
+    clientId="bOeQpmbWOhtLLXXF2IfOon4xl2rfi8MI"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+  >
     <App />
+  </Auth0Provider>
 );

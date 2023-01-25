@@ -6,6 +6,8 @@ import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useState, useEffect } from "react";
+
+import { BeatLoader } from "react-spinners";
 //import { useEffect } from "react";
 
 const UserData = () => {
@@ -55,6 +57,9 @@ const UserData = () => {
                     console.log(usuarioDatos.dni)
 
                 }
+                else {
+                    console.log("ups")
+                }
             })
             console.log(usuarioDatos.dni)
         }
@@ -76,18 +81,18 @@ const UserData = () => {
         //Si recibimos datos por query parámetros los guardamos
         if (params.get('dni') != null) {
             usuarioDatos.dni = params.get('dni');
-                usuarioDatos.provincia = params.get('provincia');
-                usuarioDatos.localidad = params.get('localidad');
-                usuarioDatos.calle = params.get('calle');
-                usuarioDatos.altura = params.get('altura');
-                usuarioDatos.piso = params.get('piso');
-                usuarioDatos.unidad = params.get('unidad');
-                usuarioDatos.cp = params.get('cp');
-                usuarioDatos.codarea = params.get('codarea');
-                usuarioDatos.celular = params.get('cel');
-                usuarioDatos.trackCode = params.get('trackCode');
-                usuarioDatos.cuit = params.get('cuit');
-                usuarioDatos.iva = params.get('iva');
+            usuarioDatos.provincia = params.get('provincia');
+            usuarioDatos.localidad = params.get('localidad');
+            usuarioDatos.calle = params.get('calle');
+            usuarioDatos.altura = params.get('altura');
+            usuarioDatos.piso = params.get('piso');
+            usuarioDatos.unidad = params.get('unidad');
+            usuarioDatos.cp = params.get('cp');
+            usuarioDatos.codarea = params.get('codarea');
+            usuarioDatos.celular = params.get('cel');
+            usuarioDatos.trackCode = params.get('trackCode');
+            usuarioDatos.cuit = params.get('cuit');
+            usuarioDatos.iva = params.get('iva');
 
             const dbSet = getFirestore();
             setDoc(doc(dbSet, "usuarios", user.name), usuarioDatos, { merge: true })
@@ -115,10 +120,11 @@ const UserData = () => {
 
     //TODO: si se guardaron los datos y el CUIT es igual al por defecto, colocar el DNI y consumidor final.
     return (
-        <>
+        <div className="userData-container">
             {
                 isAuthenticated === false ?
-                    <LoginButton />
+                    isLoading ? <div className="spinner"><BeatLoader color="#36d7b7" loading={true} /></div>
+                        : <LoginButton />
                     : <>
                         <div className="userData">
                             <img src={usuarioDatos.picture}></img>
@@ -127,9 +133,9 @@ const UserData = () => {
                             <LogoutButton />
                         </div>
                         <form>
-                            <h3>Info envío</h3>
+                            <h3>Datos para el envío</h3>
                             <div className="form__field">
-                                <input placeholder="correo" disabled={true} type="email" name="email" defaultValue={usuarioDatosHook.email}></input>
+                                <input placeholder={usuarioDatosHook.email || usuarioDatos.email} disabled={true} type="email" name="email" defaultValue={usuarioDatosHook.email}></input>
                                 <p>Tu dirección de correo electrónico</p>
                             </div>
 
@@ -162,36 +168,36 @@ const UserData = () => {
                                 <p>Localidad</p>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="calle" defaultValue={usuarioDatosHook.calle}></input>
+                                <input type="text" name="calle" defaultValue={usuarioDatosHook.calle} placeholder={usuarioDatosHook.calle || "Calle"}></input>
                                 <p>Calle</p>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="altura" defaultValue={usuarioDatosHook.altura}></input>
+                                <input type="text" name="altura" defaultValue={usuarioDatosHook.altura} placeholder={usuarioDatosHook.altura || "Numero"}></input>
                                 <p>Número</p>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="piso" defaultValue={usuarioDatosHook.piso}></input>
+                                <input type="text" name="piso" defaultValue={usuarioDatosHook.piso} placeholder={usuarioDatosHook.piso || "11"}></input>
                                 <p>Piso (si es departamento)</p>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="unidad" defaultValue={usuarioDatosHook.unidad}></input>
+                                <input type="text" name="unidad" defaultValue={usuarioDatosHook.unidad} placeholder={usuarioDatosHook.unidad || "B"}></input>
                                 <p>Unidad (Si es departamento)</p>
                             </div>
                             <div className="form__field">
-                                <input type="number" name="cp" defaultValue={usuarioDatosHook.cp}></input>
+                                <input type="number" name="cp" defaultValue={usuarioDatosHook.cp} placeholder={usuarioDatosHook.cp || "1234"}></input>
                                 <p><a href="https://www.correoargentino.com.ar/formularios/cpa" target="_blank" rel="noopener noreferrer">Código Postal. Si no lo conoce puede buscarlo aquí</a></p>
                             </div>
 
                             <div className="form__field">
-                                <input type="number" name="codarea" defaultValue={usuarioDatosHook.codarea}></input>
+                                <input type="number" name="codarea" defaultValue={usuarioDatosHook.codarea} placeholder={usuarioDatosHook.codarea || "011"}></input>
                                 <p>Teléfono - Sólo código de área</p>
                             </div>
                             <div className="form__field">
-                                <input type="number" name="cel" defaultValue={usuarioDatosHook.celular}></input>
+                                <input type="number" name="cel" defaultValue={usuarioDatosHook.celular} placeholder={usuarioDatosHook.celular || "123456"}></input>
                                 <p>Teléfono</p>
                             </div>
                             <div className="form__field">
-                                <input list="paqartrack" name="trackCode" defaultValue={usuarioDatosHook.trackCode}></input>
+                                <input list="paqartrack" name="trackCode" defaultValue={usuarioDatosHook.trackCode} placeholder={usuarioDatosHook.trackCode || "Seleccione de la lista"}></input>
                                 <datalist id="paqartrack">
                                     <option value="Email"></option>
                                     <option value="Whatsapp"></option>
@@ -202,11 +208,11 @@ const UserData = () => {
 
                             <h5>Datos Facturación</h5>
                             <div className="form__field">
-                                <input type="number" name="cuit" defaultValue={usuarioDatosHook.cuit}></input>
+                                <input type="number" name="cuit" defaultValue={usuarioDatosHook.cuit} placeholder={usuarioDatosHook.cuit || "20-12345678-0"}></input>
                                 <p>CUIT. Si es consumidor final dejar en blanco</p>
                             </div>
                             <div className="form__field">
-                                <input list="ivas" name="iva" defaultValue={usuarioDatosHook.iva}></input>
+                                <input list="ivas" name="iva" defaultValue={usuarioDatosHook.iva} placeholder={usuarioDatosHook.iva || "Seleccione de la lista o dejar en blanco"}></input>
                                 <datalist id="ivas">
                                     <option value="Consumidor Final"></option>
                                     <option value="Responsable Inscripto"></option>
@@ -221,15 +227,7 @@ const UserData = () => {
                     </>
             }
 
-        </>
+        </div>
     );
 }
 export default UserData;
-
-//<FirebaseComponent />
-
-/*
-
-
-
-                            */

@@ -1,17 +1,20 @@
 import { useSearchParams } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
 
 //import { NomPropio } from "./utils";
+import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 import { useState, useEffect } from "react";
 
 import { BeatLoader } from "react-spinners";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 //import { useEffect } from "react";
 
 const UserData = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
+    const { logout } = useAuth0();
     const [params] = useSearchParams();
     const [usuarioDatosHook, setUsuarioDatosHook] = useState({});
 
@@ -30,6 +33,7 @@ const UserData = () => {
     let provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
     let usuarioDatos = {};
 
+
     useEffect(() => {
         console.log(`cambio isAU: ${isAuthenticated}`)
 
@@ -40,9 +44,11 @@ const UserData = () => {
             console.log(`email: ${user.email}`)
 
             if (user.email === undefined) {
-                console.log("no valido")
-                alert(`Esta cuenta de ${user.sub.split('|')[0]} no tiene un email válido`);
-                //logout({ logoutParams: { returnTo: window.location.origin + "/user"} })
+               toast.error(`${user.given_name}, esta cuenta de ${user.sub.split('|')[0]} no tiene un email válido`, {
+                    autoClose: 10000,
+                    pauseOnHover: false
+                });
+                setTimeout(()=>{logout({ logoutParams: { returnTo: `${window.location.origin}/user` } })},5000);
             }
 
             const db = getFirestore();
@@ -226,7 +232,7 @@ const UserData = () => {
                         </form>
                     </>
             }
-
+            <ToastContainer />
         </div>
     );
 }

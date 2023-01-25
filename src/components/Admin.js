@@ -14,8 +14,8 @@ const AdminPage = () => {
     console.log(productosDesdeArchivo);
     const handleLogin = () => {
 
-        let user = document.getElementById("adminLogin-user").value;
-        let pass = document.getElementById("adminLogin-pass").value;
+        let user = document.getElementById("adminLogin-user").value.toLowerCase();
+        let pass = document.getElementById("adminLogin-pass").value.toLowerCase();
         let hash = md5(user + pass);
         console.log(user)
         console.log(pass)

@@ -77,7 +77,7 @@ const UserData = () => {
         if (params.get('dni') != null) {
             usuarioDatos.dni = params.get('dni');
                 usuarioDatos.provincia = params.get('provincia');
-                usuarioDatos.localidad = params.get('loc');
+                usuarioDatos.localidad = params.get('localidad');
                 usuarioDatos.calle = params.get('calle');
                 usuarioDatos.altura = params.get('altura');
                 usuarioDatos.piso = params.get('piso');
@@ -91,6 +91,7 @@ const UserData = () => {
 
             const dbSet = getFirestore();
             setDoc(doc(dbSet, "usuarios", user.name), usuarioDatos, { merge: true })
+            console.log("veces")
         }
         // setTimeout(() => { localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(usuarioDatos)) }, 1000);
     }
@@ -157,7 +158,7 @@ const UserData = () => {
                             </div>
 
                             <div className="form__field">
-                                <input type="text" name="loc" placeholder={usuarioDatosHook.localidad}></input>
+                                <input type="text" name="localidad" defaultValue={usuarioDatosHook.localidad}></input>
                                 <p>Localidad</p>
                             </div>
                             <div className="form__field">
@@ -201,11 +202,11 @@ const UserData = () => {
 
                             <h5>Datos Facturación</h5>
                             <div className="form__field">
-                                <input type="number" defaultValue={usuarioDatosHook.celular}></input>
+                                <input type="number" name="cuit" defaultValue={usuarioDatosHook.cuit}></input>
                                 <p>CUIT. Si es consumidor final dejar en blanco</p>
                             </div>
                             <div className="form__field">
-                                <input list="ivas" name="iva" value={usuarioDatosHook.iva}></input>
+                                <input list="ivas" name="iva" defaultValue={usuarioDatosHook.iva}></input>
                                 <datalist id="ivas">
                                     <option value="Consumidor Final"></option>
                                     <option value="Responsable Inscripto"></option>

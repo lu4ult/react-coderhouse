@@ -99,6 +99,7 @@ const UserData = () => {
             usuarioDatos.trackCode = params.get('trackCode');
             usuarioDatos.cuit = params.get('cuit');
             usuarioDatos.iva = params.get('iva');
+            usuarioDatos.last_update = new Date().toString();
 
             const dbSet = getFirestore();
             setDoc(doc(dbSet, "usuarios", user.name), usuarioDatos, { merge: true })

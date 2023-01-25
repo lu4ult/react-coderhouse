@@ -1,4 +1,4 @@
-import md5 from 'md5-hash'
+import md5 from 'md5'
 import uuid from 'react-uuid';
 import { useState } from 'react'
 import { doc, collection, getDocs, setDoc, getFirestore } from "firebase/firestore";
@@ -8,20 +8,16 @@ const AdminPage = () => {
 
     const [productosDesdeArchivo, setProductosDesdeArchivo] = useState([]);
     const [adminLogueado, setAdminLogueado] = useState(false);
-
     const [listadoUsuarios, setListadoUsuarios] = useState([]);
 
-    console.log(productosDesdeArchivo);
+
     const handleLogin = () => {
 
         let user = document.getElementById("adminLogin-user").value.toLowerCase();
         let pass = document.getElementById("adminLogin-pass").value.toLowerCase();
-        let hash = md5(user + pass);
-        console.log(user)
-        console.log(pass)
-        console.log(hash)
+        let hash = md5(user + pass + '1b34dcaa-a6d6-ed0b-fe82-874c784fb914');
 
-        if (hash === '51d64431677ac4d136b39258dec1cfab') {
+        if (hash === 'a496c45e8ea1cdf6e33381f96fdc7c52') {
             setAdminLogueado(true);
             setTimeout(() => { setAdminLogueado(false) }, 15 * 60 * 1000)
 
@@ -33,7 +29,7 @@ const AdminPage = () => {
             getDocs(itemsCollection).then(snapshot => {
                 let lista = snapshot.docs.map(doc => doc.data());
                 //setListadoUsuarios(snapshot.docs.map(doc => doc.data()))
-                lista.sort((a, b) => a.nombre - b.nombre);
+                lista.sort((a, b) => new Date(b.last_update) - new Date(a.last_update));
                 setListadoUsuarios(lista);
             })
 
@@ -98,9 +94,9 @@ const AdminPage = () => {
                 </div>
                 <div className='adminPage__section usersList'>
                     <ul>
-                    {
-                    listadoUsuarios.map(user => { return <li key={uuid()}><img src={user.picture}></img> <p>{user.nombre}</p><p>{user.email}</p></li>})
-                    }
+                        {
+                            listadoUsuarios.map(user => { return <li key={uuid()}><img src={user.picture}></img> <p>{user.nombre}</p><p>{user.email}</p><p>{user.last_update}</p></li> })
+                        }
                     </ul>
                 </div>
             </div>);

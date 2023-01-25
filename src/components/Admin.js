@@ -1,13 +1,15 @@
 import md5 from 'md5-hash'
 import uuid from 'react-uuid';
 import { useState } from 'react'
-import { doc, setDoc, getFirestore } from "firebase/firestore";
+import { doc, collection, getDocs, setDoc, getFirestore } from "firebase/firestore";
 
 
 const AdminPage = () => {
 
     const [productosDesdeArchivo, setProductosDesdeArchivo] = useState([]);
     const [adminLogueado, setAdminLogueado] = useState(false);
+
+    const [listadoUsuarios, setListadoUsuarios] = useState([]);
 
     console.log(productosDesdeArchivo);
     const handleLogin = () => {
@@ -22,6 +24,19 @@ const AdminPage = () => {
         if (hash === '51d64431677ac4d136b39258dec1cfab') {
             setAdminLogueado(true);
             setTimeout(() => { setAdminLogueado(false) }, 15 * 60 * 1000)
+
+
+            console.log("get users")
+            //Obtención de usuario registrados desde Firestore
+            const db = getFirestore();
+            const itemsCollection = collection(db, "usuarios", "");
+            getDocs(itemsCollection).then(snapshot => {
+                let lista = snapshot.docs.map(doc => doc.data());
+                //setListadoUsuarios(snapshot.docs.map(doc => doc.data()))
+                lista.sort((a, b) => a.nombre - b.nombre);
+                setListadoUsuarios(lista);
+            })
+
         }
     }
 
@@ -31,7 +46,7 @@ const AdminPage = () => {
         document.getElementById("archivo-selector").value = "";
 
         if (productosDesdeArchivo.length) {
-            console.log("va")
+            //console.log("va")
             const db = getFirestore();
             productosDesdeArchivo.forEach((producto) => {
                 setDoc(doc(db, "items", producto.id.toString()), producto, { merge: true })
@@ -68,17 +83,26 @@ const AdminPage = () => {
     else {
         return (
             <div className="adminPage">
-                <input type="file" onChange={handleOnFileChange} id="archivo-selector"></input>
-                <ul>
+                <div className='adminPage__section JSONHandler'>
+                    <input type="file" onChange={handleOnFileChange} id="archivo-selector"></input>
+                    <ul>
+                        {
+                            productosDesdeArchivo.map(prod => {
+                                return (
+                                    <li key={uuid()}>{prod.title}</li>
+                                )
+                            })
+                        }
+                    </ul>
+                    <button onClick={handleFirebaseClick}>Setear firebase</button>
+                </div>
+                <div className='adminPage__section usersList'>
+                    <ul>
                     {
-                        productosDesdeArchivo.map(prod => {
-                            return (
-                                <li key={uuid()}>{prod.title}</li>
-                            )
-                        })
+                    listadoUsuarios.map(user => { return <li key={uuid()}><img src={user.picture}></img> <p>{user.nombre}</p><p>{user.email}</p></li>})
                     }
-                </ul>
-                <button onClick={handleFirebaseClick}>Setear firebase</button>
+                    </ul>
+                </div>
             </div>);
     }
 

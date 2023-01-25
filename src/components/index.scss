@@ -818,6 +818,39 @@ body #root {
         }
       }
 
+      &__section {
+        width: 100%;
+        @extend .centrarColumna;
+        border: 2px solid lightblue;
+        background-color: white;
+
+        &.JSONHandler {
+          //background-color: blue;
+        }
+
+        &.usersList{
+          //background-color: green;
+          ul {
+            width: 90%;
+            li {
+              @extend .centrarFila;
+              justify-content: space-between;
+              img {
+                width: 50px;
+                &:hover {
+                  width: 300px;
+                }
+              }
+              p {
+                width: 200px;
+                //background-color: #ccc;
+                color: blue;
+              }
+            }
+          }
+        }
+      }
+
       ul {
         li {
           font-size: 1rem;

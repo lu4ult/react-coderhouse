@@ -1,10 +1,18 @@
 import BeatLoader from "react-spinners/BeatLoader";
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import ItemList from "./ItemList"
 import ItemDetailContainer from "./ItemDetailContainer";
 import CategoriesContainer from "./CategoriesContainer";
 //import { useParams } from "react-router-dom";
-import Filters from "./Filters";
+
+import { collection, getDocs, query, where } from "firebase/firestore"
+import { db } from "./Firebase";
+
+import { contexto } from "./CustomProvider";
+
+
+
+//import Filters from "./Filters";
 
 /*
 Se encarga de pedir el array de productos a products.json alojado en el repo.
@@ -15,6 +23,8 @@ También, decide si debe renderizar, en función de los props booleanos que reci
 
 */
 const ItemListContainer = (props) => {
+
+    const { setProductosTodos } = useContext(contexto);
 
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
@@ -29,24 +39,36 @@ const ItemListContainer = (props) => {
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
 
+    
     useEffect(() => {
-        console.log("Inicio useEffect")
-        //       setTimeout(() => {
-        fetch('https://raw.githubusercontent.com/lu4ult/react-coderhouse/gh-pages/data/products.json')
-            .then(response => response.json())
-            .then(data => {
-                //Intento 1:
+        console.log("Primer request a firestores")
+        
 
-                data.forEach(e => {
+        //setProductosTodos(["test"])
+        const productosCollection = collection(db, "productos")
+        //const filtro = query(productosCollection, where("category", "==", "clothing"))
+        const filtro = query(productosCollection)
+
+        getDocs(filtro)
+            .then((respuesta) => {
+                setTimeout(() => {
+                    setEstanProductosCargados(true);
+                    setProductos(productos);
+                    setProductosTodos(productos)
+
+                }, 500)
+
+                const productos = respuesta.docs.map(doc =>
+                    ({ ...doc.data() }))
+
+                productos.map(e => {
                     fetch('https://api.mercadolibre.com/items/' + e.idMeli)
                         .then(response => response.json())
                         .then(data => {
                             e.imgMeliUrl = data['pictures'][0]['secure_url'];
                             e.video = data['video_id'];
-                            //e.popularidad = data['initial_quantity']; //Cuál de los dos es las ventas??
                             e.popularidad = data['sold_quantity'];
 
-                            //Si el producto está en full no modificamos el precio porque la venta se realiza sólo en MeLi.
                             e.price = Math.floor(0.89 * parseInt(data['price']));
                             if (e.fullFilment === true)
                                 e.price = Math.floor(1 * parseInt(data['price']));
@@ -54,28 +76,19 @@ const ItemListContainer = (props) => {
                         })
                 })
 
-                //TODO: solucionar esto.
-                setTimeout(() => {
-                    setEstanProductosCargados(true);
-                    setProductos(data);
-                }, 1000);
-
-                //Acá estaba originalmente
-                //setProductos(data);
-                //setEstanProductosCargados(true);
             })
-            .catch(error => console.log(error))
-        //      }, 1000)
-        console.log("Fin useEffect");
-        //       }, [estanProductosCargados, currentId]);
+            .catch((error) => {
+                console.log(error)
+                //toast.error("Hubo un error, vuelva a intentarlo!" + error.message)
+            })
     }, []);
+
 
 
     //Si no recibió que debe renderizar un sólo producto con sus detalles o una categoría, es porque estamos en la página principal y mostramos todos los productos.
     if (renderIsCategories === false && renderIsDetails === false) {
         return (
             <>
-                <Filters />
                 {
                     estanProductosCargados ?
                         <ItemList productos={productos} />
@@ -87,8 +100,6 @@ const ItemListContainer = (props) => {
             </>
         );
     }
-
-    //Nota: no usamos 'else' ya que como está el return no llega y no es necesario
 
     if (renderIsDetails === true) {
         return (

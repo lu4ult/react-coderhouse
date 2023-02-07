@@ -6,7 +6,7 @@ import { contexto } from "./CustomProvider";
 
 const Item = ({ producto }) => {
 
-    const { totalProductos, setearTotalProductos, agregarAlCarrito } = useContext(contexto);
+    const { totalProductos, setTotalProductos, agregarAlCarrito } = useContext(contexto);
 
     // const isLocalHost = window.location.href.includes("localhost");
     // //console.log(isLocalHost)
@@ -22,8 +22,6 @@ const Item = ({ producto }) => {
     //console.log(productoUrl)
 
     const handleOnClick = () => {
-        console.log("aca")
-
         if(producto.stock === 0) {
             toast.error("Ups! Sin stock", {
                 autoClose: 3000,
@@ -33,17 +31,17 @@ const Item = ({ producto }) => {
         }
 
         setTimeout(() => {
-            setearTotalProductos(totalProductos + 1);
+            setTotalProductos(totalProductos + 1);
             agregarAlCarrito({
                 id: producto.id,
                 cantidadIndividual: 1
             });
 
 
-            toast.success("Agregado al carrito!", {
-                autoClose: 3000,
-                pauseOnHover: false
-            });
+            // toast.success("Agregado al carrito!", {
+            //     autoClose: 3000,
+            //     pauseOnHover: false
+            // });
 
         }, 500)
 

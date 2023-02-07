@@ -33,19 +33,19 @@ const ItemCount = ({ producto }) => {
         }
     }
 
-    const { totalProductos, setearTotalProductos, agregarAlCarrito } = useContext(contexto);
+    const { totalProductos, setTotalProductos, agregarAlCarrito } = useContext(contexto);
     //console.log(totalProductos)
     //console.log()
 
     const handleAddToCart = () => {
-        // console.log("click");
+         console.log("click");
         // console.log(totalProductos);
         // console.log(contador)
-        setearTotalProductos(totalProductos + contador);
+        setTotalProductos(totalProductos + contador);
         agregarAlCarrito({
             id: producto.id,
             cantidadIndividual: contador
-        })
+        });
 
         setContador(1);
         toast.success(`${producto.internalCategory} agregado al carrito!`, {

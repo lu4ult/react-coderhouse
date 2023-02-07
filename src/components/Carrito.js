@@ -1,10 +1,11 @@
 import uuid from 'react-uuid';
+import { iconoTrash } from './Iconos';
 import { useContext } from "react";
 import { contexto } from "./CustomProvider";
 
 const Carrito = () => {
 
-    const { carrito } = useContext(contexto)
+    const { carrito,borrarItemDelCarrito } = useContext(contexto);
     return (
         <div className="carritoContainer">
             <div className='carrito__productos'>
@@ -17,7 +18,7 @@ const Carrito = () => {
                                 <p>{p.id}</p>
                                 <p>Cantidad: {p.cantidadIndividual}</p>
                                 <p>Total: {Math.random()}</p>
-                                <p>X</p>
+                                <button onClick={()=>{borrarItemDelCarrito(p)}} >{iconoTrash}</button>
                             </div>
                         )
                     })

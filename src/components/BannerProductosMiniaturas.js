@@ -15,14 +15,10 @@ const BannerProductosMiniaturas = (props) => {
                             </div>
                             <p className="miniatura__individual-precio">{e.price}</p>
                         </Link>
-
                     )
                 })
             }
-
         </div>
-
-
     );
 }
 

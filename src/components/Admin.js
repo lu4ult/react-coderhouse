@@ -1,14 +1,20 @@
 import md5 from 'md5'
 import uuid from 'react-uuid';
 import { useState } from 'react'
-import { doc, collection, getDocs, setDoc, getFirestore } from "firebase/firestore";
+import { doc, onSnapshot, addDoc, collection, getDocs, setDoc, getFirestore, deleteDoc, firestore } from "firebase/firestore";
+import { db } from './Firebase';
+import { CacheKey } from '@auth0/auth0-spa-js';
 
 
 const AdminPage = () => {
 
     const [productosDesdeArchivo, setProductosDesdeArchivo] = useState([]);
-    const [adminLogueado, setAdminLogueado] = useState(false);
+    const [adminLogueado, setAdminLogueado] = useState(true);
     const [listadoUsuarios, setListadoUsuarios] = useState([]);
+
+    const unsub = onSnapshot(doc(db, "productos", "5lScuTzuOYX6phzP46YK"), (doc) => {
+        console.log("Current data: ", doc.data());
+    });
 
 
     const handleLogin = () => {
@@ -19,9 +25,13 @@ const AdminPage = () => {
 
         if (hash === 'a496c45e8ea1cdf6e33381f96fdc7c52') {
             setAdminLogueado(true);
-            setTimeout(() => { setAdminLogueado(false) }, 15 * 60 * 1000)
+            setTimeout(() => { setAdminLogueado(false) }, 15 * 60 * 1000);
 
 
+            // console.log("a borrar:")
+            // deleteDoc(doc(db, "productos", "EwEBl0ofwAPgtMi1u1sA"));
+
+            /*
             console.log("get users")
             //Obtención de usuario registrados desde Firestore
             const db = getFirestore();
@@ -32,22 +42,34 @@ const AdminPage = () => {
                 lista.sort((a, b) => new Date(b.last_update) - new Date(a.last_update));
                 setListadoUsuarios(lista);
             })
-
+            */
         }
     }
 
     const handleFirebaseClick = () => {
-        console.log(productosDesdeArchivo);
-        //console.log(misProductos);
-        document.getElementById("archivo-selector").value = "";
 
+        // const productosCollection = collection(db, "productos")
+        // getDocs(productosCollection)
+        // .then(snapshot => {
+        //     const productos = snapshot.docs.map(doc =>
+        //         ({ ...doc.data(), "idFs": doc.data().id}))
+        //     console.log(productos)
+        // })
         if (productosDesdeArchivo.length) {
-            //console.log("va")
-            const db = getFirestore();
             productosDesdeArchivo.forEach((producto) => {
-                setDoc(doc(db, "items", producto.id.toString()), producto, { merge: true })
+                const productosColeccion = collection(db, "productos")
+                addDoc(productosColeccion, producto, {merge:true})
+                    .then((resultado) => {
+                        console.log(resultado.id)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
             });
         }
+        // else {
+        //     console.log("archivo vacío")
+        // }
     }
 
     const handleOnFileChange = (e) => {
@@ -92,13 +114,7 @@ const AdminPage = () => {
                     </ul>
                     <button onClick={handleFirebaseClick}>Setear firebase</button>
                 </div>
-                <div className='adminPage__section usersList'>
-                    <ul>
-                        {
-                            listadoUsuarios.map(user => { return <li key={uuid()}><img src={user.picture}></img> <p>{user.nombre}</p><p>{user.email}</p><p>{user.last_update}</p></li> })
-                        }
-                    </ul>
-                </div>
+
             </div>);
     }
 
@@ -107,3 +123,17 @@ const AdminPage = () => {
 export default AdminPage;
 
 // productosDesdeArchivo.map(line => {return <p>{line}</p>})
+
+/*
+
+
+<div className='adminPage__section usersList'>
+                    <ul>
+                        {
+                            listadoUsuarios.map(user => { return <li key={uuid()}><img src={user.picture}></img> <p>{user.nombre}</p><p>{user.email}</p><p>{user.last_update}</p></li> })
+                        }
+                    </ul>
+                </div>
+
+
+*/

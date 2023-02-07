@@ -49,6 +49,7 @@ button {
   outline: none;
   border: none;
   cursor: pointer;
+
   &:focus {
     outline: 2px solid green;
   }
@@ -797,22 +798,34 @@ body #root {
       @extend .centrarColumna;
       justify-content: flex-start;
 
-      .carrito__productos {
+      .productos {
         //background-color: pink;
-        border: 3px solid lightgreen;
-        width: 80%;
+        width: 90%;
+        background-color: white;
 
-        .carrito__productos-producto {
+        color: green;
+
+        &__producto {
           @extend .centrarFila;
           margin: 2rem 0.5rem;
-          justify-content: space-around;
+          justify-content: space-between;
           border-bottom: 1px solid black;
 
           img {
-            border: 2px solid red;
             width: 100px;
             height: 100px;
             object-fit: scale-down;
+          }
+
+          a {
+            width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          button {
+            //margin-right: 1rem
           }
         }
 
@@ -849,19 +862,24 @@ body #root {
           //background-color: blue;
         }
 
-        &.usersList{
+        &.usersList {
+
           //background-color: green;
           ul {
             width: 90%;
+
             li {
               @extend .centrarFila;
               justify-content: space-between;
+
               img {
                 width: 50px;
+
                 &:hover {
                   width: 300px;
                 }
               }
+
               p {
                 width: 200px;
                 //background-color: #ccc;

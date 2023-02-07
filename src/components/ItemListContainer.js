@@ -39,12 +39,12 @@ const ItemListContainer = (props) => {
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
 
-    
+
+
+
     useEffect(() => {
         console.log("Primer request a firestores")
-        
-
-        //setProductosTodos(["test"])
+                //setProductosTodos(["test"])
         const productosCollection = collection(db, "productos")
         //const filtro = query(productosCollection, where("category", "==", "clothing"))
         const filtro = query(productosCollection)
@@ -54,8 +54,7 @@ const ItemListContainer = (props) => {
                 setTimeout(() => {
                     setEstanProductosCargados(true);
                     setProductos(productos);
-                    setProductosTodos(productos)
-
+                    setProductosTodos(productos);
                 }, 500)
 
                 const productos = respuesta.docs.map(doc =>
@@ -81,7 +80,9 @@ const ItemListContainer = (props) => {
                 console.log(error)
                 //toast.error("Hubo un error, vuelva a intentarlo!" + error.message)
             })
+
     }, []);
+
 
 
 

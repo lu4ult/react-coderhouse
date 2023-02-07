@@ -10,14 +10,22 @@ const CustomProvider = ({ children }) => {
     const [productosTodos, setProductosTodos] = useState([]);
 
 
-    useEffect(()=>{
-        console.log(productosTodos)
-    },[productosTodos])
+    // function ubicacionEnArraySegunId(id, array) {
+    //     return array.findIndex(el => el.id === id)
+    // }
 
 
-    function ubicacionEnArraySegunId(id, array) {
-        return array.findIndex(el => el.id === id)
-    }
+    // useEffect(()=>{
+    //     console.log("aca")
+    //     const carritoDesdeLocal = JSON.parse(localStorage.getItem('tiendaLu4ult_cart')) || [];
+    //     if(carritoDesdeLocal.length) {
+    //         console.log(carritoDesdeLocal)
+    //         carritoDesdeLocal.forEach(e => {agregarAlCarrito(e)});
+    //     }
+    //     se
+
+    // },[])
+
 
     function estaProductoEnCarrito(id) {
         const indiceHallado = carrito.findIndex(el => el.id === id)
@@ -54,6 +62,7 @@ const CustomProvider = ({ children }) => {
         setTotalProductos: setTotalProductos,
         agregarAlCarrito: agregarAlCarrito,
         borrarItemDelCarrito: borrarItemDelCarrito,
+        productosTodos: productosTodos,
         setProductosTodos: setProductosTodos
 
     }

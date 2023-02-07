@@ -5,21 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { contexto } from "./CustomProvider";
 
 const Item = ({ producto }) => {
-
     const { totalProductos, setTotalProductos, agregarAlCarrito } = useContext(contexto);
-
-    // const isLocalHost = window.location.href.includes("localhost");
-    // //console.log(isLocalHost)
-
-    //let productoUrl = "";
-    // if (isLocalHost === false) {
-    //     productoUrl += "/react-coderhouse"
-    // }
-
-    // productoUrl += "/item/";
-    // productoUrl += producto.id;
-
-    //console.log(productoUrl)
 
     const handleOnClick = () => {
         if(producto.stock === 0) {
@@ -79,16 +65,3 @@ const Item = ({ producto }) => {
 }
 
 export default Item;
-
-//                  
-// to={"/carrito"}
-
-// <button disabled={producto.stock === 0} value={producto.idMeli}>Agregar al carrito</button>
-//<div>{producto.category}</div>
-
-//<button className="meliButton">Ver en MercadoLibre</button>
-
-///
-//
-
-// 

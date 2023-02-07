@@ -1,4 +1,4 @@
-import { createContext, useState,useEffect } from "react"
+import { createContext, useState, useEffect } from "react"
 
 export const contexto = createContext();
 const Provider = contexto.Provider;
@@ -16,16 +16,26 @@ const CustomProvider = ({ children }) => {
 
 
     // useEffect(()=>{
-    //     console.log("aca")
-    //     const carritoDesdeLocal = JSON.parse(localStorage.getItem('tiendaLu4ult_cart')) || [];
-    //     if(carritoDesdeLocal.length) {
-    //         console.log(carritoDesdeLocal)
-    //         carritoDesdeLocal.forEach(e => {agregarAlCarrito(e)});
-    //     }
-    //     se
+    //     totalesDelCarrito();
 
-    // },[])
+    // },[carrito])
 
+    // function totalesDelCarrito() {
+    //     console.log(carrito)
+
+
+    //     console.log(cantidadDeProductos)
+
+
+    //     const costoTotal = carrito
+    //         .map(e => (e.cantidadIndividual * ))
+    // }
+
+    /*
+    const cantidadDeProductos = carrito
+            .map(e => e.cantidadIndividual)
+            .reduce((a, b) => a + b, 0)
+    */
 
     function estaProductoEnCarrito(id) {
         const indiceHallado = carrito.findIndex(el => el.id === id)
@@ -53,6 +63,7 @@ const CustomProvider = ({ children }) => {
         }
 
         setTimeout(() => { localStorage.setItem('tiendaLu4ult_cart', JSON.stringify(carrito)) }, 2000);
+
     }
 
 

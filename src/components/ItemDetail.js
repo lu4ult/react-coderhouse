@@ -2,11 +2,6 @@ import ItemCount from "./ItemCount";
 
 const ItemDetail = ({ productoAMostrar }) => {
 
-
-    function agregarAlCarrito(cantidad) {
-        console.log(cantidad)
-    }
-
     return (
         <div className="itemDetalles">
             <h3 className="itemDetalles__titulo">{productoAMostrar.title}</h3>
@@ -23,7 +18,7 @@ const ItemDetail = ({ productoAMostrar }) => {
                 <p>{productoAMostrar.internalCategory}</p>
                 <p>{productoAMostrar.price} $</p>
                 {
-                    productoAMostrar.fullFilment === false? <ItemCount producto={productoAMostrar} />
+                    productoAMostrar.fullFilment === false? <ItemCount producto={productoAMostrar} esCarrito={false} />
                     :null
                 }
                 <a className="meliButton" href={"https://articulo.mercadolibre.com.ar/" + productoAMostrar.idMeli.replace("MLA", "MLA-")} target="_blank" rel="noopener noreferrer">Ver en mercado libre</a>

@@ -393,17 +393,26 @@ body #root {
             }
 
             &.agregar_carrito {
-              &:hover {
-                &::after {
-                  padding: 0.5rem;
-                  background-color: black;
-                  color: white;
-                  position: absolute;
-                  top: -100%;
-                  right: -50%;
-                  content: "Agregar al carrito";
+              &.conStock {
+                &:hover {
+                  &::after {
+                    padding: 0.5rem;
+                    background-color: black;
+                    color: white;
+                    position: absolute;
+                    top: -100%;
+                    right: -50%;
+                    content: "Agregar al carrito";
+                  }
                 }
               }
+
+              &.noStock {
+                svg {
+                  fill: #ccc;
+                }
+              }
+
             }
           }
         }
@@ -472,35 +481,6 @@ body #root {
         grid-area: datos;
         @extend .centrarColumna;
         justify-content: space-evenly;
-
-        .itemCount {
-          @extend .centrarFila;
-
-          button {
-            cursor: pointer;
-            border: none;
-            outline: none;
-            //background-color: pink;
-            width: 2rem;
-            height: 2rem;
-            font-size: 2rem;
-            text-align: center;
-          }
-
-          input {
-            font-size: 1.5rem;
-            //height: 80%;
-            max-width: 5rem;
-            text-align: center;
-            border: 1px solid #ccc;
-            outline: none;
-          }
-
-          input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
-        }
       }
 
       .itemDetalles__share {
@@ -823,6 +803,9 @@ body #root {
             overflow: hidden;
             text-overflow: ellipsis;
           }
+          p {
+            width: 150px;
+          }
 
           button {
             //margin-right: 1rem
@@ -850,6 +833,38 @@ body #root {
         &.noLogueado {
           background-color: red;
         }
+      }
+    }
+
+    .itemCount {
+      @extend .centrarFila;
+      outline: 1px solid black;
+
+      button {
+        cursor: pointer;
+        border: none;
+        outline: none;
+        //background-color: pink;
+        width: 2rem;
+        height: 2rem;
+        font-size: 2rem;
+        text-align: center;
+        // background-color: pink;
+        // color: red;
+      }
+
+      input {
+        font-size: 1.5rem;
+        //height: 80%;
+        max-width: 3rem;
+        text-align: center;
+        border: none;
+        outline: none;
+      }
+
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
     }
 

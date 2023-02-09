@@ -8,7 +8,7 @@ import { contexto } from "./CustomProvider";
 
 const ItemCount = ({ producto, esCarrito }) => {
     const { totalProductos, setTotalProductos, agregarAlCarrito, carrito } = useContext(contexto);
-    const [contador, setContador] = useState(0);
+    const [contador, setContador] = useState(1);
 
     useEffect(() => {
         const cantidadEnCarrito = carrito.find(e => e.id === producto.id) || {cantidadIndividual:0,id:0};

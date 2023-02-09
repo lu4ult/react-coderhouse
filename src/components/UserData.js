@@ -43,6 +43,10 @@ const UserData = () => {
         }
     }, [isAuthenticated])
 
+
+    //TODO: reemplazar el botón type submit por un botón común para la UX, pero de esa forma evitamos que se recargue el formulario.
+    //TODO: sacar params porque al final no los usamos
+
     useEffect(() => {
         console.log(timeOutId)
     }, [timeOutId])

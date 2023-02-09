@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { contexto } from "./CustomProvider";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { iconoCarritoMas } from "./Iconos";
+import { notiflixPersonalizacion } from "./utils";
 
 
 const ItemCount = ({ producto, esCarrito }) => {
@@ -71,7 +72,7 @@ const ItemCount = ({ producto, esCarrito }) => {
 
         if (esCarrito === false) {
             setContador(1);
-            Notify.success('Agregado al carrito!', { distance: "100px" });
+            Notify.success('Agregado al carrito!', notiflixPersonalizacion);
         }
     }
 

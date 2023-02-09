@@ -1,19 +1,19 @@
-import { useSearchParams } from "react-router-dom";
 import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
-
-//import { NomPropio } from "./utils";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext} from "react";
 
 import { BeatLoader } from "react-spinners";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+import { contexto } from "./CustomProvider";
+
 
 const UserData = () => {
+    const { setDatosUsuarioContext } = useContext(contexto);
+
     const { user, isAuthenticated, isLoading } = useAuth0();
-    const [params] = useSearchParams();
     const [datosUsuario, setDatosUsuario] = useState({});
     const [timeOutId, setTimeOutId] = useState();
     const [datosLeidosFirestore, setDatosLeidosFirestore] = useState(false);
@@ -38,7 +38,6 @@ const UserData = () => {
                     }
                 })
             }
-
         }
     }, [isAuthenticated])
 
@@ -58,6 +57,7 @@ const UserData = () => {
                 //TODO: refactorizar db
                 const dbSet = getFirestore();
                 setDoc(doc(dbSet, "usuarios", datosUsuario.sub), datosUsuario, { merge: true })
+                setDatosUsuarioContext(datosUsuario);
             }, 1000);
 
             setTimeOutId(temporizadorId);

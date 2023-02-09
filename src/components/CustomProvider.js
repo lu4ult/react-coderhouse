@@ -8,6 +8,7 @@ const CustomProvider = ({ children }) => {
     const [totalProductos, setTotalProductos] = useState(0);
     const [carrito, setCarrito] = useState([]);
     const [productosTodos, setProductosTodos] = useState([]);
+    const [datosUsuarioContext, setDatosUsuarioContext] = useState({});
 
 
     // function ubicacionEnArraySegunId(id, array) {
@@ -36,6 +37,10 @@ const CustomProvider = ({ children }) => {
             .map(e => e.cantidadIndividual)
             .reduce((a, b) => a + b, 0)
     */
+
+    // useEffect(() => {
+    //     console.log(datosUsuarioContext)
+    // }, [datosUsuarioContext])
 
     function estaProductoEnCarrito(id) {
         const indiceHallado = carrito.findIndex(el => el.id === id)
@@ -94,7 +99,9 @@ const CustomProvider = ({ children }) => {
         agregarAlCarrito: agregarAlCarrito,
         borrarItemDelCarrito: borrarItemDelCarrito,
         productosTodos: productosTodos,
-        setProductosTodos: setProductosTodos
+        setProductosTodos: setProductosTodos,
+        datosUsuarioContext: datosUsuarioContext,
+        setDatosUsuarioContext: setDatosUsuarioContext
 
     }
 

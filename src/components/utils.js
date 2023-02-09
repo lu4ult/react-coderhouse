@@ -20,10 +20,14 @@ export const shuffleArray = array => {
 }
 
 
-export const formateaMoneda = (numero) =>{
-    const entero = Math.floor(numero/1000);
-    const resto = numero - entero*1000;
+export const formateaMoneda = (numero) => {
+    const entero = Math.floor(numero / 1000);
+    const resto = numero - entero * 1000;
 
-    const str = `${entero}.${resto} $`;
+
+    const str = `${entero}.${resto < 100 ? "0" : ""}${resto < 10 ? "0" : ""}${resto} $`;
+
     return str;
 }
+
+export const notiflixPersonalizacion = {distance:"100px",showOnlyTheLastOne: true};

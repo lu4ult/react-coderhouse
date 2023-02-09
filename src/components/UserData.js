@@ -14,118 +14,59 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const UserData = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
-    const { logout } = useAuth0();
     const [params] = useSearchParams();
-    const [usuarioDatosHook, setUsuarioDatosHook] = useState({});
+    const [datosUsuario, setDatosUsuario] = useState({});
+    const [timeOutId, setTimeOutId] = useState();
+    const [datosLeidosFirestore, setDatosLeidosFirestore] = useState(false);
+    const provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
 
+    useEffect(() => {
+        if (isAuthenticated) {
 
+            //TODO: refactorizar a firestore.js
+            if (datosLeidosFirestore === false) {
+                const db = getFirestore();
+                const biciRef = doc(db, "usuarios", user.sub);
+                getDoc(biciRef).then(snapshot => {
+                    if (snapshot.exists()) {
+                        setDatosUsuario({ ...snapshot.data() });
+                        setDatosLeidosFirestore(true);
+                    }
+                    else {
+                        setDatosUsuario({ ...user });
+                        const dbSet = getFirestore();
+                        setDoc(doc(dbSet, "usuarios", user.sub), { ...user }, { merge: true })
+                    }
+                })
+            }
 
-    //const { logout } = useAuth0();
-    //TODO: probar si al loguearse con facebook (que no tiene email) logramos hacer el deslogueo automáticamente
+        }
+    }, [isAuthenticated])
 
-    //TODO: utilizar el hook para el objeto.
-    console.log("user data")
-
-    console.log(user)
-    console.log(isAuthenticated)
-    console.log(isLoading)
-
-    let provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
-    let usuarioDatos = {};
+    useEffect(() => {
+        console.log(timeOutId)
+    }, [timeOutId])
 
 
     useEffect(() => {
-        console.log(`cambio isAU: ${isAuthenticated}`)
+        if (JSON.stringify(datosUsuario) !== "{}") {
+            clearTimeout(timeOutId)
+            const temporizadorId = setTimeout(() => {
+                //TODO: refactorizar db
+                const dbSet = getFirestore();
+                setDoc(doc(dbSet, "usuarios", datosUsuario.sub), datosUsuario, { merge: true })
+            }, 1000);
 
-        if (isAuthenticated) {
-            //Acá leer los datos desde firestores
-
-            console.log(`ID usuario: ${user.name}`)
-            console.log(`email: ${user.email}`)
-
-            if (user.email === undefined) {
-               toast.error(`${user.given_name}, esta cuenta de ${user.sub.split('|')[0]} no tiene un email válido`, {
-                    autoClose: 10000,
-                    pauseOnHover: false
-                });
-                setTimeout(()=>{logout({ logoutParams: { returnTo: `${window.location.origin}/user` } })},5000);
-            }
-
-            const db = getFirestore();
-            const biciRef = doc(db, "usuarios", user.name);
-            getDoc(biciRef).then(snapshot => {
-                if (snapshot.exists()) {
-                    console.log("recibido user de firestore")
-                    //setUsuarioDatos(snapshot.data());
-                    setUsuarioDatosHook(snapshot.data());
-                    console.log(snapshot.data())
-                    usuarioDatos = snapshot.data();
-                    console.log(usuarioDatos.dni)
-
-                }
-                else {
-                    console.log("ups")
-                }
-            })
-            console.log(usuarioDatos.dni)
+            setTimeOutId(temporizadorId);
         }
-        console.log(usuarioDatos.dni)
-    }, [isAuthenticated])
+    }, [datosUsuario])
 
-    if (isLoading === false && isAuthenticated) {
-        usuarioDatos = {
-            nickname: user.nickname,
-            email: user.email,
-            nombre: user.name,
-            sub: user.sub,
-            updated_at: user.updated_at,
-            picture: user.picture,
-            locale: user.locale
-        }
+    const handleFormChange = (e) => {
+        const copiaDatosUsuario = { ...datosUsuario, [e.target.name]: e.target.value };
+        setDatosUsuario(copiaDatosUsuario)
+    };
 
 
-        //Si recibimos datos por query parámetros los guardamos
-        if (params.get('dni') != null) {
-            usuarioDatos.dni = params.get('dni');
-            usuarioDatos.provincia = params.get('provincia');
-            usuarioDatos.localidad = params.get('localidad');
-            usuarioDatos.calle = params.get('calle');
-            usuarioDatos.altura = params.get('altura');
-            usuarioDatos.piso = params.get('piso');
-            usuarioDatos.unidad = params.get('unidad');
-            usuarioDatos.cp = params.get('cp');
-            usuarioDatos.codarea = params.get('codarea');
-            usuarioDatos.celular = params.get('cel');
-            usuarioDatos.trackCode = params.get('trackCode');
-            usuarioDatos.cuit = params.get('cuit');
-            usuarioDatos.iva = params.get('iva');
-            usuarioDatos.last_update = new Date().toString();
-
-            const dbSet = getFirestore();
-            setDoc(doc(dbSet, "usuarios", user.name), usuarioDatos, { merge: true })
-            console.log("veces")
-        }
-        // setTimeout(() => { localStorage.setItem('tiendaLu4ult_userData', JSON.stringify(usuarioDatos)) }, 1000);
-    }
-
-    // console.log(usuarioDatos.dni)
-    // console.log(usuarioDatosHook.dni);
-
-
-
-
-    // console.log(usuarioDatos)
-
-    // let inputs = document.querySelectorAll('.form__field input');
-    // inputs.forEach(e => {
-    //     e.addEventListener('focus', () => {
-    //         e.value = ""
-    //     });
-    // });
-
-    //console.log(usuarioDatos)
-
-    //TODO: si se guardaron los datos y el CUIT es igual al por defecto, colocar el DNI y consumidor final.
     return (
         <div className="userData-container">
             {
@@ -134,31 +75,31 @@ const UserData = () => {
                         : <LoginButton />
                     : <>
                         <div className="userData">
-                            <img src={usuarioDatos.picture}></img>
-                            <p>{usuarioDatos.nombre}</p>
-                            <p>{usuarioDatos.email}</p>
+                            <img src={datosUsuario.picture}></img>
+                            <p>{datosUsuario.nombre}</p>
+                            <p>{datosUsuario.email}</p>
                             <LogoutButton />
                         </div>
                         <form>
                             <h3>Datos para el envío</h3>
                             <div className="form__field">
-                                <input placeholder={usuarioDatosHook.email || usuarioDatos.email} disabled={true} type="email" name="email" defaultValue={usuarioDatosHook.email}></input>
-                                <p>Tu dirección de correo electrónico</p>
+                                <input placeholder={datosUsuario.correo || datosUsuario.email} type="email" name="correo" defaultValue={datosUsuario.correo || datosUsuario.email} required onChange={handleFormChange}></input>
+                                <label>Tu dirección de correo electrónico</label>
                             </div>
 
                             <div className="form__field">
-                                <input placeholder={usuarioDatos.nombre} disabled={true} type="text" name="nombre" defaultValue={usuarioDatosHook.nombre}></input>
-                                <p>Tu nombre y apellido</p>
+                                <input placeholder={datosUsuario.nombre} disabled={false} type="text" name="nombre" defaultValue={datosUsuario.nombre} onChange={handleFormChange}></input>
+                                <label>Tu nombre y apellido</label>
                             </div>
 
                             <div className="form__field">
-                                <input id="firstInputField" placeholder={usuarioDatos.dni} type="number" name="dni" defaultValue={usuarioDatosHook.dni}></input>
-                                <p>DNI sin puntos</p>
+                                <input id="firstInputField" placeholder={datosUsuario.dni} type="number" name="dni" defaultValue={datosUsuario.dni} onChange={handleFormChange}></input>
+                                <label>DNI sin puntos</label>
 
                             </div>
 
                             <div className="form__field">
-                                <input placeholder="Seleccione de lista" list="provincias" name="provincia" id="provinciaa" defaultValue={usuarioDatosHook.provincia}></input>
+                                <input placeholder="Seleccione de lista" list="provincias" name="provincia" id="provinciaa" defaultValue={datosUsuario.provincia} onChange={handleFormChange}></input>
                                 <datalist id="provincias">
                                     {
                                         provinciasLista.map(prov => {
@@ -167,66 +108,66 @@ const UserData = () => {
 
                                     }
                                 </datalist>
-                                <p>Provincia</p>
+                                <label>Provincia</label>
                             </div>
 
                             <div className="form__field">
-                                <input type="text" name="localidad" defaultValue={usuarioDatosHook.localidad}></input>
-                                <p>Localidad</p>
+                                <input type="text" name="localidad" defaultValue={datosUsuario.localidad} onChange={handleFormChange}></input>
+                                <label>Localidad</label>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="calle" defaultValue={usuarioDatosHook.calle} placeholder={usuarioDatosHook.calle || "Calle"}></input>
-                                <p>Calle</p>
+                                <input type="text" name="calle" defaultValue={datosUsuario.calle} placeholder={datosUsuario.calle || "Calle"} onChange={handleFormChange}></input>
+                                <label>Calle</label>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="altura" defaultValue={usuarioDatosHook.altura} placeholder={usuarioDatosHook.altura || "Numero"}></input>
-                                <p>Número</p>
+                                <input type="text" name="altura" defaultValue={datosUsuario.altura} placeholder={datosUsuario.altura || "Numero"} onChange={handleFormChange}></input>
+                                <label>Número</label>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="piso" defaultValue={usuarioDatosHook.piso} placeholder={usuarioDatosHook.piso || "11"}></input>
-                                <p>Piso (si es departamento)</p>
+                                <input type="text" name="piso" defaultValue={datosUsuario.piso} placeholder={datosUsuario.piso || "11"} onChange={handleFormChange}></input>
+                                <label>Piso (si es departamento)</label>
                             </div>
                             <div className="form__field">
-                                <input type="text" name="unidad" defaultValue={usuarioDatosHook.unidad} placeholder={usuarioDatosHook.unidad || "B"}></input>
-                                <p>Unidad (Si es departamento)</p>
+                                <input type="text" name="unidad" defaultValue={datosUsuario.unidad} placeholder={datosUsuario.unidad || "B"} onChange={handleFormChange}></input>
+                                <label>Unidad (Si es departamento)</label>
                             </div>
                             <div className="form__field">
-                                <input type="number" name="cp" defaultValue={usuarioDatosHook.cp} placeholder={usuarioDatosHook.cp || "1234"}></input>
-                                <p><a href="https://www.correoargentino.com.ar/formularios/cpa" target="_blank" rel="noopener noreferrer">Código Postal. Si no lo conoce puede buscarlo aquí</a></p>
+                                <input type="number" name="cp" defaultValue={datosUsuario.cp} placeholder={datosUsuario.cp || "1234"} onChange={handleFormChange}></input>
+                                <label><a href="https://www.correoargentino.com.ar/formularios/cpa" target="_blank" rel="noopener noreferrer">Código Postal. Si no lo conoce puede buscarlo aquí</a></label>
                             </div>
 
                             <div className="form__field">
-                                <input type="number" name="codarea" defaultValue={usuarioDatosHook.codarea} placeholder={usuarioDatosHook.codarea || "011"}></input>
-                                <p>Teléfono - Sólo código de área</p>
+                                <input type="number" name="codarea" defaultValue={datosUsuario.codarea} placeholder={datosUsuario.codarea || "011"} onChange={handleFormChange}></input>
+                                <label>Teléfono - Sólo código de área</label>
                             </div>
                             <div className="form__field">
-                                <input type="number" name="cel" defaultValue={usuarioDatosHook.celular} placeholder={usuarioDatosHook.celular || "123456"}></input>
-                                <p>Teléfono</p>
+                                <input type="number" name="cel" defaultValue={datosUsuario.celular} placeholder={datosUsuario.celular || "123456"} onChange={handleFormChange}></input>
+                                <label>Teléfono</label>
                             </div>
                             <div className="form__field">
-                                <input list="paqartrack" name="trackCode" defaultValue={usuarioDatosHook.trackCode} placeholder={usuarioDatosHook.trackCode || "Seleccione de la lista"}></input>
+                                <input list="paqartrack" name="trackCode" defaultValue={datosUsuario.trackCode} placeholder={datosUsuario.trackCode || "Seleccione de la lista"} onChange={handleFormChange}></input>
                                 <datalist id="paqartrack">
                                     <option value="Email"></option>
                                     <option value="Whatsapp"></option>
                                     <option value="Ambos"></option>
                                 </datalist>
-                                <p>Cómo le enviamos el código de tracking?</p>
+                                <label>Cómo le enviamos el código de tracking?</label>
                             </div>
 
                             <h5>Datos Facturación</h5>
                             <div className="form__field">
-                                <input type="number" name="cuit" defaultValue={usuarioDatosHook.cuit} placeholder={usuarioDatosHook.cuit || "20-12345678-0"}></input>
-                                <p>CUIT. Si es consumidor final dejar en blanco</p>
+                                <input type="number" name="cuit" defaultValue={datosUsuario.cuit} placeholder={datosUsuario.cuit || "20-12345678-0"} onChange={handleFormChange}></input>
+                                <label>CUIT. Si es consumidor final dejar en blanco</label>
                             </div>
                             <div className="form__field">
-                                <input list="ivas" name="iva" defaultValue={usuarioDatosHook.iva} placeholder={usuarioDatosHook.iva || "Seleccione de la lista o dejar en blanco"}></input>
+                                <input list="ivas" name="iva" defaultValue={datosUsuario.iva} placeholder={datosUsuario.iva || "Seleccione de la lista o dejar en blanco"} onChange={handleFormChange}></input>
                                 <datalist id="ivas">
                                     <option value="Consumidor Final"></option>
                                     <option value="Responsable Inscripto"></option>
                                     <option value="Excento"></option>
                                     <option value="Monotributo"></option>
                                 </datalist>
-                                <p>Condición frente al IVA</p>
+                                <label>Condición frente al IVA</label>
                             </div>
 
                             <input type="submit" className="submitButton" value="Guardar mis datos"></input>
@@ -237,4 +178,14 @@ const UserData = () => {
         </div>
     );
 }
+
 export default UserData;
+
+
+/*
+
+
+
+
+
+*/

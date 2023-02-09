@@ -23,18 +23,9 @@ También, decide si debe renderizar, en función de los props booleanos que reci
 
 */
 const ItemListContainer = (props) => {
-
-    const { setProductosTodos } = useContext(contexto);
-
+    const { setProductosTodos, carrito, agregarAlCarrito } = useContext(contexto);
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
-
-    // const { categoria } = useParams();
-    // const { currentId } = useParams();
-
-    //console.log(currentId)
-    //console.log(categoria)
-
 
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
@@ -43,8 +34,12 @@ const ItemListContainer = (props) => {
 
 
     useEffect(() => {
+
         console.log("Primer request a firestores")
-                //setProductosTodos(["test"])
+
+
+
+        //setProductosTodos(["test"])
         const productosCollection = collection(db, "productos")
         //const filtro = query(productosCollection, where("category", "==", "clothing"))
         const filtro = query(productosCollection)

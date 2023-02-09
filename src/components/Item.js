@@ -29,7 +29,7 @@ const Item = ({ producto }) => {
             //     pauseOnHover: false
             // });
 
-        }, 500)
+        }, 500);
 
     }
 

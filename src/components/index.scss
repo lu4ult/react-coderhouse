@@ -695,7 +695,7 @@ body #root {
             -webkit-appearance: none;
           }
 
-          p {
+          label {
             width: 35%;
             color: #ccc;
           }
@@ -829,6 +829,27 @@ body #root {
           }
         }
 
+
+
+      }
+
+      &__subTotal {
+        font-size: 2rem;
+        width: 80%;
+        min-height: 50px;
+        @extend .centrarFila;
+        justify-content: flex-end;
+      }
+
+      .botonFinalizarCompra {
+        outline: 3px solid #ccc;
+        padding: 1rem;
+        background-color: green;
+        color: white;
+
+        &.noLogueado {
+          background-color: red;
+        }
       }
     }
 
@@ -858,9 +879,6 @@ body #root {
         border: 2px solid lightblue;
         background-color: white;
 
-        &.JSONHandler {
-          //background-color: blue;
-        }
 
         &.usersList {
 
@@ -973,7 +991,7 @@ body #root {
             border-bottom: none;
           }
 
-          p {
+          label {
             width: 100%;
           }
 

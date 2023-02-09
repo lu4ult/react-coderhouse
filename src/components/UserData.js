@@ -8,9 +8,8 @@ import LogoutButton from "./LogoutButton";
 import { useState, useEffect } from "react";
 
 import { BeatLoader } from "react-spinners";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-//import { useEffect } from "react";
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 
 const UserData = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
@@ -174,22 +173,13 @@ const UserData = () => {
                                 <label>Condición frente al IVA</label>
                             </div>
 
-                            <input type="submit" className="submitButton" value="Guardar mis datos"></input>
+                            <button type="button" className="submitButton" onClick={()=>{Notify.success('Datos Actualizados',{distance:"100px"});}}>Guardar mis datos</button>
+                            {/* <input type="button" className="submitButton" value="Guardar mis datos"></input> */}
                         </form>
                     </>
             }
-            <ToastContainer />
         </div>
     );
 }
 
 export default UserData;
-
-
-/*
-
-
-
-
-
-*/

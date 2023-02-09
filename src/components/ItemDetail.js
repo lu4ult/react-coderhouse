@@ -14,12 +14,11 @@ const ItemDetail = ({ productoAMostrar }) => {
             </div>
 
             <div className="itemDetalles__datos">
-                <span>Ventas: {productoAMostrar.popularidad}</span>
                 <p>{productoAMostrar.internalCategory}</p>
                 <p>{productoAMostrar.price} $</p>
                 {
                     productoAMostrar.fullFilment === false? <ItemCount producto={productoAMostrar} esCarrito={false} />
-                    :null
+                    :<p className="fullMsg">Este producto se encuentra en Full, por lo que sólo se puede comprar en Mercado Libre</p>
                 }
                 <a className="meliButton" href={"https://articulo.mercadolibre.com.ar/" + productoAMostrar.idMeli.replace("MLA", "MLA-")} target="_blank" rel="noopener noreferrer">Ver en mercado libre</a>
             </div>

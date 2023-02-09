@@ -18,3 +18,12 @@ export const shuffleArray = array => {
         array[j] = temp;
     }
 }
+
+
+export const formateaMoneda = (numero) =>{
+    const entero = Math.floor(numero/1000);
+    const resto = numero - entero*1000;
+
+    const str = `${entero}.${resto} $`;
+    return str;
+}

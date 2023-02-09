@@ -481,6 +481,10 @@ body #root {
         grid-area: datos;
         @extend .centrarColumna;
         justify-content: space-evenly;
+
+        .fullMsg {
+          font-size: 1rem;
+        }
       }
 
       .itemDetalles__share {
@@ -803,13 +807,11 @@ body #root {
             overflow: hidden;
             text-overflow: ellipsis;
           }
+
           p {
             width: 150px;
           }
 
-          button {
-            //margin-right: 1rem
-          }
         }
 
 
@@ -836,37 +838,56 @@ body #root {
       }
     }
 
-    .itemCount {
-      @extend .centrarFila;
-      outline: 1px solid black;
 
-      button {
-        cursor: pointer;
-        border: none;
-        outline: none;
-        //background-color: pink;
-        width: 2rem;
-        height: 2rem;
-        font-size: 2rem;
-        text-align: center;
-        // background-color: pink;
-        // color: red;
+    .itemCountContainer {
+      .itemCount {
+        @extend .centrarFila;
+        outline: 1px solid black;
+
+        button {
+          cursor: pointer;
+          border: none;
+          outline: none;
+          //background-color: pink;
+          width: 2rem;
+          height: 2rem;
+          font-size: 2rem;
+          text-align: center;
+          // background-color: pink;
+          // color: red;
+        }
+
+        input {
+          font-size: 1.5rem;
+          //height: 80%;
+          max-width: 3rem;
+          text-align: center;
+          border: none;
+          outline: none;
+
+        }
+
+        input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
       }
 
-      input {
-        font-size: 1.5rem;
-        //height: 80%;
-        max-width: 3rem;
-        text-align: center;
-        border: none;
-        outline: none;
-      }
 
-      input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
+      .botonAgregarAlCarrito {
+
+        outline: 1px solid black;
+
+
+        svg {
+          width: 40px;
+          fill: green;
+        }
+
+        text-align: center;
       }
     }
+
 
     //Main => Admin
     .adminPage {

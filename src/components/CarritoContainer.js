@@ -6,11 +6,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import { addDoc, collection, getDocs, query, where, serverTimestamp } from "firebase/firestore"
 import { db } from "./Firebase";
+import { Loading, Notify, Report } from 'notiflix';
+import { formateaMoneda } from './utils';
+import emailjs from '@emailjs/browser';
 
 const CarritoContainer = () => {
     const { user, isAuthenticated, isLoading } = useAuth0();
 
-    const { carrito, productosTodos } = useContext(contexto);
+    const { carrito, productosTodos, setTotalProductos, borrarItemDelCarrito } = useContext(contexto);
 
     const preciosCarrito = carrito.map(item => {
         const producto = productosTodos.find(pr => pr.id === item.id)
@@ -27,16 +30,35 @@ const CarritoContainer = () => {
     }
 
     const handleFinalizarCompra = () => {
-
-        console.log(carrito)
+        Loading.hourglass();
 
         const coleccionCompras = collection(db, "ordenes");
         addDoc(coleccionCompras, ordenDeCompra)
             .then((docRef) => {
-                console.log(docRef)
-                console.log(docRef.id)
-                alert(docRef.id);
+                // 'productos': ordenDeCompra.productos.map(item => { `* ${item.cantidadIndividual}x ${item.id} ` })
+                emailjs.send('service_k3tj0b9', 'template_aznyypc', {
+                    'destinatario': 'lu4ult+tienda@gmail.com',
+                    'fecha': ordenDeCompra.fecha,
+                    'id_pedido': docRef.id,
+                    'from_name': user.name
+                }, '840utIXux0aomLktd');
+
+                Report.info(
+                    '¡Gracias!',
+                    `Comenzamos a trabajar en tu orden ${docRef.id}, vas a recibir más información por email`,
+                    'Finalizar',
+                );
+
+                carrito.map(prod => borrarItemDelCarrito(prod));
+                setTotalProductos(0);
+
+                Loading.remove(1000);
             })
+
+
+
+        console.log(ordenDeCompra)
+
     }
 
     return (
@@ -51,10 +73,10 @@ const CarritoContainer = () => {
                 }
             </div>
             <div className='carritoContainer__subTotal'>
-                <h6>Total: {precioTotalCarrito}</h6>
+                <h6>Total: {formateaMoneda(precioTotalCarrito)}</h6>
             </div>
-            <button disabled={!isAuthenticated} className={`botonFinalizarCompra ${isAuthenticated?"":" noLogueado"}`} onClick={handleFinalizarCompra}>
-                {isAuthenticated?"Finalizar Compra":"Inicia sesión para poder finalizar la compra"}
+            <button disabled={!isAuthenticated} className={`botonFinalizarCompra ${isAuthenticated ? "" : " noLogueado"}`} onClick={handleFinalizarCompra}>
+                {isAuthenticated ? "Finalizar Compra" : "Inicia sesión para poder finalizar la compra"}
             </button>
 
         </div>

@@ -1,5 +1,6 @@
 import BeatLoader from "react-spinners/BeatLoader";
 import { useEffect, useState, useContext } from "react"
+import { useParams } from "react-router-dom";
 import ItemList from "./ItemList"
 import ItemDetailContainer from "./ItemDetailContainer";
 import CategoriesContainer from "./CategoriesContainer";
@@ -27,10 +28,14 @@ const ItemListContainer = (props) => {
     const renderIsDetails = props.render === 'detalle';
     const renderIsCategories = props.render === 'categoria';
 
+    const { categoria } = useParams();
+    console.log(categoria)
+    
+
+    console.log(props)
+
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
-
-
 
 
     useEffect(() => {
@@ -42,7 +47,11 @@ const ItemListContainer = (props) => {
         //setProductosTodos(["test"])
         const productosCollection = collection(db, "productos")
         //const filtro = query(productosCollection, where("category", "==", "clothing"))
-        const filtro = query(productosCollection)
+        let filtro = query(productosCollection)
+
+        if(categoria !== undefined) {
+            filtro = query(productosCollection, where("category", "array-contains",categoria))
+        }
 
         getDocs(filtro)
             .then((respuesta) => {

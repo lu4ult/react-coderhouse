@@ -16,7 +16,7 @@ const CarritoContainer = () => {
     //TODO: en vez de usar isAuthenticated ver cómo detectarlo con los datos del contexto
     const { user, isAuthenticated, isLoading } = useAuth0();
 
-    const { carrito, productosTodos, setTotalProductos, borrarItemDelCarrito, datosUsuarioContext} = useContext(contexto);
+    const { carrito, productosTodos, setTotalProductos, borrarItemDelCarrito, datosUsuarioContext } = useContext(contexto);
 
     const preciosCarrito = carrito.map(item => {
         const producto = productosTodos.find(pr => pr.id === item.id)
@@ -36,7 +36,7 @@ const CarritoContainer = () => {
         Loading.hourglass();
 
         let textoItemsComprados = "<ul>";
-        ordenDeCompra.productos.forEach(item => {textoItemsComprados += `<li> ${item.cantidadIndividual}x ${item.id}</li>`});
+        ordenDeCompra.productos.forEach(item => { textoItemsComprados += `<li> ${item.cantidadIndividual}x ${item.id}</li>` });
         textoItemsComprados += '</ul>'
         console.log(textoItemsComprados)
 
@@ -64,8 +64,6 @@ const CarritoContainer = () => {
                 Loading.remove(2000);
             })
 
-
-
         console.log(ordenDeCompra)
 
     }
@@ -85,8 +83,9 @@ const CarritoContainer = () => {
                 <h6>Total: {formateaMoneda(precioTotalCarrito)}</h6>
             </div>
             {
-                isAuthenticated?<button className="botonFinalizarCompra" onClick={handleFinalizarCompra}>Finalizar Compra</button>
-                :<Link to="/user" className='botonFinalizarCompra noLogueado'>Inicia sesión para poder continuar la compra</Link>
+                isAuthenticated === false ? <Link to="/user" className='botonFinalizarCompra noLogueado'>Inicia sesión para poder continuar la compra</Link>
+                    : datosUsuarioContext.correo === undefined ? <Link to="/user" className='botonFinalizarCompra noLogueado'>Ingresá un correo real para poder continuar</Link>
+                        : <button className="botonFinalizarCompra" onClick={handleFinalizarCompra}>Finalizar Compra</button>
             }
         </div>
     );

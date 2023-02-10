@@ -8,11 +8,12 @@ const Item = ({ producto }) => {
     const { totalProductos, setTotalProductos, agregarAlCarrito } = useContext(contexto);
 
     //const notiflixPersonalizacion = {distance:"100px",showOnlyTheLastOne: true}
+    console.log(notiflixPersonalizacion())
 
     const handleOnClick = () => {
         if (producto.stock === 0) {
             //Notify.dismiss();
-            Notify.failure('Ups! Sin stock!',notiflixPersonalizacion);
+            Notify.failure('Ups! Sin stock!',notiflixPersonalizacion());
             return;
         }
 
@@ -24,7 +25,7 @@ const Item = ({ producto }) => {
             });
 
 
-            Notify.success('Agregado al carrito!',notiflixPersonalizacion);
+            Notify.success('Agregado al carrito!',notiflixPersonalizacion());
 
         }, 500);
 

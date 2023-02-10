@@ -8,6 +8,7 @@ import { BeatLoader } from "react-spinners";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { contexto } from "./CustomProvider";
+import { notiflixPersonalizacion } from "./utils";
 
 
 const UserData = () => {
@@ -173,7 +174,7 @@ const UserData = () => {
                                 <label>Condición frente al IVA</label>
                             </div>
 
-                            <button type="button" className="submitButton" onClick={()=>{Notify.success('Datos Actualizados',{distance:"100px"});}}>Guardar mis datos</button>
+                            <button type="button" className="submitButton" onClick={()=>{Notify.success('Datos Actualizados',notiflixPersonalizacion());}}>Guardar mis datos</button>
                             {/* <input type="button" className="submitButton" value="Guardar mis datos"></input> */}
                         </form>
                     </>

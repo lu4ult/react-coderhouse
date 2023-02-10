@@ -30,4 +30,9 @@ export const formateaMoneda = (numero) => {
     return str;
 }
 
-export const notiflixPersonalizacion = {distance:"100px",showOnlyTheLastOne: true};
+export const notiflixPersonalizacion = () => {
+    if (window.innerWidth > 900) {
+        return { distance: "100px", showOnlyTheLastOne: true };
+    }
+    return { position: "center-bottom", showOnlyTheLastOne: true };
+}

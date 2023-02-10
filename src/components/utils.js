@@ -10,6 +10,11 @@ export function NomPropio(strBk) {
     return str;
 }
 
+export const obtenerPrimeraPalabraComoStr = (str) => {
+    let palabras = str.split(" ");
+    return palabras[0] + " " + palabras[1];
+}
+
 export const shuffleArray = array => {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));

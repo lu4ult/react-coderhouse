@@ -1,8 +1,9 @@
 import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
+import { db } from "./Firebase";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
-import { useState, useEffect,useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { BeatLoader } from "react-spinners";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
@@ -22,10 +23,7 @@ const UserData = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-
-            //TODO: refactorizar a firestore.js
             if (datosLeidosFirestore === false) {
-                const db = getFirestore();
                 const biciRef = doc(db, "usuarios", user.sub);
                 getDoc(biciRef).then(snapshot => {
                     if (snapshot.exists()) {
@@ -42,10 +40,6 @@ const UserData = () => {
         }
     }, [isAuthenticated])
 
-
-    //TODO: reemplazar el botón type submit por un botón común para la UX, pero de esa forma evitamos que se recargue el formulario.
-    //TODO: sacar params porque al final no los usamos
-
     useEffect(() => {
         console.log(timeOutId)
     }, [timeOutId])
@@ -55,8 +49,6 @@ const UserData = () => {
         if (JSON.stringify(datosUsuario) !== "{}") {
             clearTimeout(timeOutId)
             const temporizadorId = setTimeout(() => {
-                //TODO: refactorizar db
-                const dbSet = getFirestore();
                 setDoc(doc(dbSet, "usuarios", datosUsuario.sub), datosUsuario, { merge: true })
                 setDatosUsuarioContext(datosUsuario);
             }, 1000);
@@ -174,7 +166,7 @@ const UserData = () => {
                                 <label>Condición frente al IVA</label>
                             </div>
 
-                            <button type="button" className="submitButton" onClick={()=>{Notify.success('Datos Actualizados',notiflixPersonalizacion());}}>Guardar mis datos</button>
+                            <button type="button" className="submitButton" onClick={() => { Notify.success('Datos Actualizados', notiflixPersonalizacion()); }}>Guardar mis datos</button>
                             {/* <input type="button" className="submitButton" value="Guardar mis datos"></input> */}
                         </form>
                     </>

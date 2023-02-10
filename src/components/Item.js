@@ -2,14 +2,13 @@ import { useContext } from "react";
 import { Link } from "react-router-dom"
 import { contexto } from "./CustomProvider";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { notiflixPersonalizacion } from './utils'
+import { notiflixPersonalizacion, obtenerPrimeraPalabraComoStr} from './utils'
 
 const Item = ({ producto }) => {
     const { totalProductos, setTotalProductos, agregarAlCarrito } = useContext(contexto);
 
     //const notiflixPersonalizacion = {distance:"100px",showOnlyTheLastOne: true}
-    console.log(notiflixPersonalizacion())
-
+    
     const handleOnClick = () => {
         if (producto.stock === 0) {
             //Notify.dismiss();
@@ -25,7 +24,7 @@ const Item = ({ producto }) => {
             });
 
 
-            Notify.success('Agregado al carrito!',notiflixPersonalizacion());
+            Notify.success(`${obtenerPrimeraPalabraComoStr(producto.title)} Agregado al carrito!`,notiflixPersonalizacion());
 
         }, 500);
 

@@ -63,6 +63,7 @@ const CarritoContainer = () => {
 
                 carrito.map(prod => borrarItemDelCarrito(prod));
                 setTotalProductos(0);
+                localStorage.setItem("tiendaLu4ult_cart","[]")
 
                 Loading.remove(2000);
             })
@@ -71,6 +72,8 @@ const CarritoContainer = () => {
 
     }
 
+    console.log(isAuthenticated)
+    console.log(datosUsuarioContext.correo)
     return (
         <div className="carritoContainer">
             <div className='productos'>

@@ -74,6 +74,7 @@ const ItemListContainer = (props) => {
                 //toast.error("Hubo un error, vuelva a intentarlo!" + error.message)
             })
 
+
     }, [categoria]);
 
 

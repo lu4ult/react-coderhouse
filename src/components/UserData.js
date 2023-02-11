@@ -1,4 +1,5 @@
 import { doc, getDoc, setDoc, getFirestore, collection, getDocs, query, where, Timestamp } from "firebase/firestore";
+import uuid from "react-uuid";
 import { db } from "./Firebase";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
@@ -10,6 +11,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { contexto } from "./CustomProvider";
 import { notiflixPersonalizacion } from "./utils";
+import sadFaceIcon from "./../img/sadFaceIcon.gif"
+
 
 
 const UserData = () => {
@@ -97,11 +100,15 @@ const UserData = () => {
                         <div className="userOrders">
                             {
                                 ordenesDelUsuario.length === 0 ?
-                                    <p>Ninguna compra por ahora</p>
+                                    <div className="sinCompras-container">
+                                        <p>Ninguna compra por ahora</p>
+                                        <img src={sadFaceIcon} alt="Cara triste al no tener compras"></img>
+                                    </div>
+
                                     : <ul>
                                         {
                                             ordenesDelUsuario.map(orden => (
-                                                <li>
+                                                <li key={uuid()}>
                                                     {JSON.stringify(orden.fecha.toDate())}
                                                     {JSON.stringify(orden.productos)}</li>
                                             ))

@@ -40,16 +40,12 @@ const UserData = () => {
         }
     }, [isAuthenticated])
 
-    useEffect(() => {
-        console.log(timeOutId)
-    }, [timeOutId])
-
 
     useEffect(() => {
         if (JSON.stringify(datosUsuario) !== "{}") {
             clearTimeout(timeOutId)
             const temporizadorId = setTimeout(() => {
-                setDoc(doc(dbSet, "usuarios", datosUsuario.sub), datosUsuario, { merge: true })
+                setDoc(doc(db, "usuarios", datosUsuario.sub), datosUsuario, { merge: true })
                 setDatosUsuarioContext(datosUsuario);
             }, 1000);
 
@@ -79,7 +75,7 @@ const UserData = () => {
                         <form>
                             <h3>Datos para el envío</h3>
                             <div className="form__field">
-                                <input placeholder={datosUsuario.correo || datosUsuario.email} type="email" name="correo" defaultValue={datosUsuario.correo || datosUsuario.email} required onChange={handleFormChange}></input>
+                                <input placeholder="correo@test.com" type="email" name="correo" defaultValue={datosUsuario.correo} required onChange={handleFormChange}></input>
                                 <label>Tu dirección de correo electrónico</label>
                             </div>
 

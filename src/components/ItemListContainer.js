@@ -24,33 +24,23 @@ También, decide si debe renderizar, en función de los props booleanos que reci
 
 */
 const ItemListContainer = (props) => {
-    const { setProductosTodos, carrito, agregarAlCarrito } = useContext(contexto);
-    const renderIsDetails = props.render === 'detalle';
-    const renderIsCategories = props.render === 'categoria';
+    const { setProductosTodos } = useContext(contexto);
+    const renderIsDetails = props.render === 'detalle' || false;
+    const renderIsCategories = props.render === 'categoria' || false;
 
     const { categoria } = useParams();
-    console.log(categoria)
-    
-
-    console.log(props)
-
+   
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
 
 
     useEffect(() => {
-
-        console.log("Primer request a firestores")
-
-
-
-        //setProductosTodos(["test"])
+        console.log(window.innerWidth)
         const productosCollection = collection(db, "productos")
-        //const filtro = query(productosCollection, where("category", "==", "clothing"))
         let filtro = query(productosCollection)
 
-        if(categoria !== undefined) {
-            filtro = query(productosCollection, where("category", "array-contains",categoria))
+        if (categoria !== undefined) {
+            filtro = query(productosCollection, where("category", "array-contains", categoria))
         }
 
         getDocs(filtro)
@@ -85,7 +75,7 @@ const ItemListContainer = (props) => {
                 //toast.error("Hubo un error, vuelva a intentarlo!" + error.message)
             })
 
-    }, []);
+    }, [categoria]);
 
 
 

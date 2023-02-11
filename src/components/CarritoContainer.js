@@ -21,14 +21,15 @@ const CarritoContainer = () => {
     const preciosCarrito = carrito.map(item => {
         const producto = productosTodos.find(pr => pr.id === item.id)
         return producto.price * item.cantidadIndividual;
-    })
+    });
     const precioTotalCarrito = preciosCarrito.reduce((a, b) => (a + b), 0);
 
 
     const ordenDeCompra = {
         productos: carrito,
         fecha: serverTimestamp(),
-        usuario: { ...user }
+        user_sub: datosUsuarioContext.sub,
+        usuario: { ...datosUsuarioContext }
 
     }
 
@@ -43,6 +44,12 @@ const CarritoContainer = () => {
         const coleccionCompras = collection(db, "ordenes");
         addDoc(coleccionCompras, ordenDeCompra)
             .then((docRef) => {
+                Report.info(
+                    '¡Gracias!',
+                    `Comenzamos a trabajar en tu orden ${docRef.id}, vas a recibir más información por email`,
+                    'Finalizar',
+                );
+
                 // 'productos': ordenDeCompra.productos.map(item => { `* ${item.cantidadIndividual}x ${item.id} ` })
                 emailjs.send('service_k3tj0b9', 'template_aznyypc', {
                     'destinatario': datosUsuarioContext.correo,
@@ -52,11 +59,7 @@ const CarritoContainer = () => {
                     'productos': textoItemsComprados
                 }, '840utIXux0aomLktd');
 
-                Report.info(
-                    '¡Gracias!',
-                    `Comenzamos a trabajar en tu orden ${docRef.id}, vas a recibir más información por email`,
-                    'Finalizar',
-                );
+
 
                 carrito.map(prod => borrarItemDelCarrito(prod));
                 setTotalProductos(0);

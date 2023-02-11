@@ -41,3 +41,13 @@ export const notiflixPersonalizacion = () => {
     }
     return { position: "center-bottom", showOnlyTheLastOne: true };
 }
+
+export const firestoreTimestampToHumanDate = (_timestamp) => {
+    const timestamp = { ..._timestamp };
+    const fechaJS = new Date(timestamp.seconds * 1000);
+
+    const min = fechaJS.getMinutes();
+    const sec = fechaJS.getSeconds();
+
+    return `${fechaJS.getDate()}/${1 + fechaJS.getMonth()}/${fechaJS.getFullYear() - 2000} - ${fechaJS.getHours()}:${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`;
+}

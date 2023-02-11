@@ -10,7 +10,7 @@ import { BeatLoader } from "react-spinners";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { contexto } from "./CustomProvider";
-import { notiflixPersonalizacion } from "./utils";
+import { notiflixPersonalizacion,firestoreTimestampToHumanDate } from "./utils";
 import sadFaceIcon from "./../img/sadFaceIcon.gif"
 
 
@@ -109,7 +109,8 @@ const UserData = () => {
                                         {
                                             ordenesDelUsuario.map(orden => (
                                                 <li key={uuid()}>
-                                                    {JSON.stringify(orden.fecha.toDate())}
+                                                    {firestoreTimestampToHumanDate(orden.fecha)}
+                                                    {orden.estado}
                                                     {JSON.stringify(orden.productos)}</li>
                                             ))
                                         }

@@ -28,6 +28,7 @@ const CarritoContainer = () => {
     const ordenDeCompra = {
         productos: carrito,
         fecha: serverTimestamp(),
+        estado:"Procesando",
         user_sub: datosUsuarioContext.sub,
         usuario: { ...datosUsuarioContext }
 

@@ -3,18 +3,18 @@ import uuid from 'react-uuid';
 import { useState } from 'react'
 import { doc, onSnapshot, addDoc, collection, getDocs, setDoc, getFirestore, deleteDoc, firestore } from "firebase/firestore";
 import { db } from './Firebase';
-import { CacheKey } from '@auth0/auth0-spa-js';
+import { iconoFloppyDisk } from './Iconos';
+import { firestoreTimestampToHumanDate } from './utils';
+
 
 
 const AdminPage = () => {
+    const [adminLogueado, setAdminLogueado] = useState(false);
+    const [listadoOrdenes, setListadoOrdenes] = useState([]);
 
-    const [productosDesdeArchivo, setProductosDesdeArchivo] = useState([]);
-    const [adminLogueado, setAdminLogueado] = useState(true);
-    const [listadoUsuarios, setListadoUsuarios] = useState([]);
-
-    const unsub = onSnapshot(doc(db, "productos", "5lScuTzuOYX6phzP46YK"), (doc) => {
-        console.log("Current data: ", doc.data());
-    });
+    // const unsub = onSnapshot(doc(db, "productos", "5lScuTzuOYX6phzP46YK"), (doc) => {
+    //     console.log("Current data: ", doc.data());
+    // });
 
 
     const handleLogin = () => {
@@ -28,68 +28,32 @@ const AdminPage = () => {
             setTimeout(() => { setAdminLogueado(false) }, 15 * 60 * 1000);
 
 
-            // console.log("a borrar:")
-            // deleteDoc(doc(db, "productos", "EwEBl0ofwAPgtMi1u1sA"));
-
-            /*
-            console.log("get users")
-            //Obtención de usuario registrados desde Firestore
-            const db = getFirestore();
-            const itemsCollection = collection(db, "usuarios", "");
-            getDocs(itemsCollection).then(snapshot => {
-                let lista = snapshot.docs.map(doc => doc.data());
-                //setListadoUsuarios(snapshot.docs.map(doc => doc.data()))
-                lista.sort((a, b) => new Date(b.last_update) - new Date(a.last_update));
-                setListadoUsuarios(lista);
-            })
-            */
+            const ordersColection = collection(db, "ordenes", "");
+            getDocs(ordersColection)
+                .then(snapshot => {
+                    let lista = snapshot.docs.map(doc => doc.data());
+                    console.log(JSON.stringify(lista))
+                    setListadoOrdenes(lista)
+                    //setListadoUsuarios(snapshot.docs.map(doc => doc.data()))
+                    // lista.sort((a, b) => new Date(b.last_update) - new Date(a.last_update));
+                    //setListadoUsuarios(lista);
+                })
+        }
+        else {
+            alert("contraseña incorrecta")
         }
     }
 
-    const handleFirebaseClick = () => {
-
-        // const productosCollection = collection(db, "productos")
-        // getDocs(productosCollection)
-        // .then(snapshot => {
-        //     const productos = snapshot.docs.map(doc =>
-        //         ({ ...doc.data(), "idFs": doc.data().id}))
-        //     console.log(productos)
-        // })
-        if (productosDesdeArchivo.length) {
-            productosDesdeArchivo.forEach((producto) => {
-                const productosColeccion = collection(db, "productos")
-                addDoc(productosColeccion, producto, {merge:true})
-                    .then((resultado) => {
-                        console.log(resultado.id)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            });
-        }
-        // else {
-        //     console.log("archivo vacío")
-        // }
-    }
-
-    const handleOnFileChange = (e) => {
-        console.log("archivo leido")
-        console.log(e.target.files[0].name)
-        let archivo = e.target.files[0];
-        let lector = new FileReader();
-        lector.onload = (f) => {
-            let contenido = JSON.parse(f.target.result);
-            setProductosDesdeArchivo(contenido);
-        };
-        lector.readAsText(archivo);
-
+    const actualizarOrden = (orden) => {
+        console.log(orden)
     }
 
 
+
+    console.log(listadoOrdenes)
     if (adminLogueado === false) {
         return (
             <div className="adminPage">
-                <p>Esta página se usará para generar los archivos de los envíos</p>
                 <div className='adminPage__credenciales'>
                     <input id="adminLogin-user" type="text" placeholder="Usuario"></input>
                     <input id="adminLogin-pass" type="password" ></input>
@@ -101,18 +65,41 @@ const AdminPage = () => {
     else {
         return (
             <div className="adminPage">
-                <div className='adminPage__section JSONHandler'>
-                    <input type="file" onChange={handleOnFileChange} id="archivo-selector"></input>
+                <div className='adminPage__section ordenes'>
+                    {/* <div>
+                        <img></img>
+                        <p>Nombre</p>
+                        <p>Productos</p>
+                        <p>Estado</p>
+                        <p>Seguimiento</p>
+                    </div> */}
                     <ul>
                         {
-                            productosDesdeArchivo.map(prod => {
+                            listadoOrdenes.map((orden, indice) => {
                                 return (
-                                    <li key={uuid()}>{prod.title}</li>
+                                    <li className={indice % 2 ? "impar" : "par"} key={uuid()}>
+                                        <img src={orden.usuario.picture}></img>
+                                        <p className='nombreUsuario'>{orden.usuario.nombre}</p>
+                                        <p>{firestoreTimestampToHumanDate(orden.fecha)}</p>
+                                        <select>
+                                            {
+                                                orden.productos.map(producto => {
+                                                    return (<option key={uuid()}>{JSON.stringify(producto)}</option>);
+                                                })
+                                            }
+                                        </select>
+                                        <select value={orden.estado}>
+                                            <option value="Compra Recibida">Compra Recibida</option>
+                                            <option value="En camino">En camino</option>
+                                            <option value="Finalizada">Finalizada</option>
+                                        </select>
+                                        <input type="text" id="trackingNumberInput" value={orden.trackingNumber || "Tracking Number pendiente"}></input>
+                                        <button onClick={actualizarOrden(orden)}>{iconoFloppyDisk}</button>
+                                    </li>
                                 )
                             })
                         }
                     </ul>
-                    <button onClick={handleFirebaseClick}>Setear firebase</button>
                 </div>
 
             </div>);

@@ -1,7 +1,11 @@
-//TODO: sacar esto? no se usa más este ícono
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap');
 
+$RickBlack: #07070A;
+$Maroon: #B7245C;
+$ForestGreen: #248232;
+$BlueMunsell: #6891A6;
+$CornflowerBlue: #253C78;
 
 $debugCss: 0;
 
@@ -655,13 +659,13 @@ body #root {
       .userOrders {
         width: 80%;
         border: 2px solid black;
-        
+
         //background-color: pink;
 
         .sinCompras-container {
           @extend .centrarColumna;
 
-         // background-color: orange;
+          // background-color: orange;
 
           img {
             width: 100px;
@@ -906,65 +910,142 @@ body #root {
 
     //Main => Admin
     .adminPage {
+      //flex-grow: 1;
+      //background-color: darkblue;
+      margin: 0 auto;
+      width: 90%;
+      min-height: 50vw;
+      padding: 1rem;
       @extend .centrarColumna;
-      margin-top: 5rem;
-      width: 90vw;
-      height: 60vh;
+      justify-content: space-around;
 
-      .adminPage__credenciales {
+      &__credenciales {
+        border: 5px solid $BlueMunsell;
+        padding: 2rem;
+        width: fit-content;
+        //min-height: 400px;
         @extend .centrarColumna;
-        justify-content: space-around;
-        width: 70%;
-        height: 200px;
-        background-color: white;
 
+        //justify-content: space-around
         input {
-          border: 2px solid blue;
-          outline: 2px solid blue;
+          width: 80%;
+          margin: 0.5rem;
+          padding: 0.5rem;
+          background-color: $CornflowerBlue;
+          text-align: center;
+          color: $ForestGreen;
+          border: none;
+          //outline: none;
+          font-size: 1.5rem;
+
+          &::placeholder {
+            color: $ForestGreen;
+          }
+        }
+
+        button {
+          color: $ForestGreen;
+          border: none;
+          margin: 0.5rem;
+          width: 80%;
+          padding: 1rem;
+          background-color: $CornflowerBlue;
         }
       }
 
       &__section {
+        margin-bottom: 3rem;
         width: 100%;
-        @extend .centrarColumna;
-        border: 2px solid lightblue;
-        background-color: white;
 
+        ul {
+          li {
+            background-color: $ForestGreen;
 
-        &.usersList {
+            p {
+              color: $RickBlack;
+              text-align: center;
 
-          //background-color: green;
-          ul {
-            width: 90%;
-
-            li {
-              @extend .centrarFila;
-              justify-content: space-between;
-
-              img {
-                width: 50px;
-
-                &:hover {
-                  width: 300px;
-                }
-              }
-
-              p {
+              &.nombre {
                 width: 200px;
-                //background-color: #ccc;
-                color: blue;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+
+            &.par {
+              background-color: #68B574;
+            }
+
+            @extend .centrarFila;
+            justify-content: space-between;
+            margin: 0.5rem;
+
+            font-size: 1.3rem;
+
+            &:hover {
+              outline: 3px solid $Maroon;
+            }
+
+          }
+        }
+
+        //aca
+        &.ordenes {
+
+
+          ul li {
+            height: 50px;
+            margin: 0;
+            padding: 0;
+
+            img {
+              width: 50px;
+              aspect-ratio: 1;
+            }
+
+            input {
+              border: none;
+              outline: none;
+              font-size: 1.2rem;
+              width: 150px;
+              text-align: center;
+              background-color: inherit;
+            }
+
+            p {
+              min-width: 80px;
+              text-align: center;
+
+              &.nombreUsuario {
+                width: 150px;
+              }
+            }
+
+            button {
+              cursor: pointer;
+              border: none;
+              outline: none;
+              //background-color: $Maroon;
+              height: 100%;
+              aspect-ratio: 1;
+              padding: 0.5rem;
+            }
+
+            svg {
+              height: 25px;
+              width: 25px;
+              fill: $Maroon;
+
+              &.errorSvg {
+                fill: $Maroon;
               }
             }
           }
         }
       }
-
-      ul {
-        li {
-          font-size: 1rem;
-        }
-      }
     }
+
 
     .error404-img {
       width: 100%;

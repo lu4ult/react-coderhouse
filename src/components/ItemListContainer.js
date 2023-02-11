@@ -29,13 +29,12 @@ const ItemListContainer = (props) => {
     const renderIsCategories = props.render === 'categoria' || false;
 
     const { categoria } = useParams();
-   
+
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
 
 
     useEffect(() => {
-        console.log(window.innerWidth)
         const productosCollection = collection(db, "productos")
         let filtro = query(productosCollection)
 

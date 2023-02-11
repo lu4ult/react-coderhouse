@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, setDoc, getFirestore, collection, getDocs, query, where, Timestamp } from "firebase/firestore";
 import { db } from "./Firebase";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
@@ -21,6 +21,8 @@ const UserData = () => {
     const [datosLeidosFirestore, setDatosLeidosFirestore] = useState(false);
     const provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
 
+    const [ordenesDelUsuario, setOrdenesDelUsuario] = useState([]);
+
     useEffect(() => {
         if (isAuthenticated) {
             if (datosLeidosFirestore === false) {
@@ -36,9 +38,29 @@ const UserData = () => {
                         setDoc(doc(dbSet, "usuarios", user.sub), { ...user }, { merge: true })
                     }
                 })
+
+
+                const ordenesDelUsuario = [];
+                const userOrders = collection(db, "ordenes")
+                const filtro = query(userOrders, where("user_sub", "==", user.sub.toString()))
+                getDocs(filtro)
+                    .then((respuesta) => {
+                        console.log(respuesta.docs)
+                        //const ordenes = respuesta.docs.map((doc,indice) => ({...doc.data(), indice:indice}))
+                        const ordenes = respuesta.docs.forEach(order => {
+                            ordenesDelUsuario.push({ ...order.data() })
+                            console.log(order.data())
+                        })
+                        setOrdenesDelUsuario(ordenesDelUsuario)
+                        console.log(ordenes)
+                    })
             }
         }
-    }, [isAuthenticated])
+    }, [isAuthenticated]);
+
+    useEffect(() => {
+        console.log(ordenesDelUsuario)
+    }, [ordenesDelUsuario])
 
 
     useEffect(() => {
@@ -71,6 +93,23 @@ const UserData = () => {
                             <p>{datosUsuario.nombre}</p>
                             <p>{datosUsuario.email}</p>
                             <LogoutButton />
+                        </div>
+                        <div className="userOrders">
+                            {
+                                ordenesDelUsuario.length === 0 ?
+                                    <p>Ninguna compra por ahora</p>
+                                    : <ul>
+                                        {
+                                            ordenesDelUsuario.map(orden => (
+                                                <li>
+                                                    {JSON.stringify(orden.fecha.toDate())}
+                                                    {JSON.stringify(orden.productos)}</li>
+                                            ))
+                                        }
+                                    </ul>
+
+                            }
+
                         </div>
                         <form>
                             <h3>Datos para el envío</h3>

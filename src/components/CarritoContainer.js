@@ -52,7 +52,7 @@ const CarritoContainer = () => {
                         'destinatario': datosUsuarioContext.correo,
                         'fecha': firestoreTimestampToHumanDate(serverTimestamp()),
                         'id_pedido': docRef.id,
-                        'from_name': datosUsuarioContext.name,
+                        'from_name': datosUsuarioContext.nombre,
                         'total_productos': totalProductos,
                         'total_costo': formateaMoneda(precioTotalCarrito),
                         'address': `${datosUsuarioContext.calle} ${datosUsuarioContext.altura}, ${datosUsuarioContext.localidad} ${datosUsuarioContext.provincia}`,

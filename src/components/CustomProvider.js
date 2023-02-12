@@ -24,8 +24,8 @@ const CustomProvider = ({ children }) => {
     }, [carrito]);
 
     useEffect(() => {
-        // const carritoLocalStorage = JSON.parse(localStorage.getItem("tiendaLu4ult_cart"));
-        // setCarrito(carritoLocalStorage);
+        const carritoLocalStorage = JSON.parse(localStorage.getItem("tiendaLu4ult_cart"));
+        setCarrito(carritoLocalStorage);
     }, []);
 
 

@@ -44,7 +44,7 @@ const CarritoContainer = () => {
         addDoc(coleccionCompras, ordenDeCompra)
             .then((docRef) => {
 
-                if (esProduccion() === false) {
+                if (esProduccion()) {
                     emailjs.send('service_k3tj0b9', 'template_aznyypc', {
                         'destinatario': datosUsuarioContext.correo,
                         'fecha': fechaJsAFechaHumana(new Date()),

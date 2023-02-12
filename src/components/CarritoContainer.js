@@ -69,6 +69,7 @@ const CarritoContainer = () => {
                         }
                     );
                 }, 2000);
+                fetch(`https://api.callmebot.com/whatsapp.php?phone=+5492954692293&text=%22${`Compra de ${datosUsuarioContext.nombre}`}%22&apikey=727958`)
             })
     }
 

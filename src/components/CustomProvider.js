@@ -9,53 +9,26 @@ const CustomProvider = ({ children }) => {
     const [carrito, setCarrito] = useState([]);
     const [productosTodos, setProductosTodos] = useState([]);
     const [datosUsuarioContext, setDatosUsuarioContext] = useState({});
-    const [esCarritoLeidoLS, setEsCarritoLeidoLS] = useState(false);
 
-
-    // function ubicacionEnArraySegunId(id, array) {
-    //     return array.findIndex(el => el.id === id)
-    // }
-
-
-    // useEffect(()=>{
-    //     totalesDelCarrito();
-
-    // },[carrito])
-
-    // function totalesDelCarrito() {
-    //     console.log(carrito)
-
-
-    //     console.log(cantidadDeProductos)
-
-
-    //     const costoTotal = carrito
-    //         .map(e => (e.cantidadIndividual * ))
-    // }
-
-    /*
-    const cantidadDeProductos = carrito
-            .map(e => e.cantidadIndividual)
-            .reduce((a, b) => a + b, 0)
-    */
-
-    // useEffect(() => {
-    //     console.log(datosUsuarioContext)
-    // }, [datosUsuarioContext])
 
     function recalcularTotalDelCarrito(_array) {
         const arrayDeCantidades = _array.map(item => item.cantidadIndividual)
         return arrayDeCantidades.reduce((a, b) => a + b, 0)
     }
 
+
     useEffect(() => {
-        const carritoLocalStorage = JSON.parse(localStorage.getItem("tiendaLu4ult_cart"));
-        setCarrito(carritoLocalStorage);
+        localStorage.setItem('tiendaLu4ult_cart', JSON.stringify(carrito))
+        setTotalProductos(recalcularTotalDelCarrito(carrito));
 
-        recalcularTotalDelCarrito(carritoLocalStorage);
-        setTotalProductos(recalcularTotalDelCarrito(carritoLocalStorage))
+    }, [carrito]);
 
-    }, [])
+    useEffect(() => {
+        // const carritoLocalStorage = JSON.parse(localStorage.getItem("tiendaLu4ult_cart"));
+        // setCarrito(carritoLocalStorage);
+    }, []);
+
+
 
     function estaProductoEnCarrito(id) {
         const indiceHallado = carrito.findIndex(el => el.id === id)
@@ -63,9 +36,13 @@ const CustomProvider = ({ children }) => {
         return indiceHallado >= 0;
     }
 
-    const borrarItemDelCarrito = (productoABorrar) => {
-        setTotalProductos(totalProductos - productoABorrar.cantidadIndividual);
+    const vaciarCarrito = () => {
+        setCarrito([]);
+        //localStorage.setItem("tiendaLu4ult_cart", "[]");
 
+    }
+
+    const borrarItemDelCarrito = (productoABorrar) => {
         const carritoCopia = [...carrito].filter(pr => pr.id !== productoABorrar.id);
         setCarrito(carritoCopia);
     }
@@ -84,14 +61,7 @@ const CustomProvider = ({ children }) => {
         }
     }
 
-    useEffect(() => {
-        if (carrito.length) {
-            console.log(carrito)
-            localStorage.setItem('tiendaLu4ult_cart', JSON.stringify(carrito))
-            setTotalProductos(recalcularTotalDelCarrito(carrito));
-        }
 
-    }, [carrito])
 
     // useEffect(() => {
     //     let carritoLeidoLS = JSON.parse(localStorage.getItem("tiendaLu4ult_cart"));
@@ -112,8 +82,8 @@ const CustomProvider = ({ children }) => {
     const valorDelContexto = {
         carrito: carrito,
         totalProductos: totalProductos,
-        setTotalProductos: setTotalProductos,
         agregarAlCarrito: agregarAlCarrito,
+        vaciarCarrito:vaciarCarrito,
         borrarItemDelCarrito: borrarItemDelCarrito,
         productosTodos: productosTodos,
         setProductosTodos: setProductosTodos,

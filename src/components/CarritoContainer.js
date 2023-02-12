@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { addDoc, collection, getDocs, query, where, serverTimestamp } from "firebase/firestore"
 import { db } from "./Firebase";
 import { Loading, Notify, Report } from 'notiflix';
-import { formateaMoneda, firestoreTimestampToHumanDate } from './utils';
+import { formateaMoneda, firestoreTimestampToHumanDate, esProduccion } from './utils';
 import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import CaraTristeAnimacion from './CaraTristeAnimacion';
@@ -17,7 +17,7 @@ const CarritoContainer = () => {
     //TODO: en vez de usar isAuthenticated ver cómo detectarlo con los datos del contexto
     const { user, isAuthenticated, isLoading } = useAuth0();
 
-    const { carrito, productosTodos, totalProductos, setTotalProductos, borrarItemDelCarrito, datosUsuarioContext } = useContext(contexto);
+    const { carrito, productosTodos, totalProductos, vaciarCarrito, datosUsuarioContext } = useContext(contexto);
 
     const preciosCarrito = carrito.map(item => {
         const producto = productosTodos.find(pr => pr.id === item.id)
@@ -43,48 +43,36 @@ const CarritoContainer = () => {
         let textoItemsComprados = "* ";
         ordenDeCompra.productos.forEach(item => { textoItemsComprados += `${item.cantidadIndividual}x ${item.id}` });
 
-        // console.log(serverTimestamp())
-        // console.log(serverTimestamp().toString())
-        // console.log(JSON.stringify(serverTimestamp()))
-        // console.log(JSON.stringify({...serverTimestamp()}))
-
-        // console.log(firestoreTimestampToHumanDate(JSON.stringify(serverTimestamp())))
-        // console.log(firestoreTimestampToHumanDate({...serverTimestamp()}))
-
-
         const coleccionCompras = collection(db, "ordenes");
         addDoc(coleccionCompras, ordenDeCompra)
             .then((docRef) => {
 
-                emailjs.send('service_k3tj0b9', 'template_aznyypc', {
-                    'destinatario': datosUsuarioContext.correo,
-                    'fecha': firestoreTimestampToHumanDate(serverTimestamp()),
-                    'id_pedido': docRef.id,
-                    'from_name': datosUsuarioContext.name,
-                    'total_productos': totalProductos,
-                    'total_costo': formateaMoneda(precioTotalCarrito),
-                    'address': `${datosUsuarioContext.calle} ${datosUsuarioContext.altura}, ${datosUsuarioContext.localidad} ${datosUsuarioContext.provincia}`,
-                    'productos': textoItemsComprados
-                }, '840utIXux0aomLktd');
+                if (esProduccion()) {
+                    emailjs.send('service_k3tj0b9', 'template_aznyypc', {
+                        'destinatario': datosUsuarioContext.correo,
+                        'fecha': firestoreTimestampToHumanDate(serverTimestamp()),
+                        'id_pedido': docRef.id,
+                        'from_name': datosUsuarioContext.name,
+                        'total_productos': totalProductos,
+                        'total_costo': formateaMoneda(precioTotalCarrito),
+                        'address': `${datosUsuarioContext.calle} ${datosUsuarioContext.altura}, ${datosUsuarioContext.localidad} ${datosUsuarioContext.provincia}`,
+                        'productos': textoItemsComprados
+                    }, '840utIXux0aomLktd');
+                }
 
-
-
-                carrito.map(prod => borrarItemDelCarrito(prod));
-                localStorage.setItem("tiendaLu4ult_cart", "[]")
-
+                Loading.remove(3000);
                 setTimeout(() => {
-                    Loading.remove();
                     Report.info(
                         '¡Gracias!',
                         `Comenzamos a trabajar en tu orden ${docRef.id}, vas a recibir más información por email`,
                         'Finalizar',
-                    )
-                }, 1500);
+                    );
 
+                }, 2000)
+
+
+                vaciarCarrito();
             })
-
-        console.log(ordenDeCompra)
-
     }
 
     return (

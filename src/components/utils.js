@@ -51,3 +51,7 @@ export const firestoreTimestampToHumanDate = (_timestamp) => {
 
     return `${fechaJS.getDate()}/${1 + fechaJS.getMonth()}/${fechaJS.getFullYear() - 2000} - ${fechaJS.getHours()}:${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`;
 }
+
+export const esProduccion = () => {
+    return window.location.origin === 'https://lu4ult.vercel.app';
+}

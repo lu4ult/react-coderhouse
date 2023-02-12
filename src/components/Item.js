@@ -2,29 +2,28 @@ import { useContext } from "react";
 import { Link } from "react-router-dom"
 import { contexto } from "./CustomProvider";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { notiflixPersonalizacion, obtenerPrimeraPalabraComoStr} from './utils'
+import { notiflixPersonalizacion, obtenerPrimeraPalabraComoStr } from './utils'
 
 const Item = ({ producto }) => {
-    const { totalProductos, setTotalProductos, agregarAlCarrito } = useContext(contexto);
+    const { agregarAlCarrito } = useContext(contexto);
 
     //const notiflixPersonalizacion = {distance:"100px",showOnlyTheLastOne: true}
-    
+
     const handleOnClick = () => {
         if (producto.stock === 0) {
             //Notify.dismiss();
-            Notify.failure('Ups! Sin stock!',notiflixPersonalizacion());
+            Notify.failure('Ups! Sin stock!', notiflixPersonalizacion());
             return;
         }
 
         setTimeout(() => {
-            setTotalProductos(totalProductos + 1);
             agregarAlCarrito({
                 id: producto.id,
                 cantidadIndividual: 1
             });
 
 
-            Notify.success(`${obtenerPrimeraPalabraComoStr(producto.title)} Agregado al carrito!`,notiflixPersonalizacion());
+            Notify.success(`${obtenerPrimeraPalabraComoStr(producto.title)} Agregado al carrito!`, notiflixPersonalizacion());
 
         }, 500);
 

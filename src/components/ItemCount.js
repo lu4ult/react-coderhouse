@@ -28,7 +28,6 @@ const ItemCount = ({ producto, esCarrito }) => {
 
     //console.log(producto)
     const handleSumar = () => {
-
         if (contador < producto.stock) {
             setContador(contador + 1);
             agregarAlCarrito({
@@ -36,8 +35,6 @@ const ItemCount = ({ producto, esCarrito }) => {
                 cantidadIndividual: 1
             });
         }
-
-        //if(!escarrito) setTotalProductos(
     }
 
     const handleRestar = () => {

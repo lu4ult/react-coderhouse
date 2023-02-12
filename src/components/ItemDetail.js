@@ -1,4 +1,5 @@
 import ItemCount from "./ItemCount";
+import { formateaMoneda } from "./utils";
 
 const ItemDetail = ({ productoAMostrar }) => {
 
@@ -15,7 +16,7 @@ const ItemDetail = ({ productoAMostrar }) => {
 
             <div className="itemDetalles__datos">
                 <p>{productoAMostrar.internalCategory}</p>
-                <p>{productoAMostrar.price} $</p>
+                <p>{formateaMoneda(productoAMostrar.price)}</p>
                 {
                     productoAMostrar.fullFilment === false? <ItemCount producto={productoAMostrar} esCarrito={false} />
                     :<p className="fullMsg">Este producto se encuentra en Full, por lo que sólo se puede comprar en Mercado Libre</p>

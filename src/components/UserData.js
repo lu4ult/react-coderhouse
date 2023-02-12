@@ -1,4 +1,4 @@
-import { doc, getDoc, setDoc, getFirestore, collection, getDocs, query, where, Timestamp } from "firebase/firestore";
+import { doc, getDoc, setDoc, getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import uuid from "react-uuid";
 import { db } from "./Firebase";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -10,7 +10,7 @@ import { BeatLoader } from "react-spinners";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { contexto } from "./CustomProvider";
-import { notiflixPersonalizacion,firestoreTimestampToHumanDate,formateaMoneda } from "./utils";
+import { notiflixPersonalizacion, firestoreTimestampToHumanDate, formateaMoneda } from "./utils";
 import CaraTristeAnimacion from "./CaraTristeAnimacion";
 
 
@@ -47,22 +47,14 @@ const UserData = () => {
                 const filtro = query(userOrders, where("user_sub", "==", user.sub.toString()))
                 getDocs(filtro)
                     .then((respuesta) => {
-                        console.log(respuesta.docs)
-                        //const ordenes = respuesta.docs.map((doc,indice) => ({...doc.data(), indice:indice}))
-                        const ordenes = respuesta.docs.forEach(order => {
-                            ordenesDelUsuario.push({ ...order.data(), id:order.id})
-                            console.log(order.data())
+                        respuesta.docs.forEach(order => {
+                            ordenesDelUsuario.push({ ...order.data(), id: order.id });
                         })
-                        setOrdenesDelUsuario(ordenesDelUsuario)
-                        console.log(ordenes)
+                        setOrdenesDelUsuario(ordenesDelUsuario);
                     })
             }
         }
     }, [isAuthenticated]);
-
-    useEffect(() => {
-        console.log(ordenesDelUsuario)
-    }, [ordenesDelUsuario])
 
 
     useEffect(() => {
@@ -91,7 +83,7 @@ const UserData = () => {
                         : <LoginButton />
                     : <>
                         <div className="userData">
-                            <img src={datosUsuario.picture}></img>
+                            <img src={datosUsuario.picture} alt="Foto perfil"></img>
                             <p>{datosUsuario.nombre}</p>
                             <p>{datosUsuario.email}</p>
                             <LogoutButton />
@@ -100,13 +92,13 @@ const UserData = () => {
                             {
                                 ordenesDelUsuario.length === 0 ?
                                     <div className="sinCompras-container">
-                                        <CaraTristeAnimacion mensaje="Ninguna compra!"/>
+                                        <CaraTristeAnimacion mensaje="Ninguna compra!" />
                                     </div>
 
                                     : <ul>
                                         {
-                                            ordenesDelUsuario.map((orden,indice) => (
-                                                <li key={uuid()} className={indice%2?"impar":"par"}>
+                                            ordenesDelUsuario.map((orden, indice) => (
+                                                <li key={uuid()} className={indice % 2 ? "impar" : "par"}>
                                                     {firestoreTimestampToHumanDate(orden.fecha)}
                                                     <p>Productos: {orden.totalProductos}</p>
                                                     <p>ID:{orden.id}</p>

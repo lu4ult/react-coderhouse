@@ -2,16 +2,12 @@ import { useContext } from "react";
 import { Link } from "react-router-dom"
 import { contexto } from "./CustomProvider";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { notiflixPersonalizacion, obtenerPrimeraPalabraComoStr } from './utils'
+import { formateaMoneda, notiflixPersonalizacion, obtenerPrimeraPalabraComoStr } from './utils'
 
 const Item = ({ producto }) => {
     const { agregarAlCarrito } = useContext(contexto);
-
-    //const notiflixPersonalizacion = {distance:"100px",showOnlyTheLastOne: true}
-
     const handleOnClick = () => {
         if (producto.stock === 0) {
-            //Notify.dismiss();
             Notify.failure('Ups! Sin stock!', notiflixPersonalizacion());
             return;
         }
@@ -22,11 +18,8 @@ const Item = ({ producto }) => {
                 cantidadIndividual: 1
             });
 
-
             Notify.success(`${obtenerPrimeraPalabraComoStr(producto.title)} Agregado al carrito!`, notiflixPersonalizacion());
-
         }, 500);
-
     }
 
     return (
@@ -39,11 +32,10 @@ const Item = ({ producto }) => {
                 <div>{producto.popularidad} - {producto.internalCategory}</div>
             </div>
 
-            <div className="article__price"><strong>{producto.price}</strong> $</div>
+            <div className="article__price"><strong>{formateaMoneda(producto.price)}</strong></div>
             {
                 producto.stock === 0 ?
-                    <div className="sinStock">Agotado</div> :
-                    ""
+                    <div className="sinStock">Agotado</div> : ""
             }
             <div className="article__buttonsContainer">
                 {

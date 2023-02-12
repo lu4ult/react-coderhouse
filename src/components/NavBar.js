@@ -3,14 +3,7 @@ import { NavLink } from "react-router-dom"
 import { useContext } from "react";
 import { contexto } from "./CustomProvider"
 const NavBar = () => {
-
-    //totalProductos = useContext(contexto).totalProductos
     const { totalProductos } = useContext(contexto);
-
-
-    //console.log(totalProductos)
-
-    //setearTotalProductos(8);
 
     return (
         <>

@@ -1,7 +1,7 @@
 import md5 from 'md5'
 import uuid from 'react-uuid';
 import { useState } from 'react'
-import { doc, onSnapshot, addDoc, collection, getDocs, setDoc, getFirestore, deleteDoc, firestore } from "firebase/firestore";
+import { doc, collection, getDocs, setDoc } from "firebase/firestore";
 import { db } from './Firebase';
 import { iconoEmail, iconoFloppyDisk } from './Iconos';
 import { firestoreTimestampToHumanDate } from './utils';
@@ -12,13 +12,7 @@ const AdminPage = () => {
     const [listadoOrdenes, setListadoOrdenes] = useState([]);
     const opcionesEstadoCompra = ["Procesando", "En camino", "Finalizada"];
 
-    const unsub = onSnapshot(doc(db, "productos", "Wv0BLu3mt4jANImiUnVO"), (doc) => {
-        console.log("Current data: ", doc.data());
-    });
-
-
     const handleLogin = () => {
-
         let user = document.getElementById("adminLogin-user").value.toLowerCase();
         let pass = document.getElementById("adminLogin-pass").value.toLowerCase();
         let hash = md5(user + pass + '1b34dcaa-a6d6-ed0b-fe82-874c784fb914');
@@ -31,43 +25,26 @@ const AdminPage = () => {
             const ordersColection = collection(db, "ordenes", "");
             getDocs(ordersColection)
                 .then(snapshot => {
-                    // { ...datosUsuario, [e.target.name]: e.target.value }
                     let lista = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-                    console.log(JSON.stringify(lista))
-                    setListadoOrdenes(lista)
-                    //setListadoUsuarios(snapshot.docs.map(doc => doc.data()))
-                    // lista.sort((a, b) => new Date(b.last_update) - new Date(a.last_update));
-                    //setListadoUsuarios(lista);
+                    setListadoOrdenes(lista);
                 })
         }
         else {
-            alert("contraseña incorrecta")
+            alert("contraseña incorrecta");
         }
     }
 
     const actualizarOrden = (id) => {
-        console.log("aca")
-        console.log(id)
-
         const ordenAModificar = listadoOrdenes.find(el => el.id === id)
-        console.log(ordenAModificar)
         const estadoActual = document.getElementById("estado" + id).value;
         const tn = document.getElementById("tn" + id).value;
 
         ordenAModificar.trackingNumber = tn;
         ordenAModificar.estado = estadoActual;
-        console.log(estadoActual)
-        console.log(tn)
 
-        //const order = doc(db,"id")
-        setDoc(doc(db, "ordenes", id), ordenAModificar, { merge: true })
-
-
-
+        setDoc(doc(db, "ordenes", id), ordenAModificar, { merge: true });
     }
 
-
-    
 
 
     if (adminLogueado === false) {
@@ -111,6 +88,8 @@ const AdminPage = () => {
                                             }
 
                                         </select>
+
+                                        {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
                                         <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "Tracking Number pendiente"}></input>
                                         <a className={indice === 0 ? 'email' : null} href={`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`}>{iconoEmail}</a>
                                         <button className={indice === 0 ? 'guardar' : null} onClick={() => { actualizarOrden(orden.id) }}>{iconoFloppyDisk}</button>
@@ -127,19 +106,3 @@ const AdminPage = () => {
 }
 
 export default AdminPage;
-
-// productosDesdeArchivo.map(line => {return <p>{line}</p>})
-
-/*
-
-
-<div className='adminPage__section usersList'>
-                    <ul>
-                        {
-                            listadoUsuarios.map(user => { return <li key={uuid()}><img src={user.picture}></img> <p>{user.nombre}</p><p>{user.email}</p><p>{user.last_update}</p></li> })
-                        }
-                    </ul>
-                </div>
-
-
-*/

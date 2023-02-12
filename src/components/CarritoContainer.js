@@ -4,19 +4,16 @@ import { contexto } from "./CustomProvider";
 import CarritoItem from './CarritoItem';
 import { useAuth0 } from "@auth0/auth0-react";
 
-import { addDoc, collection, getDocs, query, where, serverTimestamp } from "firebase/firestore"
+import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { db } from "./Firebase";
-import { Confirm, Loading, Notify, Report } from 'notiflix';
-import { formateaMoneda, firestoreTimestampToHumanDate, esProduccion } from './utils';
+import { Loading, Report } from 'notiflix';
+import { formateaMoneda, fechaJsAFechaHumana, esProduccion } from './utils';
 import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import CaraTristeAnimacion from './CaraTristeAnimacion';
 
 const CarritoContainer = () => {
-
-    //TODO: en vez de usar isAuthenticated ver cómo detectarlo con los datos del contexto
-    const { user, isAuthenticated, isLoading } = useAuth0();
-
+    const { isAuthenticated } = useAuth0();
     const { carrito, productosTodos, totalProductos, vaciarCarrito, datosUsuarioContext } = useContext(contexto);
 
     const preciosCarrito = carrito.map(item => {
@@ -47,10 +44,10 @@ const CarritoContainer = () => {
         addDoc(coleccionCompras, ordenDeCompra)
             .then((docRef) => {
 
-                if (esProduccion()) {
+                if (esProduccion() === false) {
                     emailjs.send('service_k3tj0b9', 'template_aznyypc', {
                         'destinatario': datosUsuarioContext.correo,
-                        'fecha': firestoreTimestampToHumanDate(serverTimestamp()),
+                        'fecha': fechaJsAFechaHumana(new Date()),
                         'id_pedido': docRef.id,
                         'from_name': datosUsuarioContext.nombre,
                         'total_productos': totalProductos,
@@ -72,8 +69,6 @@ const CarritoContainer = () => {
                         }
                     );
                 }, 2000);
-
-
             })
     }
 

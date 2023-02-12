@@ -1,10 +1,8 @@
 import { useParams } from "react-router-dom";
 import BannerProductosMiniaturas from "./BannerProductosMiniaturas";
-//import shuffleArray from "./ShuffleArray";
 import { shuffleArray } from "./utils";
 import ItemDetail from "./ItemDetail";
 import BeatLoader from "react-spinners/BeatLoader";
-
 
 
 const ItemDetailContainer = ({ productos }) => {
@@ -17,8 +15,6 @@ const ItemDetailContainer = ({ productos }) => {
         console.log(indiceProductoAMostrar);
     }
 
-    console.log(productoAMostrar)
-
     /*******************************************/
     let viewportWidth = window.innerWidth;
     let cantidadDeMiniaturas = Math.floor(viewportWidth / 250);
@@ -27,6 +23,8 @@ const ItemDetailContainer = ({ productos }) => {
     if (cantidadDeMiniaturas > 6)
         cantidadDeMiniaturas = 6;
 
+
+    //TODO: quitar el producto actual de este array, no tiene sentido que sugiera la publicación que ya está viendo
     const productosCopia = [...productos];
     const productosParaBanner = [];
     shuffleArray(productosCopia);
@@ -38,8 +36,6 @@ const ItemDetailContainer = ({ productos }) => {
     }
 
     /*******************************************/
-
-
     if (productos.length) {
         return (
             <>
@@ -59,9 +55,3 @@ const ItemDetailContainer = ({ productos }) => {
 }
 
 export default ItemDetailContainer;
-
-/*
-
-
-
-                */

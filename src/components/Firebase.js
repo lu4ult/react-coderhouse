@@ -1,4 +1,3 @@
-//Traigo una funcion que me conecta la app de React (codigo del front end ) con la plataforma de firebase
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
@@ -12,8 +11,5 @@ const firebaseConfig = {
   };
 
 
-//Esta es una variable que representa "la plataforma" en si
-const app = initializeApp(firebaseConfig);//FirebaseApp
-
-//Esta es una variable que representa "la pestaña Firestore Database o la base de datos"
+const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);

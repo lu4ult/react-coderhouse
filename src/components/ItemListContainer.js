@@ -4,35 +4,20 @@ import { useParams } from "react-router-dom";
 import ItemList from "./ItemList"
 import ItemDetailContainer from "./ItemDetailContainer";
 import CategoriesContainer from "./CategoriesContainer";
-//import { useParams } from "react-router-dom";
 
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "./Firebase";
-
 import { contexto } from "./CustomProvider";
 
 
-
-//import Filters from "./Filters";
-
-/*
-Se encarga de pedir el array de productos a products.json alojado en el repo.
-También, decide si debe renderizar, en función de los props booleanos que recibe qué debe renderizar:
-1) la página principal:     ItemList => Item
-2) individual de producto:  ItemDetailContainer
-3) página por categoría:    CategoriesContainer => ItemList => Item
-
-*/
 const ItemListContainer = (props) => {
     const { setProductosTodos } = useContext(contexto);
     const renderIsDetails = props.render === 'detalle' || false;
     const renderIsCategories = props.render === 'categoria' || false;
-
     const { categoria } = useParams();
 
     const [productos, setProductos] = useState([]);
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
-
 
     useEffect(() => {
         const productosCollection = collection(db, "productos")
@@ -48,7 +33,7 @@ const ItemListContainer = (props) => {
                     setEstanProductosCargados(true);
                     setProductos(productos);
                     setProductosTodos(productos);
-                }, 500)
+                }, 1000);
 
                 const productos = respuesta.docs.map(doc =>
                     ({ ...doc.data() }))
@@ -61,7 +46,7 @@ const ItemListContainer = (props) => {
                             e.video = data['video_id'];
                             e.popularidad = data['sold_quantity'];
 
-                            e.price = Math.floor(0.89 * parseInt(data['price']));
+                            e.price = Math.floor(0.9 * parseInt(data['price']));
                             if (e.fullFilment === true)
                                 e.price = Math.floor(1 * parseInt(data['price']));
                             //e.stock = parseInt(data['available_quantity']);               //No porque no es el stock
@@ -71,7 +56,6 @@ const ItemListContainer = (props) => {
             })
             .catch((error) => {
                 console.log(error)
-                //toast.error("Hubo un error, vuelva a intentarlo!" + error.message)
             })
 
 

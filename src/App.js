@@ -19,8 +19,6 @@ function App() {
         <Footer />
       </BrowserRouter>
     </CustomProvider>
-
-
   );
 }
 

@@ -29,7 +29,6 @@ const CustomProvider = ({ children }) => {
     }, []);
 
 
-
     function estaProductoEnCarrito(id) {
         const indiceHallado = carrito.findIndex(el => el.id === id)
 
@@ -38,8 +37,6 @@ const CustomProvider = ({ children }) => {
 
     const vaciarCarrito = () => {
         setCarrito([]);
-        //localStorage.setItem("tiendaLu4ult_cart", "[]");
-
     }
 
     const borrarItemDelCarrito = (productoABorrar) => {
@@ -48,7 +45,6 @@ const CustomProvider = ({ children }) => {
     }
 
     const agregarAlCarrito = (producto) => {
-        console.log("agregando" + JSON.stringify(producto))
         if (estaProductoEnCarrito(producto.id) === false) {
             setCarrito([...carrito, producto]);
         }
@@ -61,24 +57,6 @@ const CustomProvider = ({ children }) => {
         }
     }
 
-
-
-    // useEffect(() => {
-    //     let carritoLeidoLS = JSON.parse(localStorage.getItem("tiendaLu4ult_cart"));
-    //     console.log(carritoLeidoLS)
-
-    //     if (carritoLeidoLS.length) {
-    //         console.log("va")
-    //         //console.log(carrito)
-    //         //carritoLeidoLS.map(item => agregarAlCarrito(item))
-    //         //setCarrito(carritoLeidoLS)
-
-    //         carritoLeidoLS.forEach(item => agregarAlCarrito(item))
-    //     }
-
-    // }, [])
-
-
     const valorDelContexto = {
         carrito: carrito,
         totalProductos: totalProductos,
@@ -89,7 +67,6 @@ const CustomProvider = ({ children }) => {
         setProductosTodos: setProductosTodos,
         datosUsuarioContext: datosUsuarioContext,
         setDatosUsuarioContext: setDatosUsuarioContext
-
     }
 
     return (

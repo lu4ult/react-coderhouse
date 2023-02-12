@@ -1,6 +1,6 @@
 const Footer = () => {
     return (
-        <footer>Desarrollado por Lautaro Tourn</footer>
+        <footer><a href="https://lu4ult.github.io/" target="_blank" rel="noopener noreferrer">Desarrollado por Lautaro Tourn</a></footer>
     );
 }
 

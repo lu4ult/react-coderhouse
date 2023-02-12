@@ -732,6 +732,7 @@ body #root {
             text-align: center;
             width: 250px;
           }
+          //flex-wrap: wrap;
         }
       }
 
@@ -1224,6 +1225,18 @@ body #root {
 
           a {
             text-align: center;
+          }
+        }
+      }
+
+      .userData-container {
+        .userOrders {
+
+          ul li {
+            padding: 0.5rem;
+            height: fit-content;
+            display: flex;
+            flex-direction: column;
           }
         }
       }

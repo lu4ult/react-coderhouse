@@ -6,7 +6,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import { addDoc, collection, getDocs, query, where, serverTimestamp } from "firebase/firestore"
 import { db } from "./Firebase";
-import { Loading, Notify, Report } from 'notiflix';
+import { Confirm, Loading, Notify, Report } from 'notiflix';
 import { formateaMoneda, firestoreTimestampToHumanDate, esProduccion } from './utils';
 import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
@@ -66,12 +66,14 @@ const CarritoContainer = () => {
                         '¡Gracias!',
                         `Comenzamos a trabajar en tu orden ${docRef.id}, vas a recibir más información por email`,
                         'Finalizar',
+                        () => {
+                            vaciarCarrito();
+                            window.location.replace(window.location.origin + "/user")
+                        }
                     );
+                }, 2000);
 
-                }, 2000)
 
-
-                vaciarCarrito();
             })
     }
 

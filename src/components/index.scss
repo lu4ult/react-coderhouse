@@ -399,8 +399,8 @@ body #root {
                   background-color: black;
                   color: white;
                   position: absolute;
-                  top: -100%;
-                  right: -50%;
+                  bottom: 100%;
+                  left: -50%;
                   text-overflow: none;
                   border-radius: 10px;
                   content: "Más Información";
@@ -416,8 +416,8 @@ body #root {
                     background-color: black;
                     color: white;
                     position: absolute;
-                    top: -100%;
-                    right: -50%;
+                    bottom: 100%;
+                    left: -50%;
                     content: "Agregar al carrito";
                   }
                 }
@@ -855,6 +855,7 @@ body #root {
           }
 
           a {
+            //text-align: center;
             width: 300px;
             white-space: nowrap;
             overflow: hidden;
@@ -863,6 +864,7 @@ body #root {
 
           p {
             width: 150px;
+            text-align: center;
           }
 
         }
@@ -1209,6 +1211,19 @@ body #root {
             width: 100%;
             border: 1px solid #ccc;
             border-bottom: 1px solid blue;
+          }
+        }
+      }
+
+      .carritoContainer {
+
+        //background-color: red;
+        .productos__producto {
+          display: flex;
+          flex-direction: column;
+
+          a {
+            text-align: center;
           }
         }
       }

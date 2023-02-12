@@ -50,7 +50,7 @@ const UserData = () => {
                         console.log(respuesta.docs)
                         //const ordenes = respuesta.docs.map((doc,indice) => ({...doc.data(), indice:indice}))
                         const ordenes = respuesta.docs.forEach(order => {
-                            ordenesDelUsuario.push({ ...order.data() })
+                            ordenesDelUsuario.push({ ...order.data(), id:order.id})
                             console.log(order.data())
                         })
                         setOrdenesDelUsuario(ordenesDelUsuario)
@@ -109,7 +109,9 @@ const UserData = () => {
                                                 <li key={uuid()} className={indice%2?"impar":"par"}>
                                                     {firestoreTimestampToHumanDate(orden.fecha)}
                                                     <p>Productos: {orden.totalProductos}</p>
+                                                    <p>ID:{orden.id}</p>
                                                     <p>Total: {formateaMoneda(orden.totalCosto)}</p>
+                                                    <p className="trackingNumber">TN: <a href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer">{orden.trackingNumber || "Pendiente"}</a></p>
                                                     {orden.estado}
                                                     {/* {JSON.stringify(orden.productos)} */}
                                                 </li>

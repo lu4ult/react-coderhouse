@@ -87,11 +87,6 @@ const CarritoContainer = () => {
 
     }
 
-    console.log(isAuthenticated)
-    console.log(datosUsuarioContext.correo)
-    console.log(carrito)
-    console.log(carrito.lenght)
-    console.log(JSON.stringify(carrito))
     return (
         <div className="carritoContainer">
             <div className='productos'>

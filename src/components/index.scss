@@ -727,6 +727,11 @@ body #root {
           &:hover {
             background-color: lightblue;
           }
+
+          .trackingNumber {
+            text-align: center;
+            width: 250px;
+          }
         }
       }
 
@@ -938,9 +943,9 @@ body #root {
     //Main => Admin
     .adminPage {
       //flex-grow: 1;
-      //background-color: darkblue;
+      // background-color: darkblue;
       margin: 0 auto;
-      width: 90%;
+      width: 100%;
       min-height: 50vw;
       padding: 1rem;
       @extend .centrarColumna;
@@ -991,6 +996,7 @@ body #root {
             p {
               color: $RickBlack;
               text-align: center;
+              font-size: 1rem;
 
               &.nombre {
                 width: 200px;
@@ -1002,6 +1008,11 @@ body #root {
 
             &.par {
               background-color: #68B574;
+            }
+
+            input {
+              background-color: red;
+              font-size: 1rem
             }
 
             @extend .centrarFila;
@@ -1047,7 +1058,6 @@ body #root {
           }
         }
 
-        //aca
         &.ordenes {
 
 
@@ -1064,8 +1074,8 @@ body #root {
             input {
               border: none;
               outline: none;
-              font-size: 1.2rem;
-              width: 150px;
+              font-size: 1.0rem;
+              width: fit-content;
               text-align: center;
               background-color: inherit;
             }

@@ -10,10 +10,11 @@ import { firestoreTimestampToHumanDate } from './utils';
 const AdminPage = () => {
     const [adminLogueado, setAdminLogueado] = useState(false);
     const [listadoOrdenes, setListadoOrdenes] = useState([]);
+    const opcionesEstadoCompra = ["Procesando", "En camino", "Finalizada"];
 
-    // const unsub = onSnapshot(doc(db, "productos", "5lScuTzuOYX6phzP46YK"), (doc) => {
-    //     console.log("Current data: ", doc.data());
-    // });
+    const unsub = onSnapshot(doc(db, "productos", "Wv0BLu3mt4jANImiUnVO"), (doc) => {
+        console.log("Current data: ", doc.data());
+    });
 
 
     const handleLogin = () => {
@@ -30,7 +31,8 @@ const AdminPage = () => {
             const ordersColection = collection(db, "ordenes", "");
             getDocs(ordersColection)
                 .then(snapshot => {
-                    let lista = snapshot.docs.map(doc => doc.data());
+                    // { ...datosUsuario, [e.target.name]: e.target.value }
+                    let lista = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
                     console.log(JSON.stringify(lista))
                     setListadoOrdenes(lista)
                     //setListadoUsuarios(snapshot.docs.map(doc => doc.data()))
@@ -43,20 +45,31 @@ const AdminPage = () => {
         }
     }
 
-    const actualizarOrden = (orden) => {
-        console.log(orden)
+    const actualizarOrden = (id) => {
+        console.log("aca")
+        console.log(id)
+
+        const ordenAModificar = listadoOrdenes.find(el => el.id === id)
+        console.log(ordenAModificar)
+        const estadoActual = document.getElementById("estado" + id).value;
+        const tn = document.getElementById("tn" + id).value;
+
+        ordenAModificar.trackingNumber = tn;
+        ordenAModificar.estado = estadoActual;
+        console.log(estadoActual)
+        console.log(tn)
+
+        //const order = doc(db,"id")
+        setDoc(doc(db, "ordenes", id), ordenAModificar, { merge: true })
+
+
+
     }
 
-    const handleEstadoOrdenChange = (e) =>{
-        console.log(e)
-    }
 
-    const opcionesEstadoCompra = ["Procesando","En camino","Finalizada"];
+    
 
 
-
-
-    console.log(listadoOrdenes)
     if (adminLogueado === false) {
         return (
             <div className="adminPage">
@@ -72,13 +85,6 @@ const AdminPage = () => {
         return (
             <div className="adminPage">
                 <div className='adminPage__section ordenes'>
-                    {/* <div>
-                        <img></img>
-                        <p>Nombre</p>
-                        <p>Productos</p>
-                        <p>Estado</p>
-                        <p>Seguimiento</p>
-                    </div> */}
                     <ul>
                         {
                             listadoOrdenes.map((orden, indice) => {
@@ -86,6 +92,7 @@ const AdminPage = () => {
                                     <li className={indice % 2 ? "impar" : "par"} key={uuid()}>
                                         <img src={orden.usuario.picture}></img>
                                         <p className='nombreUsuario'>{orden.usuario.nombre}</p>
+                                        <p>{orden.id}</p>
                                         <p>{firestoreTimestampToHumanDate(orden.fecha)}</p>
                                         <select>
                                             {
@@ -94,17 +101,19 @@ const AdminPage = () => {
                                                 })
                                             }
                                         </select>
-                                        <select defaultValue={orden.estado} onChange={handleEstadoOrdenChange}>
+                                        <select id={"estado" + orden.id} defaultValue={orden.estado}>
                                             {
-                                                opcionesEstadoCompra.map(opc => {return (
-                                                    <option value={opc}>{opc}</option>
-                                                )})
+                                                opcionesEstadoCompra.map(opc => {
+                                                    return (
+                                                        <option value={opc}>{opc}</option>
+                                                    )
+                                                })
                                             }
-                                          
+
                                         </select>
-                                        <input type="text" id="trackingNumberInput" value={orden.trackingNumber || "Tracking Number pendiente"}></input>
-                                        <a className={indice===0?'email':null} href={`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`}>{iconoEmail}</a>
-                                        <button className={indice===0?'guardar':null} onClick={actualizarOrden(orden)}>{iconoFloppyDisk}</button>
+                                        <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "Tracking Number pendiente"}></input>
+                                        <a className={indice === 0 ? 'email' : null} href={`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`}>{iconoEmail}</a>
+                                        <button className={indice === 0 ? 'guardar' : null} onClick={() => { actualizarOrden(orden.id) }}>{iconoFloppyDisk}</button>
                                     </li>
                                 )
                             })

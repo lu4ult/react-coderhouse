@@ -3,9 +3,8 @@ import uuid from 'react-uuid';
 import { useState } from 'react'
 import { doc, onSnapshot, addDoc, collection, getDocs, setDoc, getFirestore, deleteDoc, firestore } from "firebase/firestore";
 import { db } from './Firebase';
-import { iconoFloppyDisk } from './Iconos';
+import { iconoEmail, iconoFloppyDisk } from './Iconos';
 import { firestoreTimestampToHumanDate } from './utils';
-
 
 
 const AdminPage = () => {
@@ -48,6 +47,13 @@ const AdminPage = () => {
         console.log(orden)
     }
 
+    const handleEstadoOrdenChange = (e) =>{
+        console.log(e)
+    }
+
+    const opcionesEstadoCompra = ["Procesando","En camino","Finalizada"];
+
+
 
 
     console.log(listadoOrdenes)
@@ -88,13 +94,17 @@ const AdminPage = () => {
                                                 })
                                             }
                                         </select>
-                                        <select value={orden.estado}>
-                                            <option value="Compra Recibida">Compra Recibida</option>
-                                            <option value="En camino">En camino</option>
-                                            <option value="Finalizada">Finalizada</option>
+                                        <select defaultValue={orden.estado} onChange={handleEstadoOrdenChange}>
+                                            {
+                                                opcionesEstadoCompra.map(opc => {return (
+                                                    <option value={opc}>{opc}</option>
+                                                )})
+                                            }
+                                          
                                         </select>
                                         <input type="text" id="trackingNumberInput" value={orden.trackingNumber || "Tracking Number pendiente"}></input>
-                                        <button onClick={actualizarOrden(orden)}>{iconoFloppyDisk}</button>
+                                        <a className={indice===0?'email':null} href={`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`}>{iconoEmail}</a>
+                                        <button className={indice===0?'guardar':null} onClick={actualizarOrden(orden)}>{iconoFloppyDisk}</button>
                                     </li>
                                 )
                             })

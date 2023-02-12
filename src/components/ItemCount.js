@@ -8,7 +8,7 @@ import { notiflixPersonalizacion } from "./utils";
 
 
 const ItemCount = ({ producto, esCarrito }) => {
-    const { totalProductos, setTotalProductos, agregarAlCarrito, carrito } = useContext(contexto);
+    const { totalProductos, agregarAlCarrito, carrito } = useContext(contexto);
     const [contador, setContador] = useState(1);
 
     useEffect(() => {
@@ -64,7 +64,6 @@ const ItemCount = ({ producto, esCarrito }) => {
     //console.log()
 
     const handleAddToCart = () => {
-        setTotalProductos(totalProductos + contador);
         agregarAlCarrito({
             id: producto.id,
             cantidadIndividual: contador

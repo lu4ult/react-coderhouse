@@ -63,6 +63,16 @@ button {
   }
 }
 
+.afterEstilos {
+  background-color: #ccc;
+  color: $CornflowerBlue;
+  padding: 0.5rem;
+  border: 2px solid $BlueMunsell;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 10;
+}
+
 body #root {
   background-color: #eee;
   font-family: 'Roboto', sans-serif;
@@ -77,6 +87,8 @@ body #root {
     "header"
     "main"
     "footer";
+
+
 
 
   header {
@@ -656,6 +668,41 @@ body #root {
       @extend .centrarColumna;
       background-color: #fff;
 
+      .userData {
+        @extend .centrarFila;
+        background-color: darkgreen;
+        color: #ccc;
+        width: 80%;
+        height: 75px;
+        justify-content: space-between;
+        font-size: 1rem;
+
+        img {
+          height: 100%;
+          object-fit: contain;
+        }
+
+        .logoutButtonContainer {
+          height: 100%;
+
+          button {
+            cursor: pointer;
+            outline: none;
+            border: none;
+            background-color: inherit;
+            height: 100%;
+            @extend .centrarColumna;
+            color: inherit;
+
+            svg {
+              height: 50%;
+              fill: white;
+            }
+          }
+        }
+
+      }
+
       .userOrders {
         width: 80%;
         border: 2px solid black;
@@ -664,11 +711,21 @@ body #root {
 
         .sinCompras-container {
           @extend .centrarColumna;
+        }
 
-          // background-color: orange;
+        ul li {
+          @extend .centrarFila;
+          justify-content: space-between;
+          height: 30px;
+          //outline: 1px solid #333;
+          font-size: 1rem;
 
-          img {
-            width: 100px;
+          &.par {
+            background-color: #ddd;
+          }
+
+          &:hover {
+            background-color: lightblue;
           }
         }
       }
@@ -742,36 +799,6 @@ body #root {
         }
       }
 
-      .userData {
-        @extend .centrarFila;
-        width: 100%;
-        height: 100px;
-        justify-content: space-around;
-        font-size: 1rem;
-
-        img {
-          height: 100%;
-          object-fit: scale-down;
-        }
-
-        .logoutButtonContainer {
-          height: 100%;
-
-          button {
-            cursor: pointer;
-            outline: none;
-            border: none;
-            background-color: inherit;
-            height: 100%;
-            @extend .centrarColumna;
-
-            svg {
-              height: 50%;
-            }
-          }
-        }
-
-      }
 
       .loginButtonContainer {
         button {
@@ -987,6 +1014,36 @@ body #root {
               outline: 3px solid $Maroon;
             }
 
+            .email {
+              position: relative;
+
+              &:hover {
+                &::after {
+                  content: "Enviar correo a este usuario";
+                  @extend .afterEstilos;
+                  width: 300px;
+                  right: -10%;
+                  bottom: 100%;
+                }
+
+              }
+            }
+
+            .guardar {
+              position: relative;
+
+              &:hover {
+                &::after {
+                  content: "Actualizar orden en FireStore";
+                  @extend .afterEstilos;
+                  width: 300px;
+                  right: -10%;
+                  bottom: 100%;
+                }
+
+              }
+            }
+
           }
         }
 
@@ -1050,6 +1107,16 @@ body #root {
     .error404-img {
       width: 100%;
       object-fit: scale-down;
+    }
+
+    .caraTriste {
+      background-color: inherit;
+      @extend .centrarColumna;
+
+      img {
+        width: 50px;
+      }
+
     }
   }
 

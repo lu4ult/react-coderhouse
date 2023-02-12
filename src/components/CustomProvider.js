@@ -88,7 +88,9 @@ const CustomProvider = ({ children }) => {
         if (carrito.length) {
             console.log(carrito)
             localStorage.setItem('tiendaLu4ult_cart', JSON.stringify(carrito))
+            setTotalProductos(recalcularTotalDelCarrito(carrito));
         }
+
     }, [carrito])
 
     // useEffect(() => {

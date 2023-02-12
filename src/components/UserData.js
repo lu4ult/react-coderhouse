@@ -10,9 +10,8 @@ import { BeatLoader } from "react-spinners";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { contexto } from "./CustomProvider";
-import { notiflixPersonalizacion,firestoreTimestampToHumanDate } from "./utils";
-import sadFaceIcon from "./../img/sadFaceIcon.gif"
-
+import { notiflixPersonalizacion,firestoreTimestampToHumanDate,formateaMoneda } from "./utils";
+import CaraTristeAnimacion from "./CaraTristeAnimacion";
 
 
 const UserData = () => {
@@ -101,17 +100,19 @@ const UserData = () => {
                             {
                                 ordenesDelUsuario.length === 0 ?
                                     <div className="sinCompras-container">
-                                        <p>Ninguna compra por ahora</p>
-                                        <img src={sadFaceIcon} alt="Cara triste al no tener compras"></img>
+                                        <CaraTristeAnimacion mensaje="Ninguna compra!"/>
                                     </div>
 
                                     : <ul>
                                         {
-                                            ordenesDelUsuario.map(orden => (
-                                                <li key={uuid()}>
+                                            ordenesDelUsuario.map((orden,indice) => (
+                                                <li key={uuid()} className={indice%2?"impar":"par"}>
                                                     {firestoreTimestampToHumanDate(orden.fecha)}
+                                                    <p>Productos: {orden.totalProductos}</p>
+                                                    <p>Total: {formateaMoneda(orden.totalCosto)}</p>
                                                     {orden.estado}
-                                                    {JSON.stringify(orden.productos)}</li>
+                                                    {/* {JSON.stringify(orden.productos)} */}
+                                                </li>
                                             ))
                                         }
                                     </ul>

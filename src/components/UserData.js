@@ -12,6 +12,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { contexto } from "./CustomProvider";
 import { notiflixPersonalizacion, firestoreTimestampToHumanDate, formateaMoneda } from "./utils";
 import CaraTristeAnimacion from "./CaraTristeAnimacion";
+import { iconoWhatsapp } from "./Iconos";
 
 
 const UserData = () => {
@@ -105,7 +106,9 @@ const UserData = () => {
                                                     <p>Total: {formateaMoneda(orden.totalCosto)}</p>
                                                     <p className="trackingNumber">TN: <a href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer">{orden.trackingNumber || "Pendiente"}</a></p>
                                                     {orden.estado}
-                                                    {/* {JSON.stringify(orden.productos)} */}
+                                                    <a className={`whatsapp-consulta${indice === 0 ? " primerIcono" : ""}`}
+                                                        href={`https://wa.me/542954692293?text=Quería consultar sobre mi compra:%0a*${encodeURIComponent(orden.id)}*%0aCon fecha:%0a${encodeURIComponent(firestoreTimestampToHumanDate(orden.fecha))}`} target="_blank" rel="noopener noreferrer">
+                                                        {iconoWhatsapp}</a>
                                                 </li>
                                             ))
                                         }

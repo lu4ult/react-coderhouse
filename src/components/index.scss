@@ -714,6 +714,7 @@ body #root {
         }
 
         ul li {
+          position: relative;
           @extend .centrarFila;
           justify-content: space-between;
           height: 30px;
@@ -726,13 +727,40 @@ body #root {
 
           &:hover {
             background-color: lightblue;
+
+            .whatsapp-consulta {
+              svg {
+                fill: blue;
+              }
+            }
           }
 
           .trackingNumber {
             text-align: center;
             width: 250px;
           }
-          //flex-wrap: wrap;
+
+          .whatsapp-consulta {
+            // background-color: red;
+            text-align: center;
+            height: 80%;
+            aspect-ratio: 1;
+
+            &.primerIcono {
+              position: relative;
+
+              &:hover {
+                &::after {
+                  @extend .afterEstilos;
+                  position: absolute;
+                  bottom: 100%;
+                  right: -50%;
+                  width: fit-content;
+                  content: "Consultar en Whatsapp";
+                }
+              }
+            }
+          }
         }
       }
 

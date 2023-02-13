@@ -3,9 +3,9 @@ import uuid from 'react-uuid';
 import { useState } from 'react'
 import { doc, collection, getDocs, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from './Firebase';
-import { iconoEmail, iconoFloppyDisk, iconoTrash } from './Iconos';
+import { iconoEmail, iconoFloppyDisk, iconoGuardarArchivo, iconoTrash } from './Iconos';
 import { firestoreTimestampToHumanDate } from './utils';
-
+import { Confirm } from 'notiflix';
 
 const AdminPage = () => {
     const [adminLogueado, setAdminLogueado] = useState(false);
@@ -35,6 +35,10 @@ const AdminPage = () => {
         }
     }
 
+    const descargarPaqAr = (orden) => {
+        console.log(orden.usuario)
+    }
+
     const actualizarOrden = (id) => {
         const ordenAModificar = listadoOrdenes.find(el => el.id === id)
         const estadoActual = document.getElementById("estado" + id).value;
@@ -47,10 +51,18 @@ const AdminPage = () => {
     }
 
     const eliminarOrden = (orden) => {
-        const id = orden.id;
-        deleteDoc(doc(db, "ordenes", orden.id));
-        const listadOrdenesReducida = listadoOrdenes.filter(or => or != orden)
-        setListadoOrdenes(listadOrdenesReducida);
+        Confirm.show(
+            'Seguro??',
+            `Vas a eliminar esta orden`,
+            'Si, eliminar',
+            'No,mantenerla',
+            () => {
+                const id = orden.id;
+                deleteDoc(doc(db, "ordenes", orden.id));
+                const listadOrdenesReducida = listadoOrdenes.filter(or => or != orden)
+                setListadoOrdenes(listadOrdenesReducida);
+            }
+        );
     }
 
 
@@ -98,6 +110,7 @@ const AdminPage = () => {
 
                                         {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
                                         <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "TN pendiente"}></input>
+                                        <button onClick={() => { descargarPaqAr(orden) }}>{iconoGuardarArchivo}</button>
                                         <a className={indice === 0 ? 'email' : null} href={`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`}>{iconoEmail}</a>
                                         <button className={indice === 0 ? 'eliminar' : null} onClick={() => { eliminarOrden(orden) }}>{iconoTrash}</button>
                                         <button className={indice === 0 ? 'guardar' : null} onClick={() => { actualizarOrden(orden.id) }}>{iconoFloppyDisk}</button>

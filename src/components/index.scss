@@ -70,6 +70,7 @@ button {
   border: 2px solid $BlueMunsell;
   border-radius: 5px;
   position: absolute;
+  white-space: nowrap;
   z-index: 10;
 }
 
@@ -755,7 +756,6 @@ body #root {
                   position: absolute;
                   bottom: 100%;
                   right: -50%;
-                  width: fit-content;
                   content: "Consultar en Whatsapp";
                 }
               }
@@ -1062,7 +1062,21 @@ body #root {
                 &::after {
                   content: "Enviar correo a este usuario";
                   @extend .afterEstilos;
-                  width: 300px;
+                  // width: 300px;
+                  right: -10%;
+                  bottom: 100%;
+                }
+
+              }
+            }
+
+            .eliminar {
+              position: relative;
+
+              &:hover {
+                &::after {
+                  content: "Eliminar orden";
+                  @extend .afterEstilos;
                   right: -10%;
                   bottom: 100%;
                 }
@@ -1077,28 +1091,13 @@ body #root {
                 &::after {
                   content: "Actualizar orden en FireStore";
                   @extend .afterEstilos;
-                  width: 300px;
+                  //width: 300px;
                   right: -10%;
                   bottom: 100%;
                 }
 
               }
             }
-            .eliminar {
-              position: relative;
-
-              &:hover {
-                &::after {
-                  content: "Eliminar orden";
-                  @extend .afterEstilos;
-                  width: 300px;
-                  right: -10%;
-                  bottom: 100%;
-                }
-
-              }
-            }
-
           }
         }
 
@@ -1281,6 +1280,11 @@ body #root {
           }
         }
       }
+
+      // .adminPage__section ul li {
+      //   flex-wrap: wrap;
+      //   height: 300px;
+      // }
     }
 
     footer {

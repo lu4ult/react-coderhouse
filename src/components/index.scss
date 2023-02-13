@@ -1084,6 +1084,20 @@ body #root {
 
               }
             }
+            .eliminar {
+              position: relative;
+
+              &:hover {
+                &::after {
+                  content: "Eliminar orden";
+                  @extend .afterEstilos;
+                  width: 300px;
+                  right: -10%;
+                  bottom: 100%;
+                }
+
+              }
+            }
 
           }
         }

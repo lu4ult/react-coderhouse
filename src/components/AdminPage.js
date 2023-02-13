@@ -1,9 +1,9 @@
 import md5 from 'md5'
 import uuid from 'react-uuid';
 import { useState } from 'react'
-import { doc, collection, getDocs, setDoc } from "firebase/firestore";
+import { doc, collection, getDocs, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from './Firebase';
-import { iconoEmail, iconoFloppyDisk } from './Iconos';
+import { iconoEmail, iconoFloppyDisk, iconoTrash } from './Iconos';
 import { firestoreTimestampToHumanDate } from './utils';
 
 
@@ -45,6 +45,12 @@ const AdminPage = () => {
         setDoc(doc(db, "ordenes", id), ordenAModificar, { merge: true });
     }
 
+    const eliminarOrden = (orden) => {
+        const id = orden.id;
+        deleteDoc(doc(db, "ordenes", orden.id));
+        const listadOrdenesReducida = listadoOrdenes.filter(or => or != orden)
+        setListadoOrdenes(listadOrdenesReducida);
+    }
 
 
     if (adminLogueado === false) {
@@ -90,8 +96,9 @@ const AdminPage = () => {
                                         </select>
 
                                         {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
-                                        <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "Tracking Number pendiente"}></input>
+                                        <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "TN pendiente"}></input>
                                         <a className={indice === 0 ? 'email' : null} href={`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`}>{iconoEmail}</a>
+                                        <button className={indice === 0 ? 'eliminar' : null} onClick={() => { eliminarOrden(orden) }}>{iconoTrash}</button>
                                         <button className={indice === 0 ? 'guardar' : null} onClick={() => { actualizarOrden(orden.id) }}>{iconoFloppyDisk}</button>
                                     </li>
                                 )

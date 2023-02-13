@@ -51,6 +51,7 @@ const UserData = () => {
                         respuesta.docs.forEach(order => {
                             ordenesDelUsuario.push({ ...order.data(), id: order.id });
                         })
+                        ordenesDelUsuario.sort((a, b) => b.fecha - a.fecha)
                         setOrdenesDelUsuario(ordenesDelUsuario);
                     })
             }

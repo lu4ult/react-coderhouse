@@ -26,6 +26,7 @@ const AdminPage = () => {
             getDocs(ordersColection)
                 .then(snapshot => {
                     let lista = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+                    lista.sort((a, b) => b.fecha - a.fecha)
                     setListadoOrdenes(lista);
                 })
         }

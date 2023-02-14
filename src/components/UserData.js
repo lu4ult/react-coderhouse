@@ -12,7 +12,8 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { contexto } from "./CustomProvider";
 import { notiflixPersonalizacion, firestoreTimestampToHumanDate, formateaMoneda } from "./utils";
 import CaraTristeAnimacion from "./CaraTristeAnimacion";
-import { iconoWhatsapp } from "./Iconos";
+import { iconoWhatsapp,iconoTrash } from "./Iconos";
+import { Confirm } from 'notiflix';
 
 
 const UserData = () => {
@@ -69,7 +70,28 @@ const UserData = () => {
 
             setTimeOutId(temporizadorId);
         }
-    }, [datosUsuario])
+    }, [datosUsuario]);
+
+    const handleCancelarCompra = (orden) => {
+        if (orden.estado !== "Procesando") {
+            alert(`Esta orden se encuentra ${orden.estado} y no se puede cancelar. Cualquier consulta no dudes en comunicarte con nosotros.`)
+            return;
+        }
+
+        Confirm.show(
+            'Seguro??',
+            `Vas a cancelar esta orden`,
+            'Si, cancelar',
+            'No,mantenerla',
+            () => {
+                const ordenesCopia = ordenesDelUsuario.filter(or => or != orden);
+                orden.estado = "Cancelar";
+                setOrdenesDelUsuario([orden, ...ordenesCopia]);
+
+                setDoc(doc(db, "ordenes", orden.id), orden, { merge: true });
+            }
+        );
+    }
 
     const handleFormChange = (e) => {
         const copiaDatosUsuario = { ...datosUsuario, [e.target.name]: e.target.value };
@@ -107,6 +129,7 @@ const UserData = () => {
                                                     <p>Total: {formateaMoneda(orden.totalCosto)}</p>
                                                     <p className="trackingNumber">TN: <a href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer">{orden.trackingNumber || "Pendiente"}</a></p>
                                                     {orden.estado}
+                                                    <button className={`orden-cancelacion${indice === 0 ? " primerIcono" : ""}`} onClick={() => { handleCancelarCompra(orden) }}>{iconoTrash}</button>
                                                     <a className={`whatsapp-consulta${indice === 0 ? " primerIcono" : ""}`}
                                                         href={`https://wa.me/542954692293?text=Quería consultar sobre mi compra:%0a*${encodeURIComponent(orden.id)}*%0aCon fecha:%0a${encodeURIComponent(firestoreTimestampToHumanDate(orden.fecha))}`} target="_blank" rel="noopener noreferrer">
                                                         {iconoWhatsapp}</a>

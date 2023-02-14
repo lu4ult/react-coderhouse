@@ -10,7 +10,7 @@ import { Confirm } from 'notiflix';
 const AdminPage = () => {
     const [adminLogueado, setAdminLogueado] = useState(false);
     const [listadoOrdenes, setListadoOrdenes] = useState([]);
-    const opcionesEstadoCompra = ["Procesando", "En camino", "Finalizada"];
+    const opcionesEstadoCompra = ["Procesando", "En camino", "Finalizada", "Cancelar","Cancelada"];
 
     const handleLogin = () => {
         let user = document.getElementById("adminLogin-user").value.toLowerCase();

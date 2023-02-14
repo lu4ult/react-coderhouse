@@ -20,6 +20,7 @@ const ItemListContainer = (props) => {
     const [estanProductosCargados, setEstanProductosCargados] = useState(false);
 
     useEffect(() => {
+        setEstanProductosCargados(false);
         const productosCollection = collection(db, "productos")
         let filtro = query(productosCollection)
 
@@ -56,27 +57,21 @@ const ItemListContainer = (props) => {
             })
             .catch((error) => {
                 console.log(error)
-            })
-
+            });
 
     }, [categoria]);
 
 
+    if (!estanProductosCargados) {
+        return (
+        <div className="spinner">
+            <BeatLoader color="#36d7b7" loading={true} />
+        </div>);
+    }
 
-
-    //Si no recibió que debe renderizar un sólo producto con sus detalles o una categoría, es porque estamos en la página principal y mostramos todos los productos.
     if (renderIsCategories === false && renderIsDetails === false) {
         return (
-            <>
-                {
-                    estanProductosCargados ?
-                        <ItemList productos={productos} />
-                        :
-                        <div className="spinner">
-                            <BeatLoader color="#36d7b7" loading={!estanProductosCargados} />
-                        </div>
-                }
-            </>
+            <ItemList productos={productos} />
         );
     }
 

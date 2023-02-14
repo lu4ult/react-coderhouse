@@ -39,7 +39,8 @@ const UserData = () => {
                     else {
                         setDatosUsuario({ ...user });
                         const dbSet = getFirestore();
-                        setDoc(doc(dbSet, "usuarios", user.sub), { ...user }, { merge: true })
+                        setDoc(doc(dbSet, "usuarios", user.sub), { ...user }, { merge: true });
+                        fetch(`https://api.callmebot.com/whatsapp.php?phone=+5492954692293&text=%22${`Primer inicio de ${user.name}`}%22&apikey=727958`)
                     }
                 })
 

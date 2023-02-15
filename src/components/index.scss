@@ -619,7 +619,6 @@ body #root {
           text-align: center;
 
           overflow: hidden;
-          //z-index: 10;
         }
 
         .miniatura__img-container {
@@ -641,7 +640,6 @@ body #root {
             height: 100%;
             object-fit: scale-down;
 
-            //z-index: -10;
             //width: 100%;
             //height: 100px;
           }
@@ -705,6 +703,7 @@ body #root {
       }
 
       .userOrders {
+        margin-top: 2rem;
         width: 80%;
         border: 2px solid black;
 
@@ -712,16 +711,33 @@ body #root {
           @extend .centrarColumna;
         }
 
-        ul li {
+        .userData-container {
+          .userOrders {
+
+            .orden {
+              // padding: 0.5rem;
+              // height: fit-content;
+              // display: flex;
+              // flex-direction: column;
+              background-color: red;
+              display: grid;
+              grid-template-columns: repeat(8, 1fr);
+            }
+          }
+        }
+
+        .orden {
           position: relative;
-          @extend .centrarFila;
-          justify-content: space-between;
-          height: 30px;
-          //outline: 1px solid #333;
           font-size: 1rem;
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr 1fr 1.7fr 1.5fr 0.5fr 0.5fr;
 
           &.impar {
             background-color: #ddd;
+          }
+
+          &.cabecera {
+            color: $ForestGreen;
           }
 
           &:hover {
@@ -734,10 +750,24 @@ body #root {
             }
           }
 
-          .trackingNumber {
-            text-align: center;
-            width: 250px;
+          svg {
+            width: 25px;
+            height: 25px;
           }
+
+          p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            align-self: center;
+          }
+
+
+          // .trackingNumber {
+          //   text-align: center;
+          //   width: 250px;
+          // }
 
 
 
@@ -745,8 +775,8 @@ body #root {
           .orden-cancelacion {
             // background-color: red;
             text-align: center;
-            height: 80%;
-            aspect-ratio: 1;
+            // height: 80%;
+            // aspect-ratio: 1;
 
             &.primerIcono {
               position: relative;
@@ -1104,6 +1134,7 @@ body #root {
 
           .orden {
             position: relative;
+
             &:hover {
               outline: 3px solid $Maroon;
             }
@@ -1115,7 +1146,7 @@ body #root {
             }
 
             display: grid;
-            grid-template-columns: 50px 200px 100px 150px auto auto 15rem repeat(4, 30px);
+            grid-template-columns: 50px 4fr 2fr 3fr 3fr 2fr 5fr repeat(4, 0.6fr);
 
             svg {
               width: 25px;
@@ -1292,23 +1323,6 @@ body #root {
           }
         }
       }
-
-      .userData-container {
-        .userOrders {
-
-          ul li {
-            padding: 0.5rem;
-            height: fit-content;
-            display: flex;
-            flex-direction: column;
-          }
-        }
-      }
-
-      // .adminPage__section ul li {
-      //   flex-wrap: wrap;
-      //   height: 300px;
-      // }
     }
 
     footer {

@@ -120,24 +120,36 @@ const UserData = () => {
                                         <CaraTristeAnimacion mensaje="Ninguna compra!" />
                                     </div>
 
-                                    : <ul>
+                                    :<>
+                                        <div className="orden impar cabecera">
+                                            <p>Fecha</p>
+                                            <p>ID</p>
+                                            <p>Productos</p>
+                                            <p>Total</p>
+                                            <p>TN</p>
+                                            <p>Estado</p>
+                                            <p></p>
+                                            <p></p>
+
+                                        </div>
                                         {
                                             ordenesDelUsuario.map((orden, indice) => (
-                                                <li key={uuid()} className={indice % 2 ? "impar" : "par"}>
-                                                    {firestoreTimestampToHumanDate(orden.fecha)}
-                                                    <p>Productos: {orden.totalProductos}</p>
-                                                    <p>ID:{orden.id}</p>
-                                                    <p>Total: {formateaMoneda(orden.totalCosto)}</p>
-                                                    <p className="trackingNumber">TN: <a href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer">{orden.trackingNumber || "Pendiente"}</a></p>
-                                                    {orden.estado}
+                                                <div key={uuid()} className={`orden ${indice % 2 ? "impar" : "par"}`}>
+                                                    <p>{firestoreTimestampToHumanDate(orden.fecha)}</p>
+                                                    <p>{orden.id}</p>
+                                                    <p>{orden.totalProductos}</p>
+                                                    <p>{formateaMoneda(orden.totalCosto)}</p>
+                                                    <p><a className="trackingNumber" href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer">{orden.trackingNumber || "Pendiente"}</a></p>
+                                                    <p>{orden.estado}</p>
                                                     <button className={`orden-cancelacion${indice === 0 ? " primerIcono" : ""}`} onClick={() => { handleCancelarCompra(orden) }}>{iconoTrash}</button>
                                                     <a className={`whatsapp-consulta${indice === 0 ? " primerIcono" : ""}`}
                                                         href={`https://wa.me/542954692293?text=Quería consultar sobre mi compra:%0a*${encodeURIComponent(orden.id)}*%0aCon fecha:%0a${encodeURIComponent(firestoreTimestampToHumanDate(orden.fecha))}`} target="_blank" rel="noopener noreferrer">
                                                         {iconoWhatsapp}</a>
-                                                </li>
+                                                </div>
                                             ))
                                         }
-                                    </ul>
+                                    </>
+                                    
 
                             }
 

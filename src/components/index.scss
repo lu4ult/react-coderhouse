@@ -1076,50 +1076,26 @@ body #root {
               outline: 3px solid $Maroon;
             }
 
-            .email {
-              position: relative;
-
-              &:hover {
-                &::after {
-                  content: "Enviar correo a este usuario";
-                  @extend .afterEstilos;
-                  // width: 300px;
-                  right: -10%;
-                  bottom: 100%;
-                }
-
-              }
-            }
-
-            .eliminar {
-              position: relative;
-
-              &:hover {
-                &::after {
-                  content: "Eliminar orden";
-                  @extend .afterEstilos;
-                  right: -10%;
-                  bottom: 100%;
-                }
-
-              }
-            }
-
+            .paqar,
+            .email,
+            .eliminar,
             .guardar {
               position: relative;
 
               &:hover {
                 &::after {
-                  content: "Actualizar orden en FireStore";
                   @extend .afterEstilos;
-                  //width: 300px;
                   right: -10%;
                   bottom: 100%;
                 }
-
               }
             }
-          }
+
+            .paqar {&:hover {&::after {content: "Descargar envio para Correo Argentino";}}}
+            .email {&:hover {&::after {content: "Enviar correo a este usuario";}}}
+            .eliminar {&:hover {&::after {content: "Eliminar orden";}}}
+            .guardar {&:hover {&::after {content: "Actualizar orden en FireStore";}}}
+           }
         }
 
         &.ordenes {

@@ -1050,31 +1050,84 @@ body #root {
               font-size: 1rem;
 
               &.nombre {
-                width: 200px;
+                // width: 200px;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
               }
             }
 
-            &.par {
-              background-color: #68B574;
-            }
+
 
             input {
               background-color: red;
               font-size: 1rem
             }
 
-            @extend .centrarFila;
-            justify-content: space-between;
-            margin: 0.5rem;
+            // @extend .centrarFila;
+            // justify-content: space-between;
+            // margin: 0.5rem;
 
-            font-size: 1.3rem;
+            //grid-row: auto;
 
+            //font-size: 1.3rem;
+
+
+
+
+          }
+        }
+
+        &.ordenes-container {
+          //background-color: pink;
+          //grid-row: 50px;
+
+          p,
+          input,
+          a,
+          select {
+            color: $RickBlack;
+            font-size: 1rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: center;
+            align-self: center;
+            background-color: inherit;
+
+            //outline: 1px solid #ccc;
+          }
+
+          select {
+            height: 100%;
+          }
+
+          .orden {
+            position: relative;
             &:hover {
               outline: 3px solid $Maroon;
             }
+
+            background-color: $ForestGreen;
+
+            &.par {
+              background-color: #68B574;
+            }
+
+            display: grid;
+            grid-template-columns: 50px 200px 100px 150px auto auto 15rem repeat(4, 30px);
+
+            svg {
+              width: 25px;
+              height: 25px;
+            }
+
+
+            img {
+              width: 50px;
+              height: 50px;
+            }
+
 
             .paqar,
             .email,
@@ -1091,61 +1144,35 @@ body #root {
               }
             }
 
-            .paqar {&:hover {&::after {content: "Descargar envio para Correo Argentino";}}}
-            .email {&:hover {&::after {content: "Enviar correo a este usuario";}}}
-            .eliminar {&:hover {&::after {content: "Eliminar orden";}}}
-            .guardar {&:hover {&::after {content: "Actualizar orden en FireStore";}}}
-           }
-        }
-
-        &.ordenes {
-
-
-          ul li {
-            height: 50px;
-            margin: 0;
-            padding: 0;
-
-            img {
-              width: 50px;
-              aspect-ratio: 1;
-            }
-
-            input {
-              border: none;
-              outline: none;
-              font-size: 1.0rem;
-              width: fit-content;
-              text-align: center;
-              background-color: inherit;
-            }
-
-            p {
-              min-width: 80px;
-              text-align: center;
-
-              &.nombreUsuario {
-                width: 150px;
+            .paqar {
+              &:hover {
+                &::after {
+                  content: "Descargar envio para Correo Argentino";
+                }
               }
             }
 
-            button {
-              cursor: pointer;
-              border: none;
-              outline: none;
-              //background-color: $Maroon;
-              height: 100%;
-              aspect-ratio: 1;
-              padding: 0.5rem;
+            .email {
+              &:hover {
+                &::after {
+                  content: "Enviar correo a este usuario";
+                }
+              }
             }
 
-            svg {
-              height: 25px;
-              width: 25px;
-              fill: $Maroon;
+            .eliminar {
+              &:hover {
+                &::after {
+                  content: "Eliminar orden";
+                }
+              }
+            }
 
-              &.errorSvg {
-                fill: $Maroon;
+            .guardar {
+              &:hover {
+                &::after {
+                  content: "Actualizar orden en FireStore";
+                }
               }
             }
           }

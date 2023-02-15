@@ -26,7 +26,7 @@ const AdminPage = () => {
             getDocs(ordersColection)
                 .then(snapshot => {
                     let lista = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-                    lista.sort((a, b) => b.fecha - a.fecha)
+                    lista.sort((a, b) => b.fecha - a.fecha);
                     setListadoOrdenes(lista);
                 })
         }
@@ -52,23 +52,22 @@ const AdminPage = () => {
             "MENDOZA": "M",
             "MISIONES": "N",
             "NEUQUEN": "Q",
-            "RIO NEGRO": "R",
+            "RIO_NEGRO": "R",
             "SALTA": "A",
-            "SAN JUAN": "J",
-            "SAN LUIS": "D",
-            "SANTA CRUZ": "Z",
-            "SANTA FE": "S",
-            "SANTIAGO DEL ESTERO": "G",
-            "TIERRA DEL FUEGO": "V",
+            "SAN_JUAN": "J",
+            "SAN_LUIS": "D",
+            "SANTA_CRUZ": "Z",
+            "SANTA_FE": "S",
+            "SANTIAGO_DEL_ESTERO": "G",
+            "TIERRA_DEL_FUEGO": "V",
             "TUCUMAN": "T"
-        }
+        };
 
         const matrizParaArchivo = [
             ["tipo_producto", "largo", "ancho", "altura", "peso", "valor_del_contenido", "provincia_destino", "sucursal_destino", "localidad_destino", "calle_destino", "altura_destino", "piso", "dpto", "codpostal_destino", "destino_nombre", "destino_email", "cod_area_tel", "tel", "cod_area_cel", "cel"],
             ["CP", "30", "20", "15", "1", orden.totalCosto, provinciasEquivalentes[orden.usuario.provincia.replace(" ", "_")], "", orden.usuario.localidad, orden.usuario.calle, orden.usuario.altura, orden.usuario.piso || "", orden.usuario.unidad || "", orden.usuario.cp, orden.usuario.nombre, orden.usuario.correo, "", "", orden.usuario.codarea, orden.usuario.cel, orden.usuario.codarea, orden.usuario.cel]
         ];
 
-        console.table(matrizParaArchivo)
         let csvContent = "data:text/csv;charset=utf-8,";                                                    //https://stackoverflow.com/questions/14964035
         matrizParaArchivo.forEach(function (rowArray) {
             let row = rowArray.join(",");                                                                   //Transformamos esa matriz bidimensional en algo tipo CSV
@@ -86,13 +85,15 @@ const AdminPage = () => {
     }
 
     const actualizarOrden = (id) => {
+        const listadOrdenesCopia = listadoOrdenes.filter(el => el.id !== id);
         const ordenAModificar = listadoOrdenes.find(el => el.id === id)
         const estadoActual = document.getElementById("estado" + id).value;
-        const tn = document.getElementById("tn" + id).value;
+        const tn = document.getElementById("tn" + id).value.substring(0, 23);
 
         ordenAModificar.trackingNumber = tn;
         ordenAModificar.estado = estadoActual;
 
+        setListadoOrdenes([ordenAModificar, ...listadOrdenesCopia]);
         setDoc(doc(db, "ordenes", id), ordenAModificar, { merge: true });
     }
 
@@ -126,45 +127,43 @@ const AdminPage = () => {
     else {
         return (
             <div className="adminPage">
-                <div className='adminPage__section ordenes'>
-                    <ul>
-                        {
-                            listadoOrdenes.map((orden, indice) => {
-                                return (
-                                    <li className={indice % 2 ? "impar" : "par"} key={uuid()}>
-                                        <img src={orden.usuario.picture}></img>
-                                        <p className='nombreUsuario'>{orden.usuario.nombre}</p>
-                                        <p>{orden.id}</p>
-                                        <p>{firestoreTimestampToHumanDate(orden.fecha)}</p>
-                                        <select>
-                                            {
-                                                orden.productos.map(producto => {
-                                                    return (<option key={uuid()}>{JSON.stringify(producto)}</option>);
-                                                })
-                                            }
-                                        </select>
-                                        <select id={"estado" + orden.id} defaultValue={orden.estado}>
-                                            {
-                                                opcionesEstadoCompra.map(opc => {
-                                                    return (
-                                                        <option value={opc}>{opc}</option>
-                                                    )
-                                                })
-                                            }
+                <div className='adminPage__section ordenes-container'>
+                    {
+                        listadoOrdenes.map((orden, indice) => {
+                            return (
+                                <div className={`orden ${indice % 2 ? "impar" : "par"}`} key={uuid()}>
+                                    <img src={orden.usuario.picture}></img>
+                                    <p className='nombreUsuario'>{orden.usuario.nombre}</p>
+                                    <p>{orden.id}</p>
+                                    <p>{firestoreTimestampToHumanDate(orden.fecha)}</p>
+                                    <select>
+                                        {
+                                            orden.productos.map(producto => {
+                                                return (<option key={uuid()}>{JSON.stringify(producto)}</option>);
+                                            })
+                                        }
+                                    </select>
+                                    <select id={"estado" + orden.id} defaultValue={orden.estado}>
+                                        {
+                                            opcionesEstadoCompra.map(opc => {
+                                                return (
+                                                    <option key={uuid()} value={opc}>{opc}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
 
-                                        </select>
+                                    {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
+                                    <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "TN pendiente"}></input>
+                                    <button className={indice === 0 ? 'paqar' : null} onClick={() => { descargarPaqAr(orden) }}>{iconoGuardarArchivo}</button>
+                                    <button className={indice === 0 ? 'email' : null} onClick={() => { window.open(`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`); }} >{iconoEmail}</button>
+                                    <button className={indice === 0 ? 'eliminar' : null} onClick={() => { eliminarOrden(orden) }}>{iconoTrash}</button>
+                                    <button className={indice === 0 ? 'guardar' : null} onClick={() => { actualizarOrden(orden.id) }}>{iconoFloppyDisk}</button>
+                                </div>
+                            )
+                        })
+                    }
 
-                                        {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
-                                        <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "TN pendiente"}></input>
-                                        <button className={indice === 0 ? 'paqar' : null} onClick={() => { descargarPaqAr(orden) }}>{iconoGuardarArchivo}</button>
-                                        <a className={indice === 0 ? 'email' : null} href={`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`}>{iconoEmail}</a>
-                                        <button className={indice === 0 ? 'eliminar' : null} onClick={() => { eliminarOrden(orden) }}>{iconoTrash}</button>
-                                        <button className={indice === 0 ? 'guardar' : null} onClick={() => { actualizarOrden(orden.id) }}>{iconoFloppyDisk}</button>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
                 </div>
 
             </div>);

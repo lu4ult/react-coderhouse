@@ -7,7 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore"
 import { db } from "./Firebase";
 import { Loading, Report } from 'notiflix';
-import { formateaMoneda, fechaJsAFechaHumana, esProduccion } from './utils';
+import { formateaMoneda, fechaJsAFechaHumana, esProduccion, notificarMePorWhatsapp } from './utils';
 import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import CaraTristeAnimacion from './CaraTristeAnimacion';
@@ -69,7 +69,8 @@ const CarritoContainer = () => {
                         }
                     );
                 }, 2000);
-                fetch(`https://api.callmebot.com/whatsapp.php?phone=+5492954692293&text=%22${`Compra de ${datosUsuarioContext.nombre}`}%22&apikey=727958`)
+
+                notificarMePorWhatsapp(`Compra de ${datosUsuarioContext.nombre}`);
             })
     }
 

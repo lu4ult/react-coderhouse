@@ -55,3 +55,13 @@ export const firestoreTimestampToHumanDate = (_timestamp) => {
 export const esProduccion = () => {
     return window.location.origin === 'https://lu4ult.vercel.app';
 }
+
+export const notificarMePorWhatsapp = (mensaje) => {
+    const url = new URL('https://api.callmebot.com/whatsapp.php');
+    url.searchParams.set('text', mensaje);
+    url.searchParams.set('phone', '+5492954692293');
+    url.searchParams.set('apikey', '727958');
+
+    fetch(url)
+        .catch(error => console.log(error))
+}

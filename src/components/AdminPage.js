@@ -65,12 +65,12 @@ const AdminPage = () => {
 
         const matrizParaArchivo = [
             ["tipo_producto", "largo", "ancho", "altura", "peso", "valor_del_contenido", "provincia_destino", "sucursal_destino", "localidad_destino", "calle_destino", "altura_destino", "piso", "dpto", "codpostal_destino", "destino_nombre", "destino_email", "cod_area_tel", "tel", "cod_area_cel", "cel"],
-            ["CP", "30", "20", "15", "1", orden.totalCosto, provinciasEquivalentes[orden.usuario.provincia.replace(" ", "_")], "", orden.usuario.localidad, orden.usuario.calle, orden.usuario.altura, orden.usuario.piso || "", orden.usuario.unidad || "", orden.usuario.cp, orden.usuario.nombre, orden.usuario.correo, "", "", orden.usuario.codarea, orden.usuario.cel, orden.usuario.codarea, orden.usuario.cel]
+            ["CP", "30", "20", "15", "1", orden.totalCosto, provinciasEquivalentes[orden.usuario.provincia.replace(" ", "_")], "", orden.usuario.localidad, orden.usuario.calle, orden.usuario.altura, orden.usuario.piso || " ", orden.usuario.unidad || " ", orden.usuario.cp, orden.usuario.nombre, orden.usuario.correo, orden.usuario.codarea, orden.usuario.cel, orden.usuario.codarea, orden.usuario.cel]
         ];
 
         let csvContent = "data:text/csv;charset=utf-8,";                                                    //https://stackoverflow.com/questions/14964035
         matrizParaArchivo.forEach(function (rowArray) {
-            let row = rowArray.join(",");                                                                   //Transformamos esa matriz bidimensional en algo tipo CSV
+            let row = rowArray.join(";");                                                                   //Transformamos esa matriz bidimensional en algo tipo CSV
             csvContent += row + "\r\n";
         });
 
@@ -81,7 +81,7 @@ const AdminPage = () => {
         anchorDescarga.click();
         anchorDescarga.remove();
 
-        window.open("https://www.correoargentino.com.ar/MiCorreo/public/importExport");
+        window.open("https://www.correoargentino.com.ar/MiCorreo/public/login");
     }
 
     const actualizarOrden = (id) => {
@@ -106,7 +106,7 @@ const AdminPage = () => {
             () => {
                 const id = orden.id;
                 deleteDoc(doc(db, "ordenes", orden.id));
-                const listadOrdenesReducida = listadoOrdenes.filter(or => or != orden)
+                const listadOrdenesReducida = listadoOrdenes.filter(or => or !== orden)
                 setListadoOrdenes(listadOrdenesReducida);
             }
         );

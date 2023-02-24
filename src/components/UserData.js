@@ -10,7 +10,7 @@ import { BeatLoader } from "react-spinners";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { contexto } from "./CustomProvider";
-import { notiflixPersonalizacion, firestoreTimestampToHumanDate, formateaMoneda } from "./utils";
+import { notiflixPersonalizacion, firestoreTimestampToHumanDate, formateaMoneda, notificarMePorWhatsapp } from "./utils";
 import CaraTristeAnimacion from "./CaraTristeAnimacion";
 import { iconoWhatsapp,iconoTrash } from "./Iconos";
 import { Confirm } from 'notiflix';
@@ -40,7 +40,7 @@ const UserData = () => {
                         setDatosUsuario({ ...user });
                         const dbSet = getFirestore();
                         setDoc(doc(dbSet, "usuarios", user.sub), { ...user }, { merge: true });
-                        fetch(`https://api.callmebot.com/whatsapp.php?phone=+5492954692293&text=%22${`Primer inicio de ${user.name}`}%22&apikey=727958`)
+                        notificarMePorWhatsapp(`Primer inicio de ${user.name} en ${window.location.origin}`)
                     }
                 })
 

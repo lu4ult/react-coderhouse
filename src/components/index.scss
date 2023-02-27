@@ -1001,6 +1001,11 @@ body #root {
 
         }
 
+        input:out-of-range {
+          background-color: red;
+          color: white;
+        }
+
         input::-webkit-inner-spin-button {
           -webkit-appearance: none;
           margin: 0;

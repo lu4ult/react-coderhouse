@@ -75,7 +75,7 @@ const ItemCount = ({ producto, esCarrito }) => {
         <div className="itemCountContainer">
             <div className="itemCount">
                 <button onClick={handleRestar} disabled={contador === 1}>-</button>
-                <input type="number" value={contador} onChange={handleOnChange} disabled={esCarrito}></input>
+                <input type="number" value={contador} onChange={handleOnChange} disabled={esCarrito} max={producto.stock}></input>
                 <button className="plus" disabled={contador >= producto.stock} onClick={handleSumar}>+</button>
             </div>
             {esCarrito ? "" : <button className="botonAgregarAlCarrito" onClick={handleAddToCart} disabled={producto.stock === 0}>{iconoCarritoMas}Agregar al carrito</button>}

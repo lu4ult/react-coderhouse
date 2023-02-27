@@ -25,6 +25,11 @@ export const obtenerPrimeraPalabraComoStr = (str) => {
 
 
 export const formateaMoneda = (numero) => {
+
+    if (numero < 1000) {
+        return numero + " $";
+    }
+
     const entero = Math.floor(numero / 1000);
     const resto = numero - entero * 1000;
 
@@ -57,11 +62,17 @@ export const esProduccion = () => {
 }
 
 export const notificarMePorWhatsapp = (mensaje) => {
-    const url = new URL('https://api.callmebot.com/whatsapp.php');
-    url.searchParams.set('text', mensaje);
-    url.searchParams.set('phone', '+5492954692293');
-    url.searchParams.set('apikey', '727958');
+    const urlWhatsapp = new URL('https://api.callmebot.com/whatsapp.php');
+    urlWhatsapp.searchParams.set('text', mensaje);
+    urlWhatsapp.searchParams.set('phone', '+5492954692293');
+    urlWhatsapp.searchParams.set('apikey', '727958');
 
-    fetch(url)
+    fetch(urlWhatsapp)
         .catch(error => console.log(error))
+
+    const urlNotificador = new URL('https://blynk.cloud/external/api/update');
+    urlNotificador.searchParams.set('token', '40faYKApg37ONbh8YIPQWLe5NcdDRtBu');
+    urlNotificador.searchParams.set('v27', `Tienda:   ${mensaje}`);
+
+    fetch(urlNotificador)
 }

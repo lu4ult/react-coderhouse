@@ -12,7 +12,6 @@ import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import CaraTristeAnimacion from './CaraTristeAnimacion';
 import paqArLogo from '../img/paqar.png'
-import ItemCount from './ItemCount';
 
 const CarritoContainer = () => {
     const { isAuthenticated } = useAuth0();
@@ -24,7 +23,6 @@ const CarritoContainer = () => {
     });
     const costoCarrito = preciosCarrito.reduce((a, b) => (a + b), 0);
 
-    console.log(costoCarrito)
     let costoDelEnvioGratis = Math.floor(1300 - costoCarrito * 0.05);
 
     if (costoDelEnvioGratis < 500) {
@@ -33,7 +31,7 @@ const CarritoContainer = () => {
 
     const ordenDeCompra = {
         totalProductos: totalProductos,
-        totalCosto: costoCarrito,
+        totalCosto: costoCarrito + costoDelEnvioGratis,
         productos: carrito,
         fecha: serverTimestamp(),
         estado: "Procesando",
@@ -59,7 +57,7 @@ const CarritoContainer = () => {
                         'id_pedido': docRef.id,
                         'from_name': datosUsuarioContext.nombre,
                         'total_productos': totalProductos,
-                        'total_costo': formateaMoneda(costoCarrito),
+                        'total_costo': formateaMoneda(costoCarrito+costoDelEnvioGratis),
                         'address': `${datosUsuarioContext.calle} ${datosUsuarioContext.altura}, ${datosUsuarioContext.localidad} ${datosUsuarioContext.provincia}`,
                         'productos': textoItemsComprados
                     }, '840utIXux0aomLktd');
@@ -106,8 +104,6 @@ const CarritoContainer = () => {
                 }
 
             </div>
-
-
 
             <div className='carritoContainer__subTotal'>
                 <h6>Total: {formateaMoneda(costoCarrito + costoDelEnvioGratis)}</h6>

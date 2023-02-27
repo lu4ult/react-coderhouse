@@ -104,7 +104,6 @@ const AdminPage = () => {
             'Si, eliminar',
             'No,mantenerla',
             () => {
-                const id = orden.id;
                 deleteDoc(doc(db, "ordenes", orden.id));
                 const listadOrdenesReducida = listadoOrdenes.filter(or => or !== orden)
                 setListadoOrdenes(listadOrdenesReducida);
@@ -132,7 +131,7 @@ const AdminPage = () => {
                         listadoOrdenes.map((orden, indice) => {
                             return (
                                 <div className={`orden ${indice % 2 ? "impar" : "par"}`} key={uuid()}>
-                                    <img src={orden.usuario.picture}></img>
+                                    <img src={orden.usuario.picture} alt="Foto perfil"></img>
                                     <p className='nombreUsuario'>{orden.usuario.nombre}</p>
                                     <p>{orden.id}</p>
                                     <p>{firestoreTimestampToHumanDate(orden.fecha)}</p>

@@ -85,7 +85,7 @@ const UserData = () => {
             'Si, cancelar',
             'No,mantenerla',
             () => {
-                const ordenesCopia = ordenesDelUsuario.filter(or => or != orden);
+                const ordenesCopia = ordenesDelUsuario.filter(or => or !== orden);
                 orden.estado = "Cancelar";
                 setOrdenesDelUsuario([orden, ...ordenesCopia]);
 

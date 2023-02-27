@@ -11,6 +11,8 @@ import { formateaMoneda, fechaJsAFechaHumana, esProduccion, notificarMePorWhatsa
 import emailjs from '@emailjs/browser';
 import { Link } from 'react-router-dom';
 import CaraTristeAnimacion from './CaraTristeAnimacion';
+import paqArLogo from '../img/paqar.png'
+import ItemCount from './ItemCount';
 
 const CarritoContainer = () => {
     const { isAuthenticated } = useAuth0();
@@ -20,12 +22,18 @@ const CarritoContainer = () => {
         const producto = productosTodos.find(pr => pr.id === item.id)
         return producto.price * item.cantidadIndividual;
     });
-    const precioTotalCarrito = preciosCarrito.reduce((a, b) => (a + b), 0);
+    const costoCarrito = preciosCarrito.reduce((a, b) => (a + b), 0);
 
+    console.log(costoCarrito)
+    let costoDelEnvioGratis = Math.floor(1300 - costoCarrito * 0.05);
+
+    if (costoDelEnvioGratis < 500) {
+        costoDelEnvioGratis = 0;
+    }
 
     const ordenDeCompra = {
         totalProductos: totalProductos,
-        totalCosto: precioTotalCarrito,
+        totalCosto: costoCarrito,
         productos: carrito,
         fecha: serverTimestamp(),
         estado: "Procesando",
@@ -51,7 +59,7 @@ const CarritoContainer = () => {
                         'id_pedido': docRef.id,
                         'from_name': datosUsuarioContext.nombre,
                         'total_productos': totalProductos,
-                        'total_costo': formateaMoneda(precioTotalCarrito),
+                        'total_costo': formateaMoneda(costoCarrito),
                         'address': `${datosUsuarioContext.calle} ${datosUsuarioContext.altura}, ${datosUsuarioContext.localidad} ${datosUsuarioContext.provincia}`,
                         'productos': textoItemsComprados
                     }, '840utIXux0aomLktd');
@@ -85,9 +93,24 @@ const CarritoContainer = () => {
                             )
                         })
                 }
+
+                {
+                    JSON.stringify(carrito) === "[]" ? <></>
+                        : <div className={`${costoDelEnvioGratis === 0 ? "envioGratis" : ""} productos__producto`}>
+                            <img alt='Producto' src={paqArLogo}></img>
+                            <a>Envio Paq Ar (Correo Argentino)</a>
+                            <div></div>
+                            <p>{formateaMoneda(costoDelEnvioGratis)}</p>
+                            <button disabled="true"></button>
+                        </div>
+                }
+
             </div>
+
+
+
             <div className='carritoContainer__subTotal'>
-                <h6>Total: {formateaMoneda(precioTotalCarrito)}</h6>
+                <h6>Total: {formateaMoneda(costoCarrito + costoDelEnvioGratis)}</h6>
             </div>
             {
                 isAuthenticated === false ? <Link to="/user" className='botonFinalizarCompra noLogueado'>Inicia sesión para poder continuar la compra</Link>

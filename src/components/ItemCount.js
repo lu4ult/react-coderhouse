@@ -21,7 +21,7 @@ const ItemCount = ({ producto, esCarrito }) => {
             setContador(cantidadEnCarrito ? cantidadEnCarrito.cantidadIndividual : 1);
         }
 
-    }, [])
+    }, []);
 
 
     const handleSumar = () => {

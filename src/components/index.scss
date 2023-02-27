@@ -946,10 +946,15 @@ body #root {
             text-align: center;
           }
 
+          &.envioGratis {
+            background-color: rgba(51, 51, 51, 0.1);
+
+            a,
+            p {
+              text-decoration: line-through;
+            }
+          }
         }
-
-
-
       }
 
       &__subTotal {

@@ -11,8 +11,6 @@ const ItemDetailContainer = ({ productos }) => {
 
     if (productos.length) {
         productoAMostrar = productos.find(e => e.id === parseInt(currentId));
-        let indiceProductoAMostrar = productos.indexOf(productoAMostrar);
-        console.log(indiceProductoAMostrar);
     }
 
     /*******************************************/
@@ -24,8 +22,7 @@ const ItemDetailContainer = ({ productos }) => {
         cantidadDeMiniaturas = 6;
 
 
-    //TODO: quitar el producto actual de este array, no tiene sentido que sugiera la publicación que ya está viendo
-    const productosCopia = [...productos];
+    const productosCopia = productos.filter(e => e.id !== parseInt(currentId))
     const productosParaBanner = [];
     shuffleArray(productosCopia);
 

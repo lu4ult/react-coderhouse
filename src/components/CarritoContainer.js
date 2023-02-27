@@ -57,7 +57,7 @@ const CarritoContainer = () => {
                         'id_pedido': docRef.id,
                         'from_name': datosUsuarioContext.nombre,
                         'total_productos': totalProductos,
-                        'total_costo': formateaMoneda(costoCarrito+costoDelEnvioGratis),
+                        'total_costo': formateaMoneda(costoCarrito + costoDelEnvioGratis),
                         'address': `${datosUsuarioContext.calle} ${datosUsuarioContext.altura}, ${datosUsuarioContext.localidad} ${datosUsuarioContext.provincia}`,
                         'productos': textoItemsComprados
                     }, '840utIXux0aomLktd');
@@ -105,9 +105,13 @@ const CarritoContainer = () => {
 
             </div>
 
-            <div className='carritoContainer__subTotal'>
-                <h6>Total: {formateaMoneda(costoCarrito + costoDelEnvioGratis)}</h6>
-            </div>
+            {
+                JSON.stringify(carrito) === "[]" ? <></>
+                    : <div className='carritoContainer__subTotal'>
+                        <h6>Total: {formateaMoneda(costoCarrito + costoDelEnvioGratis)}</h6>
+                    </div>
+            }
+
             {
                 isAuthenticated === false ? <Link to="/user" className='botonFinalizarCompra noLogueado'>Inicia sesión para poder continuar la compra</Link>
                     : datosUsuarioContext.correo === undefined ? <Link to="/user" className='botonFinalizarCompra noLogueado'>Ingresá un correo real para poder continuar</Link>

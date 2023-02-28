@@ -96,7 +96,7 @@ const CarritoContainer = () => {
                     JSON.stringify(carrito) === "[]" ? <></>
                         : <div className={`${costoDelEnvioGratis === 0 ? "envioGratis" : ""} productos__producto`}>
                             <img alt='Producto' src={paqArLogo}></img>
-                            <a>Envio Paq Ar (Correo Argentino)</a>
+                            <label>Envio Paq Ar (Correo Argentino)</label>
                             <div></div>
                             <p>{formateaMoneda(costoDelEnvioGratis)}</p>
                             <button disabled="true"></button>

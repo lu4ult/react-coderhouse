@@ -54,3 +54,6 @@ Consola Firestore
 Email recibido al finalizar la compra
 ![foto 4](docs_imgs/4.png)
 
+
+Árbol de componentes
+![React Tree](docs_imgs/reacttree.png)

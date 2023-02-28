@@ -43,7 +43,7 @@ const ItemListContainer = (props) => {
                     fetch('https://api.mercadolibre.com/items/' + e.idMeli)
                         .then(response => response.json())
                         .then(data => {
-                            e.imgMeliUrl = data['pictures'][0]['secure_url'];
+                            e.imgMeliUrl = data['pictures'];
                             e.video = data['video_id'];
                             e.popularidad = data['sold_quantity'];
 
@@ -64,9 +64,9 @@ const ItemListContainer = (props) => {
 
     if (!estanProductosCargados) {
         return (
-        <div className="spinner">
-            <BeatLoader color="#36d7b7" loading={true} />
-        </div>);
+            <div className="spinner">
+                <BeatLoader color="#36d7b7" loading={true} />
+            </div>);
     }
 
     if (renderIsCategories === false && renderIsDetails === false) {

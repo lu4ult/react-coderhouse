@@ -12,7 +12,7 @@ const CarritoItem = ({ item }) => {
 
     return (
         <div className='productos__producto'>
-            <img alt='Producto' src={productoCompleto.imgMeliUrl}></img>
+            <img alt='Producto' src={productoCompleto.imgMeliUrl[0].url}></img>
             <Link className='producto__titulo' to={"/item/" + item.id}>{productoCompleto.title}</Link>
             <ItemCount producto={productoCompleto} esCarrito={true}/>
             <p>{formateaMoneda(productoCompleto.price * item.cantidadIndividual)}</p>

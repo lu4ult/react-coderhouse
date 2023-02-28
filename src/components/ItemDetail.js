@@ -1,13 +1,29 @@
 import ItemCount from "./ItemCount";
 import { formateaMoneda } from "./utils";
 
+import { Carousel } from "react-responsive-carousel";
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import uuid from "react-uuid";
+
 const ItemDetail = ({ productoAMostrar }) => {
+
+    const imgsUrls = productoAMostrar.imgMeliUrl.map(i => i.url);
+
+    const handleClickSlide = (index) => {
+        //console.log(imgsUrls.at(index))
+        //TODO: modal para imágen grande
+    }
 
     return (
         <div className="itemDetalles">
             <h3 className="itemDetalles__titulo">{productoAMostrar.title}</h3>
             <div className="itemDetalles__imagen">
-                <img src={productoAMostrar.imgMeliUrl} alt={"Foto producto " + productoAMostrar.title}></img>
+                <Carousel showArrows="true" onClickItem={handleClickSlide} autoPlay={true} interval={3000} infiniteLoop="true" useKeyboardArrows={true}>
+                    {
+                        imgsUrls.map(i => <img src={i} key={uuid()} alt={`Foto Producto ${i} ${productoAMostrar.title}`}></img>)
+                    }
+                </Carousel>
+
                 {productoAMostrar.video != null ?
                     <iframe className="itemDetalles__video" src={"https://www.youtube.com/embed/" + productoAMostrar.video} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
                     : null
@@ -18,8 +34,9 @@ const ItemDetail = ({ productoAMostrar }) => {
                 <p>{productoAMostrar.internalCategory}</p>
                 <p>{formateaMoneda(productoAMostrar.price)}</p>
                 {
-                    productoAMostrar.fullFilment === false? <ItemCount producto={productoAMostrar} esCarrito={false} />
-                    :<p className="fullMsg">Este producto se encuentra en Full, por lo que sólo se puede comprar en Mercado Libre</p>
+                    productoAMostrar.fullFilment === false ?
+                        <ItemCount producto={productoAMostrar} esCarrito={false} />
+                        : <p className="fullMsg">Este producto se encuentra en Full, por lo que sólo se puede comprar en Mercado Libre</p>
                 }
                 <a className="meliButton" href={"https://articulo.mercadolibre.com.ar/" + productoAMostrar.idMeli.replace("MLA", "MLA-")} target="_blank" rel="noopener noreferrer">Ver en mercado libre</a>
             </div>

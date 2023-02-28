@@ -43,6 +43,8 @@ const CarritoContainer = () => {
     const handleFinalizarCompra = () => {
         Loading.hourglass();
 
+        document.getElementById("botonFinalizarCompra").disabled = true;
+
         let textoItemsComprados = "* ";
         ordenDeCompra.productos.forEach(item => { textoItemsComprados += `${item.cantidadIndividual}x ${item.id}` });
 
@@ -74,6 +76,7 @@ const CarritoContainer = () => {
                             window.location.replace(window.location.origin + "/user")
                         }
                     );
+
                 }, 2000);
 
                 notificarMePorWhatsapp(`Compra de ${datosUsuarioContext.nombre}`);
@@ -115,7 +118,7 @@ const CarritoContainer = () => {
             {
                 isAuthenticated === false ? <Link to="/user" className='botonFinalizarCompra noLogueado'>Inicia sesión para poder continuar la compra</Link>
                     : datosUsuarioContext.correo === undefined ? <Link to="/user" className='botonFinalizarCompra noLogueado'>Ingresá un correo real para poder continuar</Link>
-                        : <button disabled={JSON.stringify(carrito) === "[]"} className="botonFinalizarCompra" onClick={handleFinalizarCompra}>Finalizar Compra</button>
+                        : <button id="botonFinalizarCompra" disabled={JSON.stringify(carrito) === "[]"} className="botonFinalizarCompra" onClick={handleFinalizarCompra}>Finalizar Compra</button>
             }
         </div>
     );

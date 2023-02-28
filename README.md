@@ -36,6 +36,7 @@ docs_imgs
 - Firebase
 - md5: validación usuario y contraseña a través del hash
 - notiflix: notificaciones y alertas
+- react-responsive-carousel: carousel de imágenen en ItemDetail
 - react-spinners: spinners mientras se cargan productos o cualquier otro fetch
 - react-uuid: para los key de las listas en react
 - sass

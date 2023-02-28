@@ -30,18 +30,20 @@ const ItemListContainer = (props) => {
 
         getDocs(filtro)
             .then((respuesta) => {
-                setTimeout(() => {
-                    setEstanProductosCargados(true);
-                    setProductos(productos);
-                    setProductosTodos(productos);
-                }, 1000);
+                // setTimeout(() => {
+                //     setEstanProductosCargados(true);
+                //     setProductos(productos);
+                //     setProductosTodos(productos);
+                // }, 1000);
 
-                const productos = respuesta.docs.map(doc =>
-                    ({ ...doc.data() }))
+                const productos = respuesta.docs.map(doc => ({ ...doc.data() }));
 
-                productos.map(e => {
-                    fetch('https://api.mercadolibre.com/items/' + e.idMeli)
-                        .then(response => response.json())
+                const momentoInicio = new Date();
+                Promise.all(productos.map(e => {
+                    return fetch('https://api.mercadolibre.com/items/' + e.idMeli)
+                        .then((response) => {
+                            return response.json();
+                        })
                         .then(data => {
                             e.imgMeliUrl = data['pictures'];
                             e.video = data['video_id'];
@@ -52,8 +54,15 @@ const ItemListContainer = (props) => {
                                 e.price = Math.floor(1 * parseInt(data['price']));
                             //e.stock = parseInt(data['available_quantity']);               //No porque no es el stock
                         })
-                })
 
+                }))
+                .then(() => {
+                    setEstanProductosCargados(true);
+                    setProductos(productos);
+                    setProductosTodos(productos);
+                    const momentoFin = new Date();
+                    //console.log(`Tiempo de Ejecucion: ${momentoFin - momentoInicio} mS.`)
+                });
             })
             .catch((error) => {
                 console.log(error)

@@ -59,7 +59,9 @@ const ItemListContainer = (props) => {
                 .then(() => {
                     setEstanProductosCargados(true);
                     setProductos(productos);
-                    setProductosTodos(productos);
+                    if (categoria === undefined) {
+                        setProductosTodos(productos);
+                    }
                     const momentoFin = new Date();
                     //console.log(`Tiempo de Ejecucion: ${momentoFin - momentoInicio} mS.`)
                 });

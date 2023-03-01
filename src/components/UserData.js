@@ -12,7 +12,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { contexto } from "./CustomProvider";
 import { notiflixPersonalizacion, firestoreTimestampToHumanDate, formateaMoneda, notificarMePorWhatsapp } from "./utils";
 import CaraTristeAnimacion from "./CaraTristeAnimacion";
-import { iconoWhatsapp,iconoTrash } from "./Iconos";
+import { iconoWhatsapp, iconoTrash } from "./Iconos";
 import { Confirm } from 'notiflix';
 
 
@@ -120,7 +120,7 @@ const UserData = () => {
                                         <CaraTristeAnimacion mensaje="Ninguna compra!" />
                                     </div>
 
-                                    :<>
+                                    : <>
                                         <div className="orden impar cabecera">
                                             <p>Fecha</p>
                                             <p>ID</p>
@@ -149,7 +149,7 @@ const UserData = () => {
                                             ))
                                         }
                                     </>
-                                    
+
 
                             }
 

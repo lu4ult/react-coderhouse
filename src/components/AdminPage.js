@@ -6,6 +6,7 @@ import { db } from './Firebase';
 import { iconoEmail, iconoFloppyDisk, iconoGuardarArchivo, iconoTrash } from './Iconos';
 import { firestoreTimestampToHumanDate } from './utils';
 import { Confirm } from 'notiflix';
+import { crearEtiquetaEnvio } from './correos';
 
 const AdminPage = () => {
     const [adminLogueado, setAdminLogueado] = useState(false);
@@ -35,55 +36,6 @@ const AdminPage = () => {
         }
     }
 
-    const descargarPaqAr = (orden) => {
-        const provinciasEquivalentes = {
-            "BUENOS_AIRES": "B",
-            "CAPITAL_FEDERAL": "C",
-            "CATAMARCA": "K",
-            "CHACO": "H",
-            "CHUBUT": "U",
-            "CORDOBA": "X",
-            "CORRIENTES": "W",
-            "ENTRE_RIOS": "E",
-            "FORMOSA": "P",
-            "JUJUY": "Y",
-            "LA_PAMPA": "L",
-            "LA_RIOJA": "F",
-            "MENDOZA": "M",
-            "MISIONES": "N",
-            "NEUQUEN": "Q",
-            "RIO_NEGRO": "R",
-            "SALTA": "A",
-            "SAN_JUAN": "J",
-            "SAN_LUIS": "D",
-            "SANTA_CRUZ": "Z",
-            "SANTA_FE": "S",
-            "SANTIAGO_DEL_ESTERO": "G",
-            "TIERRA_DEL_FUEGO": "V",
-            "TUCUMAN": "T"
-        };
-
-        const matrizParaArchivo = [
-            ["tipo_producto", "largo", "ancho", "altura", "peso", "valor_del_contenido", "provincia_destino", "sucursal_destino", "localidad_destino", "calle_destino", "altura_destino", "piso", "dpto", "codpostal_destino", "destino_nombre", "destino_email", "cod_area_tel", "tel", "cod_area_cel", "cel"],
-            ["CP", "30", "20", "15", "1", orden.totalCosto, provinciasEquivalentes[orden.usuario.provincia.replace(" ", "_")], "", orden.usuario.localidad, orden.usuario.calle, orden.usuario.altura, orden.usuario.piso || " ", orden.usuario.unidad || " ", orden.usuario.cp, orden.usuario.nombre, orden.usuario.correo, orden.usuario.codarea, orden.usuario.cel, orden.usuario.codarea, orden.usuario.cel]
-        ];
-
-        let csvContent = "data:text/csv;charset=utf-8,";                                                    //https://stackoverflow.com/questions/14964035
-        matrizParaArchivo.forEach(function (rowArray) {
-            let row = rowArray.join(";");                                                                   //Transformamos esa matriz bidimensional en algo tipo CSV
-            csvContent += row + "\r\n";
-        });
-
-        let encodedUri = encodeURI(csvContent);
-        let anchorDescarga = document.createElement('a')
-        anchorDescarga.setAttribute("href", encodedUri);                                                    //Para poder descargar el archivo creado hay que "adjuntarlo" a un anchor, el cuál no está visible en el DOM.
-        anchorDescarga.setAttribute("download", "envio_paq_ar.csv");
-        anchorDescarga.click();
-        anchorDescarga.remove();
-
-        window.open("https://www.correoargentino.com.ar/MiCorreo/public/login");
-    }
-
     const actualizarOrden = (id) => {
         const listadOrdenesCopia = listadoOrdenes.filter(el => el.id !== id);
         const ordenAModificar = listadoOrdenes.find(el => el.id === id)
@@ -111,6 +63,21 @@ const AdminPage = () => {
         );
     }
 
+    const descargarEtiquetaCorreo = (orden) => {
+        Confirm.prompt(
+            'Seleccionar Servicio de envío',
+            'Paq Ar / Andreani / Buspack',
+            'Paq Ar',
+            'Generar',
+            'Cancelar',
+            (clientAnswer) => {
+                crearEtiquetaEnvio(orden, clientAnswer.toLowerCase().replace(' ', ''));
+            },
+            (clientAnswer) => {
+                crearEtiquetaEnvio(orden, clientAnswer.toLowerCase().replace(' ', ''));
+            }
+        );
+    }
 
     if (adminLogueado === false) {
         return (
@@ -154,7 +121,7 @@ const AdminPage = () => {
 
                                     {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
                                     <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "TN pendiente"}></input>
-                                    <button className={indice === 0 ? 'paqar' : null} onClick={() => { descargarPaqAr(orden) }}>{iconoGuardarArchivo}</button>
+                                    <button className={indice === 0 ? 'paqar' : null} onClick={() => { descargarEtiquetaCorreo(orden) }}>{iconoGuardarArchivo}</button>
                                     <button className={indice === 0 ? 'email' : null} onClick={() => { window.open(`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`); }} >{iconoEmail}</button>
                                     <button className={indice === 0 ? 'eliminar' : null} onClick={() => { eliminarOrden(orden) }}>{iconoTrash}</button>
                                     <button className={indice === 0 ? 'guardar' : null} onClick={() => { actualizarOrden(orden.id) }}>{iconoFloppyDisk}</button>
@@ -162,12 +129,8 @@ const AdminPage = () => {
                             )
                         })
                     }
-
                 </div>
-
             </div>);
     }
-
 }
-
 export default AdminPage;

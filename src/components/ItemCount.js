@@ -52,7 +52,6 @@ const ItemCount = ({ producto, esCarrito }) => {
 
     const handleOnChange = (e) => {
         const cantDeseada = parseInt(e.target.value) || 1;
-        console.log(cantDeseada);
         setContador(cantDeseada);
         if (cantDeseada > producto.stock) {
             setTimeout(() => { setContador(producto.stock) }, 1000);

@@ -25,16 +25,13 @@ export const obtenerPrimeraPalabraComoStr = (str) => {
 
 
 export const formateaMoneda = (numero) => {
+    const options = {
+        style: "currency",
+        currency: "ARS",
+        minimumFractionDigits: Number.isInteger(numero) ? 0 : 2
+    };
 
-    if (numero < 1000) {
-        return numero + " $";
-    }
-
-    const entero = Math.floor(numero / 1000);
-    const resto = numero - entero * 1000;
-
-    const str = `${entero}.${resto < 100 ? "0" : ""}${resto < 10 ? "0" : ""}${resto} $`;
-    return str;
+    return numero.toLocaleString("es-AR", options);
 }
 
 export const notiflixPersonalizacion = () => {

@@ -7,7 +7,11 @@ import uuid from "react-uuid";
 
 const ItemDetail = ({ productoAMostrar }) => {
 
-    const imgsUrls = productoAMostrar.imgMeliUrl.map(i => i.url);
+    const imgsUrls = productoAMostrar.imgMeliUrl.map(i => i.secure_url);
+    const max_number_of_imgs = 8;
+    if (imgsUrls.length > max_number_of_imgs) {
+        imgsUrls.splice(max_number_of_imgs, imgsUrls.length)
+    }
 
     const handleClickSlide = (index) => {
         //console.log(imgsUrls.at(index))

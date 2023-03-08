@@ -16,6 +16,8 @@ import { iconoWhatsapp, iconoTrash } from "./Iconos";
 import { Confirm } from 'notiflix';
 
 
+
+
 const UserData = () => {
     const { setDatosUsuarioContext } = useContext(contexto);
 
@@ -26,6 +28,58 @@ const UserData = () => {
     const provinciasLista = ["BUENOS AIRES", "CAPITAL FEDERAL", "CATAMARCA", "CHACO", "CHUBUT", "CORDOBA", "CORRIENTES", "ENTRE RIOS", "FORMOSA", "JUJUY", "LA PAMPA", "LA RIOJA", "MENDOZA", "MISIONES", "NEUQUEN", "RIO NEGRO", "SALTA", "SAN JUAN", "SAN LUIS", "SANTA CRUZ", "SANTA FE", "SANTIAGO DEL ESTERO"];
 
     const [ordenesDelUsuario, setOrdenesDelUsuario] = useState([]);
+    const [analizarTNs, setAnalizarTNs] = useState(false);
+
+    useEffect(() => {
+        if (analizarTNs) {
+            const ordenesCopia = ordenesDelUsuario;
+            ordenesCopia.forEach(orden => {
+                const analizarTn = orden.trackingNumber.substring(0, 5);
+
+                if (analizarTn === '36000') {
+                    fetch(`https://apidestinatarios.andreani.com/api/envios/${orden.trackingNumber}/trazas`)
+                        .then(response => response.json())
+                        .then(data => {
+                            //orden.andreani[0].estado
+                            switch (data[0].evento) {
+                                case 'ExpedicionHojaDeRutaDeViaje': {
+                                    //orden.andreani = data[0].estado;
+                                    orden.andreani = "En camino!";
+                                    break;
+                                }
+
+                                case 'OrdenDeEnvioCreada': {
+                                    orden.andreani = "Pendiente de recepción";
+                                    break;
+                                }
+
+                                case 'RecepcionEnSucursalDestino': {
+                                    orden.andreani = "En sucursal destino";
+                                    break;
+                                }
+
+                                case 'Distribucion': {
+                                    orden.andreani = "Llega hoy!";
+                                    break;
+                                }
+
+                                case 'EnvioEntregado': {
+                                    orden.andreani = "Entregado el " + data[0].fecha.dia;
+                                    break;
+                                }
+
+                                default: {
+                                    orden.andreani = data[0].estado;
+                                }
+                            }
+                        })
+                        .catch(error => console.log(error))
+                }
+            })
+            setOrdenesDelUsuario(ordenesCopia)
+        }
+    }, [analizarTNs])
+
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -53,7 +107,8 @@ const UserData = () => {
                         respuesta.docs.forEach(order => {
                             ordenesDelUsuario.push({ ...order.data(), id: order.id });
                         })
-                        ordenesDelUsuario.sort((a, b) => b.fecha - a.fecha)
+                        ordenesDelUsuario.sort((a, b) => b.fecha - a.fecha);
+                        setAnalizarTNs(true);
                         setOrdenesDelUsuario(ordenesDelUsuario);
                     })
             }
@@ -126,7 +181,7 @@ const UserData = () => {
                                             <p>ID</p>
                                             <p>Productos</p>
                                             <p>Total</p>
-                                            <p>TN</p>
+                                            <p>Seguimiento</p>
                                             <p>Estado</p>
                                             <p></p>
                                             <p></p>
@@ -139,7 +194,14 @@ const UserData = () => {
                                                     <p>{orden.id}</p>
                                                     <p>{orden.totalProductos}</p>
                                                     <p>{formateaMoneda(orden.totalCosto)}</p>
-                                                    <p><a className="trackingNumber" href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer">{orden.trackingNumber || "Pendiente"}</a></p>
+                                                    <p>
+                                                        {
+                                                            orden.andreani === undefined
+                                                                ? <a className="trackingNumber" href="https://www.correoargentino.com.ar/formularios/e-commerce" target="_blank" rel="noopener noreferrer">{orden.trackingNumber || "Pendiente"}</a>
+                                                                : <a className="trackingNumber" href={'https://www.andreani.com/#!/informacionEnvio/' + orden.trackingNumber} target="_blank" rel="noopener noreferrer">{orden.andreani || "Pendiente"}</a>
+                                                        }
+
+                                                    </p>
                                                     <p>{orden.estado}</p>
                                                     <button className={`orden-cancelacion${indice === 0 ? " primerIcono" : ""}`} onClick={() => { handleCancelarCompra(orden) }}>{iconoTrash}</button>
                                                     <a className={`whatsapp-consulta${indice === 0 ? " primerIcono" : ""}`}

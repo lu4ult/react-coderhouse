@@ -1,6 +1,6 @@
 import md5 from 'md5'
 import uuid from 'react-uuid';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { doc, collection, getDocs, setDoc, deleteDoc } from "firebase/firestore";
 import { db } from './Firebase';
 import { iconoEmail, iconoFloppyDisk, iconoGuardarArchivo, iconoTrash } from './Iconos';
@@ -11,6 +11,7 @@ import { crearEtiquetaEnvio } from './correos';
 const AdminPage = () => {
     const [adminLogueado, setAdminLogueado] = useState(false);
     const [listadoOrdenes, setListadoOrdenes] = useState([]);
+    const [analizarTNs, setAnalizarTNs] = useState(false);
     const opcionesEstadoCompra = ["Procesando", "En camino", "Finalizada", "Cancelar", "Cancelada"];
 
     const handleLogin = () => {
@@ -29,6 +30,7 @@ const AdminPage = () => {
                     let lista = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
                     lista.sort((a, b) => b.fecha - a.fecha);
                     setListadoOrdenes(lista);
+                    setAnalizarTNs(true);
                 })
         }
         else {
@@ -36,11 +38,34 @@ const AdminPage = () => {
         }
     }
 
+    useEffect(() => {
+        if (analizarTNs) {
+            const ordenesCopia = [...listadoOrdenes];
+            ordenesCopia.forEach(orden => {
+                const analizarTn = orden.trackingNumber.substring(0, 5);
+                console.log(orden.trackingNumber)
+
+                if (analizarTn === '36000') {
+                    fetch(`https://apidestinatarios.andreani.com/api/envios/${orden.trackingNumber}/trazas`)
+                        .then(response => response.json())
+                        .then(data => {
+                            orden.andreani = [...data];
+                            console.log(data)
+
+                        })
+                        .catch(error => console.log(error))
+                }
+            })
+            setListadoOrdenes(ordenesCopia);
+            //setOrdenesDelUsuario(ordenesCopia)
+        }
+    }, [analizarTNs])
+
     const actualizarOrden = (id) => {
         const listadOrdenesCopia = listadoOrdenes.filter(el => el.id !== id);
         const ordenAModificar = listadoOrdenes.find(el => el.id === id)
         const estadoActual = document.getElementById("estado" + id).value;
-        const tn = document.getElementById("tn" + id).value.substring(0, 23);
+        const tn = document.getElementById("tn" + id).value.replace(' ','').substring(0, 23);
 
         ordenAModificar.trackingNumber = tn;
         ordenAModificar.estado = estadoActual;
@@ -109,6 +134,29 @@ const AdminPage = () => {
                                             })
                                         }
                                     </select>
+
+                                    <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "TN pendiente"}></input>
+
+
+                                    {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
+                                    {
+                                        orden.andreani === undefined
+                                            ? <a></a>
+                                            : <a>
+                                                <select>
+                                                    {
+                                                        orden.andreani.map(evento => {
+                                                            return (
+                                                                <option key={uuid()}>
+                                                                    {evento.evento} - {evento.fecha.dia} {evento.fecha.hora}
+                                                                </option>
+                                                            );
+                                                        })
+                                                    }
+                                                </select>
+                                            </a>
+                                    }
+
                                     <select id={"estado" + orden.id} defaultValue={orden.estado}>
                                         {
                                             opcionesEstadoCompra.map(opc => {
@@ -119,8 +167,6 @@ const AdminPage = () => {
                                         }
                                     </select>
 
-                                    {/* TODO: deshabilitar los botones de email/whatsapp según la respuesta del usuario */}
-                                    <input type="text" id={"tn" + orden.id} defaultValue={orden.trackingNumber || "TN pendiente"}></input>
                                     <button className={indice === 0 ? 'paqar' : null} onClick={() => { descargarEtiquetaCorreo(orden) }}>{iconoGuardarArchivo}</button>
                                     <button className={indice === 0 ? 'email' : null} onClick={() => { window.open(`mailto: ${orden.usuario.correo}?subject=Tu compra en LU4ULT`); }} >{iconoEmail}</button>
                                     <button className={indice === 0 ? 'eliminar' : null} onClick={() => { eliminarOrden(orden) }}>{iconoTrash}</button>

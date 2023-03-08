@@ -1178,7 +1178,7 @@ body #root {
             }
 
             display: grid;
-            grid-template-columns: 50px 4fr 2fr 3fr 3fr 2fr 5fr repeat(4, 0.6fr);
+            grid-template-columns: 50px 3.5fr 1.5fr 3fr 3fr 2fr 2fr 1fr repeat(4, 0.6fr);
 
             svg {
               width: 25px;
@@ -1190,6 +1190,11 @@ body #root {
               width: 50px;
               height: 50px;
             }
+
+            a select option {
+              text-align: left;
+            }
+
 
 
             .paqar,

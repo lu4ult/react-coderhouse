@@ -16,8 +16,6 @@ import { iconoWhatsapp, iconoTrash } from "./Iconos";
 import { Confirm } from 'notiflix';
 
 
-
-
 const UserData = () => {
     const { setDatosUsuarioContext } = useContext(contexto);
 
@@ -32,7 +30,7 @@ const UserData = () => {
 
     useEffect(() => {
         if (analizarTNs) {
-            const ordenesCopia = ordenesDelUsuario;
+            const ordenesCopia = [...ordenesDelUsuario];
             ordenesCopia.forEach(orden => {
                 const analizarTn = orden.trackingNumber.substring(0, 5);
 

@@ -38,38 +38,43 @@ const UserData = () => {
                     fetch(`https://apidestinatarios.andreani.com/api/envios/${orden.trackingNumber}/trazas`)
                         .then(response => response.json())
                         .then(data => {
-                            //orden.andreani[0].estado
-                            switch (data[0].evento) {
-                                case 'ExpedicionHojaDeRutaDeViaje': {
-                                    //orden.andreani = data[0].estado;
-                                    orden.andreani = "En camino!";
-                                    break;
-                                }
+                            if (data.code === 404) {
+                                orden.andreani = 'Error en TN';
+                            }
+                            else {
+                                switch (data[0].evento) {
+                                    case 'ExpedicionHojaDeRutaDeViaje': {
+                                        //orden.andreani = data[0].estado;
+                                        orden.andreani = "En camino!";
+                                        break;
+                                    }
 
-                                case 'OrdenDeEnvioCreada': {
-                                    orden.andreani = "Pendiente de recepción";
-                                    break;
-                                }
+                                    case 'OrdenDeEnvioCreada': {
+                                        orden.andreani = "Pendiente de recepción";
+                                        break;
+                                    }
 
-                                case 'RecepcionEnSucursalDestino': {
-                                    orden.andreani = "En sucursal destino";
-                                    break;
-                                }
+                                    case 'RecepcionEnSucursalDestino': {
+                                        orden.andreani = "En sucursal destino";
+                                        break;
+                                    }
 
-                                case 'Distribucion': {
-                                    orden.andreani = "Llega hoy!";
-                                    break;
-                                }
+                                    case 'Distribucion': {
+                                        orden.andreani = "Llega hoy!";
+                                        break;
+                                    }
 
-                                case 'EnvioEntregado': {
-                                    orden.andreani = "Entregado el " + data[0].fecha.dia;
-                                    break;
-                                }
+                                    case 'EnvioEntregado': {
+                                        orden.andreani = "Entregado el " + data[0].fecha.dia;
+                                        break;
+                                    }
 
-                                default: {
-                                    orden.andreani = data[0].estado;
+                                    default: {
+                                        orden.andreani = data[0].estado;
+                                    }
                                 }
                             }
+
                         })
                         .catch(error => console.log(error))
                 }
@@ -77,6 +82,10 @@ const UserData = () => {
             setOrdenesDelUsuario(ordenesCopia)
         }
     }, [analizarTNs])
+
+    useEffect(() => {
+        console.log(ordenesDelUsuario)
+    }, [ordenesDelUsuario])
 
 
     useEffect(() => {

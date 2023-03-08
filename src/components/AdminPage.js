@@ -43,34 +43,53 @@ const AdminPage = () => {
             const ordenesCopia = [...listadoOrdenes];
             ordenesCopia.forEach(orden => {
                 const analizarTn = orden.trackingNumber.substring(0, 5);
-                console.log(orden.trackingNumber)
 
                 if (analizarTn === '36000') {
                     fetch(`https://apidestinatarios.andreani.com/api/envios/${orden.trackingNumber}/trazas`)
                         .then(response => response.json())
                         .then(data => {
-                            orden.andreani = [...data];
-                            console.log(data)
-
+                            if (data.code === 404) {
+                                alert(`Error en TN de id ${orden.id}. Borrar objeto desde FireStore. https://console.firebase.google.com/u/0/project/react-coderhouse-ac264/firestore`);
+                                alert(`Error en TN de id ${orden.id}. Borrar objeto desde FireStore. https://console.firebase.google.com/u/0/project/react-coderhouse-ac264/firestore`);
+                            }
+                            else {
+                                orden.andreani = [...data];
+                            }
                         })
-                        .catch(error => console.log(error))
+                        .catch(error => {
+                            console.log(error);
+                        })
                 }
             })
             setListadoOrdenes(ordenesCopia);
-            //setOrdenesDelUsuario(ordenesCopia)
         }
     }, [analizarTNs])
+
+    // useEffect(() => {
+    //     listadoOrdenes.forEach(ord => {
+    //         console.log(ord.andreani);
+    //     })
+    // }, [listadoOrdenes])
+
 
     const actualizarOrden = (id) => {
         const listadOrdenesCopia = listadoOrdenes.filter(el => el.id !== id);
         const ordenAModificar = listadoOrdenes.find(el => el.id === id)
         const estadoActual = document.getElementById("estado" + id).value;
-        const tn = document.getElementById("tn" + id).value.replace(' ','').substring(0, 23);
+        const tn = document.getElementById("tn" + id).value.replace(' ', '').substring(0, 23);
 
-        ordenAModificar.trackingNumber = tn;
+        if (tn.length < 15) {
+            alert("tn demasiado corto")
+        }
+        else {
+            ordenAModificar.trackingNumber = tn;
+        }
+
         ordenAModificar.estado = estadoActual;
 
         setListadoOrdenes([ordenAModificar, ...listadOrdenesCopia]);
+
+        //while(ordenAModificar.andreani length > 1 ) ordenAModificar.andreani.pop
         setDoc(doc(db, "ordenes", id), ordenAModificar, { merge: true });
     }
 
@@ -148,7 +167,7 @@ const AdminPage = () => {
                                                         orden.andreani.map(evento => {
                                                             return (
                                                                 <option key={uuid()}>
-                                                                    {evento.evento} - {evento.fecha.dia} {evento.fecha.hora}
+                                                                    {evento.evento || "upss"} - {evento.fecha.dia || "upss"} {evento.fecha.hora || "upss"}
                                                                 </option>
                                                             );
                                                         })
